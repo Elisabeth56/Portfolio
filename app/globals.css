@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #121212;
+  --surface: #1a1a1a;
+  --surface-light: #3D3D3D;
+  --gray-muted: #A6A6A6;
+  --gray-light: #F5F5F5;
+  --accent-purple: #6B46C1;
+  --accent-blue: #3B82F6;
+  --accent-cyan: #06B6D4;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--gray-light);
+  font-family: 'Open Sans', sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Fix scroll getting stuck */
+html, body {
+  overscroll-behavior: none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface-light);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-muted);
+}
+
+/* Decorative circles */
+.decorative-circle {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Monospace headings */
+.mono-heading {
+  font-family: 'Fira Code', monospace;
+  letter-spacing: -0.02em;
+}
+
+/* Section label styling */
+.section-label {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.875rem;
+  color: var(--gray-muted);
+  letter-spacing: 0.05em;
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #fff 0%, #a6a6a6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Consistent accent gradient - matches hero */
+.accent-gradient {
+  background: linear-gradient(135deg, 
+    rgba(107, 70, 193, 0.3) 0%, 
+    rgba(59, 130, 246, 0.2) 50%, 
+    rgba(6, 182, 212, 0.3) 100%
+  );
+}
+
+/* Button styles */
+.btn-primary {
+  @apply px-6 py-3 bg-transparent border border-gray-light text-gray-light rounded-full 
+         font-mono text-sm transition-all duration-300 hover:bg-gray-light hover:text-background;
+}
+
+.btn-icon {
+  @apply w-10 h-10 rounded-full border border-gray-light flex items-center justify-center 
+         transition-all duration-300 hover:bg-gray-light hover:text-background;
+}
+
+/* Tag styles */
+.tech-tag {
+  @apply px-3 py-1 text-xs font-mono border border-surface-light rounded-full text-gray-muted;
+}
+
+/* Social link styles */
+.social-link {
+  @apply flex items-center gap-2 px-4 py-2 border border-surface-light rounded-full 
+         text-sm text-gray-muted transition-all duration-300 hover:border-gray-light hover:text-gray-light;
+}
+
+/* Grid pattern background */
+.grid-pattern {
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Diagonal lines pattern */
+.diagonal-lines {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 2px,
+    rgba(255,255,255,0.02) 2px,
+    rgba(255,255,255,0.02) 4px
+  );
+}
+
+/* Smooth section transitions */
+section {
+  position: relative;
+}
+
+/* Ensure proper stacking */
+main {
+  position: relative;
+  z-index: 1;
+}
