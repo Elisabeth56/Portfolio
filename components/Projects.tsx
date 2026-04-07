@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 
 interface Project {
   id: string;
@@ -11,6 +12,11 @@ interface Project {
   description: string;
   tags: string[];
   features?: string[];
+  images: {
+    main: string;
+    secondary1: string;
+    secondary2: string;
+  };
 }
 
 const projects: Project[] = [
@@ -25,6 +31,11 @@ const projects: Project[] = [
       "Automated spending categorization using AI",
       "Real-time dashboard with interactive visualizations",
     ],
+    images: {
+      main: "/images/finance-dashboard-main.png",
+      secondary1: "/images/finance-dashboard-1.png",
+      secondary2: "/images/fin-dash-2.png",
+    },
   },
   {
     id: "ai-productivity-system",
@@ -37,6 +48,11 @@ const projects: Project[] = [
       "Smart task prioritization and scheduling",
       "Context-aware note organization",
     ],
+    images: {
+      main: "/images/productivity-main.png",
+      secondary1: "/images/productivity-1.png",
+      secondary2: "/images/productivity-2.png",
+    },
   },
   {
     id: "automation-dashboards",
@@ -49,8 +65,49 @@ const projects: Project[] = [
       "Real-time operational metrics tracking",
       "Automated report generation and insights",
     ],
+    images: {
+      main: "/images/autodash-main.png",
+      secondary1: "/images/autodash-1.png",
+      secondary2: "/images/autodash-2.png",
+    },
   },
 ];
+
+// Image component with fallback gradient
+function ProjectImage({ 
+  src, 
+  alt, 
+  className = "",
+  priority = false 
+}: { 
+  src: string; 
+  alt: string; 
+  className?: string;
+  priority?: boolean;
+}) {
+  const [imageError, setImageError] = useState(false);
+
+  return (
+    <div className={`relative overflow-hidden ${className}`}>
+      {/* Fallback gradient - always visible as background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-700/40 via-blue-600/30 to-cyan-500/40" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-gray-900/60 via-transparent to-transparent" />
+      <div className="absolute inset-0 grid-pattern opacity-30" />
+      
+      {/* Actual image - overlays the gradient when loaded */}
+      {!imageError && (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover z-10"
+          priority={priority}
+          onError={() => setImageError(true)}
+        />
+      )}
+    </div>
+  );
+}
 
 export default function Projects() {
   const ref = useRef(null);
@@ -136,31 +193,47 @@ export default function Projects() {
                 </motion.button>
               </div>
 
-              {/* Project Images - Matching hero gradient */}
+              {/* Project Images */}
               <div
                 className={`relative ${index % 2 === 1 ? "lg:order-1" : ""}`}
               >
                 <div className="grid grid-cols-2 gap-4">
                   {/* Main image */}
-                  <div className="col-span-2 aspect-video rounded-2xl overflow-hidden relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-700/40 via-blue-600/30 to-cyan-500/40" />
-                    <div className="absolute inset-0 bg-gradient-to-tr from-gray-900/60 via-transparent to-transparent" />
-                    <div className="absolute inset-0 grid-pattern opacity-30" />
+                  <div className="col-span-2 aspect-video rounded-2xl overflow-hidden relative group">
+                    <ProjectImage
+                      src={project.images.main}
+                      alt={`${project.title} main screenshot`}
+                      className="w-full h-full"
+                      priority={index === 0}
+                    />
                     
-                    {/* Project icon/badge */}
-                    <div className="absolute top-4 left-4 px-3 py-1 bg-black/40 backdrop-blur-sm rounded-full">
+                    {/* Hover overlay */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 z-20" />
+                    
+                    {/* Project badge */}
+                    <div className="absolute top-4 left-4 px-3 py-1 bg-black/40 backdrop-blur-sm rounded-full z-30">
                       <span className="text-xs font-mono text-gray-light">{project.id}</span>
                     </div>
                   </div>
 
-                  {/* Secondary images */}
-                  <div className="aspect-square rounded-xl overflow-hidden relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-800/30 via-blue-700/25 to-cyan-600/30" />
-                    <div className="absolute inset-0 grid-pattern opacity-40" />
+                  {/* Secondary image 1 */}
+                  <div className="aspect-square rounded-xl overflow-hidden relative group">
+                    <ProjectImage
+                      src={project.images.secondary1}
+                      alt={`${project.title} screenshot 1`}
+                      className="w-full h-full"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 z-20" />
                   </div>
-                  <div className="aspect-square rounded-xl overflow-hidden relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-700/30 via-blue-600/25 to-purple-700/30" />
-                    <div className="absolute inset-0 grid-pattern opacity-40" />
+
+                  {/* Secondary image 2 */}
+                  <div className="aspect-square rounded-xl overflow-hidden relative group">
+                    <ProjectImage
+                      src={project.images.secondary2}
+                      alt={`${project.title} screenshot 2`}
+                      className="w-full h-full"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 z-20" />
                   </div>
                 </div>
 

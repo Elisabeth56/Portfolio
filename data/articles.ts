@@ -20,7 +20,7 @@ export const articles: Article[] = [
     date: "2024-03-28",
     readTime: "12 min read",
     tags: ["AI", "LLMs", "RAG", "Full-Stack", "Architecture"],
-    image: "/images/article-1.jpg",
+    image: "/images/articles/art1.jpg",
     content: `
 ## Introduction
 
@@ -222,7 +222,7 @@ The tools are mature enough. The patterns are established. The only question is:
     date: "2024-03-15",
     readTime: "10 min read",
     tags: ["Next.js", "Supabase", "Real-Time", "AI", "WebSockets"],
-    image: "/images/article-2.jpg",
+    image: "/images/articles/art2.jpg",
     content: `
 ## Introduction
 
@@ -415,7 +415,7 @@ Start with the patterns in this article, and adapt them to your specific use cas
     date: "2024-02-28",
     readTime: "11 min read",
     tags: ["Automation", "AI", "Internal Tools", "Productivity", "Workflows"],
-    image: "/images/article-3.jpg",
+    image: "/images/articles/art3.jpg",
     content: `
 ## Introduction
 
@@ -555,7 +555,7 @@ Your team will thank you.
     date: "2024-02-10",
     readTime: "9 min read",
     tags: ["Groq", "LLaMA", "Mistral", "Performance", "Open Source"],
-    image: "/images/article-4.jpg",
+    image: "/images/articles/art4.jpg",
     content: `
 ## Introduction
 

@@ -2,10 +2,45 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, ArrowRight, Calendar, Clock, Share2 } from "lucide-react";
 import { useParams } from "next/navigation";
+import { useState } from "react";
 import { getArticleBySlug, articles } from "@/data/articles";
 import { notFound } from "next/navigation";
+
+function ArticleImage({ 
+  src, 
+  alt, 
+  priority = false 
+}: { 
+  src: string; 
+  alt: string; 
+  priority?: boolean;
+}) {
+  const [imageError, setImageError] = useState(false);
+
+  return (
+    <div className="relative w-full h-full overflow-hidden">
+      {/* Fallback gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-700/40 via-blue-600/30 to-cyan-500/40" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-gray-900/50 via-transparent to-transparent" />
+      <div className="absolute inset-0 grid-pattern opacity-30" />
+
+      {/* Actual image */}
+      {!imageError && (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover z-10"
+          priority={priority}
+          onError={() => setImageError(true)}
+        />
+      )}
+    </div>
+  );
+}
 
 export default function ArticlePage() {
   const params = useParams();
@@ -180,16 +215,18 @@ export default function ArticlePage() {
           </div>
         </motion.header>
 
-        {/* Featured Image - Matching hero gradient */}
+        {/* Featured Image */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
           className="aspect-video rounded-2xl overflow-hidden mb-12 relative"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-700/40 via-blue-600/30 to-cyan-500/40" />
-          <div className="absolute inset-0 bg-gradient-to-tr from-gray-900/50 via-transparent to-transparent" />
-          <div className="absolute inset-0 grid-pattern opacity-30" />
+          <ArticleImage
+            src={article.image}
+            alt={article.title}
+            priority
+          />
         </motion.div>
 
         {/* Article Content */}
@@ -270,19 +307,30 @@ export default function ArticlePage() {
             <div className="grid md:grid-cols-2 gap-6">
               {relatedArticles.map((related) => (
                 <Link key={related.id} href={`/articles/${related.slug}`}>
-                  <div className="group bg-surface rounded-xl p-6 border border-surface-light/30 hover:border-surface-light transition-all duration-300 card-hover h-full">
-                    <h3 className="mono-heading text-lg font-semibold text-gray-light group-hover:text-white transition-colors mb-3">
-                      {related.title}
-                    </h3>
-                    <p className="text-gray-muted text-sm line-clamp-2 mb-4">
-                      {related.description}
-                    </p>
-                    <div className="flex items-center gap-2 text-gray-muted group-hover:text-gray-light transition-colors">
-                      <span className="text-sm">Read more</span>
-                      <ArrowRight
-                        size={14}
-                        className="transition-transform group-hover:translate-x-1"
+                  <div className="group bg-surface rounded-xl overflow-hidden border border-surface-light/30 hover:border-surface-light transition-all duration-300 card-hover h-full">
+                    {/* Related Article Image */}
+                    <div className="aspect-[16/9] relative overflow-hidden">
+                      <ArticleImage
+                        src={related.image}
+                        alt={related.title}
                       />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 z-20" />
+                    </div>
+
+                    <div className="p-6">
+                      <h3 className="mono-heading text-lg font-semibold text-gray-light group-hover:text-white transition-colors mb-3">
+                        {related.title}
+                      </h3>
+                      <p className="text-gray-muted text-sm line-clamp-2 mb-4">
+                        {related.description}
+                      </p>
+                      <div className="flex items-center gap-2 text-gray-muted group-hover:text-gray-light transition-colors">
+                        <span className="text-sm">Read more</span>
+                        <ArrowRight
+                          size={14}
+                          className="transition-transform group-hover:translate-x-1"
+                        />
+                      </div>
                     </div>
                   </div>
                 </Link>

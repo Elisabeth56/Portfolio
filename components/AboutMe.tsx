@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 
 interface SkillCategory {
   title: string;
@@ -54,6 +55,7 @@ const skillCategories: SkillCategory[] = [
 export default function AboutMe() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [imageError, setImageError] = useState(false);
 
   return (
     <section id="about" className="py-24 px-6 relative" ref={ref}>
@@ -139,7 +141,7 @@ export default function AboutMe() {
             </motion.p>
           </div>
 
-          {/* Right Column - Profile Image Placeholder */}
+          {/* Right Column - Profile Image */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
@@ -147,15 +149,21 @@ export default function AboutMe() {
             className="relative"
           >
             <div className="relative aspect-[4/5] rounded-3xl overflow-hidden">
-              {/* Gradient matching hero colors */}
+              {/* Fallback gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-purple-700/40 via-blue-600/30 to-cyan-500/40" />
               <div className="absolute inset-0 bg-gradient-to-tr from-gray-900/70 via-gray-900/30 to-transparent" />
               <div className="absolute inset-0 grid-pattern opacity-30" />
               
-              {/* Placeholder text */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-gray-muted/50 font-mono text-sm">Profile Image</span>
-              </div>
+              {/* Profile Image */}
+              {!imageError && (
+                <Image
+                  src="/images/me.png"
+                  alt="Elisabeth Nnamani"
+                  fill
+                  className="object-cover z-10"
+                  onError={() => setImageError(true)}
+                />
+              )}
             </div>
 
             {/* Decorative elements */}

@@ -2,8 +2,34 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, ArrowLeft } from "lucide-react";
+import { useState } from "react";
 import { articles } from "@/data/articles";
+
+function ArticleImage({ src, alt }: { src: string; alt: string }) {
+  const [imageError, setImageError] = useState(false);
+
+  return (
+    <div className="relative w-full h-full overflow-hidden">
+      {/* Fallback gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-700/40 via-blue-600/30 to-cyan-500/40" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-gray-900/50 via-transparent to-transparent" />
+      <div className="absolute inset-0 grid-pattern opacity-30" />
+
+      {/* Actual image */}
+      {!imageError && (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover z-10"
+          onError={() => setImageError(true)}
+        />
+      )}
+    </div>
+  );
+}
 
 export default function ArticlesPage() {
   return (
@@ -59,16 +85,19 @@ export default function ArticlesPage() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               <Link href={`/articles/${article.slug}`}>
-                <div className="group bg-surface rounded-2xl p-6 md:p-8 border border-surface-light/30 hover:border-surface-light transition-all duration-300 card-hover">
-                  <div className="flex flex-col md:flex-row md:items-start gap-6">
-                    {/* Article Image - Matching hero gradient */}
-                    <div className="w-full md:w-48 h-32 md:h-32 rounded-xl overflow-hidden flex-shrink-0 relative">
-                      <div className="absolute inset-0 bg-gradient-to-br from-purple-700/40 via-blue-600/30 to-cyan-500/40" />
-                      <div className="absolute inset-0 grid-pattern opacity-40" />
+                <div className="group bg-surface rounded-2xl overflow-hidden border border-surface-light/30 hover:border-surface-light transition-all duration-300 card-hover">
+                  <div className="flex flex-col md:flex-row">
+                    {/* Article Image */}
+                    <div className="w-full md:w-72 h-48 md:h-auto relative flex-shrink-0">
+                      <ArticleImage
+                        src={article.image}
+                        alt={article.title}
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 z-20" />
                     </div>
 
                     {/* Article Content */}
-                    <div className="flex-1 space-y-4">
+                    <div className="flex-1 p-6 md:p-8 space-y-4">
                       <div className="flex flex-wrap items-center gap-3 text-sm text-gray-muted">
                         <time>{article.date}</time>
                         <span className="w-1 h-1 rounded-full bg-gray-muted" />

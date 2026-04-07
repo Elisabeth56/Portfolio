@@ -2,10 +2,35 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { articles } from "@/data/articles";
+
+function ArticleImage({ src, alt }: { src: string; alt: string }) {
+  const [imageError, setImageError] = useState(false);
+
+  return (
+    <div className="relative w-full h-full overflow-hidden">
+      {/* Fallback gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-700/40 via-blue-600/30 to-cyan-500/40" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-gray-900/50 via-transparent to-transparent" />
+      <div className="absolute inset-0 grid-pattern opacity-30" />
+
+      {/* Actual image */}
+      {!imageError && (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover z-10"
+          onError={() => setImageError(true)}
+        />
+      )}
+    </div>
+  );
+}
 
 export default function Articles() {
   const ref = useRef(null);
@@ -58,15 +83,21 @@ export default function Articles() {
                 transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
               >
                 <Link href={`/articles/${article.slug}`} className="block h-full">
-                  <div className="group bg-surface rounded-2xl p-6 border border-surface-light/30 hover:border-surface-light transition-all duration-300 card-hover h-full">
-                    {/* Article preview gradient - matching hero */}
-                    <div className="h-2 w-full rounded-full mb-4 bg-gradient-to-r from-purple-700/50 via-blue-600/40 to-cyan-500/50" />
-                    
-                    <div className="space-y-4">
+                  <div className="group bg-surface rounded-2xl overflow-hidden border border-surface-light/30 hover:border-surface-light transition-all duration-300 card-hover h-full">
+                    {/* Article Image */}
+                    <div className="aspect-[16/9] relative overflow-hidden">
+                      <ArticleImage
+                        src={article.image}
+                        alt={article.title}
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 z-20" />
+                    </div>
+
+                    <div className="p-6 space-y-4">
                       <h3 className="mono-heading text-xl font-semibold text-gray-light leading-tight group-hover:text-white transition-colors">
                         {article.title}
                       </h3>
-                      <p className="text-sm text-gray-muted leading-relaxed line-clamp-3">
+                      <p className="text-sm text-gray-muted leading-relaxed line-clamp-2">
                         {article.description}
                       </p>
                       <div className="flex items-center gap-3 pt-2">

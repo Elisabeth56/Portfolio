@@ -4,7 +4,32 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { articles } from "@/data/articles";
+
+function ArticleImage({ src, alt }: { src: string; alt: string }) {
+  const [imageError, setImageError] = useState(false);
+
+  return (
+    <div className="relative w-full h-full overflow-hidden">
+      {/* Fallback gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-700/30 via-blue-600/20 to-cyan-500/30" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-gray-900/50 via-transparent to-transparent" />
+      <div className="absolute inset-0 grid-pattern opacity-20" />
+
+      {/* Actual image */}
+      {!imageError && (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover z-10"
+          onError={() => setImageError(true)}
+        />
+      )}
+    </div>
+  );
+}
 
 export default function ArticlesCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -78,17 +103,18 @@ export default function ArticlesCarousel() {
                 >
                   <Link href={`/articles/${article.slug}`} className="block group">
                     <div className="relative rounded-2xl overflow-hidden bg-surface border border-surface-light/30 hover:border-surface-light transition-all duration-300">
-                      {/* Article Image - Matching hero gradient colors */}
+                      {/* Article Image */}
                       <div className="aspect-[16/10] relative overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-br from-purple-700/30 via-blue-600/20 to-cyan-500/30" />
-                        <div className="absolute inset-0 bg-gradient-to-tr from-gray-900/50 via-transparent to-transparent" />
-                        <div className="absolute inset-0 grid-pattern opacity-20" />
+                        <ArticleImage
+                          src={article.image}
+                          alt={article.title}
+                        />
                         
                         {/* Hover overlay */}
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 z-20" />
                         
                         {/* Gradient overlay for text */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/50 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/50 to-transparent z-10" />
                       </div>
 
                       {/* Article Content */}
