@@ -12,10 +12,10 @@ import {
 } from "lucide-react";
 
 const socialLinks = [
-  { icon: Github, label: "Github", href: "#" },
-  { icon: Linkedin, label: "LinkedIn", href: "#" },
-  { icon: Twitter, label: "X", href: "#" },
-  { icon: Mail, label: "Email", href: "#" },
+  { icon: Github, label: "Github", href: "https://github.com/Elisabeth56" },
+  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/elisabeth-nnamani-68b704391" },
+  { icon: Twitter, label: "X", href: "https://x.com/elisynthdev" },
+  { icon: Mail, label: "Email", href: "mailto:elisabethnnamani@gmail.com" },
 ];
 
 export default function Hero() {
