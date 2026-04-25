@@ -5,6 +5,7 @@ import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Project {
   id: string;
@@ -12,6 +13,7 @@ interface Project {
   description: string;
   tags: string[];
   features?: string[];
+  link: string;
   images: {
     main: string;
     secondary1: string;
@@ -31,6 +33,7 @@ const projects: Project[] = [
       "Automated spending categorization using AI",
       "Real-time dashboard with interactive visualizations",
     ],
+    link: "https://finsight-red-two.vercel.app/", // ← Edit this URL
     images: {
       main: "/images/finance-dashboard-main.png",
       secondary1: "/images/finance-dashboard-1.png",
@@ -48,6 +51,7 @@ const projects: Project[] = [
       "Smart task prioritization and scheduling",
       "Context-aware note organization",
     ],
+    link: "https://flowmind-sage.vercel.app/", // ← Edit this URL
     images: {
       main: "/images/productivity-main.png",
       secondary1: "/images/productivity-1.png",
@@ -65,6 +69,7 @@ const projects: Project[] = [
       "Real-time operational metrics tracking",
       "Automated report generation and insights",
     ],
+    link: "https://github.com/username/automation-dashboards", // ← Edit this URL
     images: {
       main: "/images/autodash-main.png",
       secondary1: "/images/autodash-1.png",
@@ -146,9 +151,20 @@ export default function Projects() {
                 className={`space-y-6 ${index % 2 === 1 ? "lg:order-2" : ""}`}
               >
                 <div className="space-y-4">
-                  <h3 className="mono-heading text-3xl md:text-4xl font-bold text-gray-light">
-                    {project.title}
-                  </h3>
+                  <Link 
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-block"
+                  >
+                    <h3 className="mono-heading text-3xl md:text-4xl font-bold text-gray-light group-hover:text-white transition-colors">
+                      {project.title}
+                      <ArrowUpRight 
+                        size={24} 
+                        className="inline-block ml-2 opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" 
+                      />
+                    </h3>
+                  </Link>
 
                   {/* Tags */}
                   <div className="flex flex-wrap gap-2">
@@ -179,23 +195,35 @@ export default function Projects() {
                 </div>
 
                 {/* Action Button */}
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="flex items-center gap-3 group"
+                <Link
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <span className="btn-icon bg-surface">
-                    <ArrowUpRight
-                      size={16}
-                      className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    />
-                  </span>
-                </motion.button>
+                  <motion.span
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="inline-flex items-center gap-3 group"
+                  >
+                    <span className="btn-icon bg-surface group-hover:bg-surface-light transition-colors">
+                      <ArrowUpRight
+                        size={16}
+                        className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      />
+                    </span>
+                    <span className="text-sm text-gray-muted group-hover:text-gray-light transition-colors">
+                      View Project
+                    </span>
+                  </motion.span>
+                </Link>
               </div>
 
               {/* Project Images */}
-              <div
-                className={`relative ${index % 2 === 1 ? "lg:order-1" : ""}`}
+              <Link
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`relative block ${index % 2 === 1 ? "lg:order-1" : ""}`}
               >
                 <div className="grid grid-cols-2 gap-4">
                   {/* Main image */}
@@ -239,7 +267,7 @@ export default function Projects() {
 
                 {/* Decorative element */}
                 <div className="absolute -z-10 -bottom-8 -right-8 w-48 h-48 rounded-full border border-surface-light/20" />
-              </div>
+              </Link>
             </motion.div>
           ))}
         </div>
