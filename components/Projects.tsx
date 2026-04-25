@@ -69,7 +69,7 @@ const projects: Project[] = [
       "Real-time operational metrics tracking",
       "Automated report generation and insights",
     ],
-    link: "https://github.com/username/automation-dashboards", // ← Edit this URL
+    link: "https://github.com/Elisabeth56", // ← Edit this URL
     images: {
       main: "/images/autodash-main.png",
       secondary1: "/images/autodash-1.png",
