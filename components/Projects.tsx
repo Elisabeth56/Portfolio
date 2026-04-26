@@ -35,8 +35,8 @@ const projects: Project[] = [
     ],
     link: "https://finsight-red-two.vercel.app/", // ← Edit this URL
     images: {
-      main: "/images/finance-dashboard-main.png",
-      secondary1: "/images/finance-dashboard-1.png",
+      main: "/images/fin-last.png",
+      secondary1: "/images/fin-dash-1.png",
       secondary2: "/images/fin-dash-2.png",
     },
   },
@@ -53,9 +53,9 @@ const projects: Project[] = [
     ],
     link: "https://flowmind-sage.vercel.app/", // ← Edit this URL
     images: {
-      main: "/images/productivity-main.png",
-      secondary1: "/images/productivity-1.png",
-      secondary2: "/images/productivity-2.png",
+      main: "/images/prod-last.png",
+      secondary1: "/images/prod-1.png",
+      secondary2: "/images/prod-2.png",
     },
   },
   {
@@ -71,9 +71,9 @@ const projects: Project[] = [
     ],
     link: "https://github.com/Elisabeth56", // ← Edit this URL
     images: {
-      main: "/images/autodash-main.png",
-      secondary1: "/images/autodash-1.png",
-      secondary2: "/images/autodash-2.png",
+      main: "/images/automate1.png",
+      secondary1: "/images/auto1.png",
+      secondary2: "/images/auto2.png",
     },
   },
 ];
