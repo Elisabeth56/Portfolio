@@ -72,7 +72,7 @@ const projects: Project[] = [
     link: "https://github.com/Elisabeth56", // ← Edit this URL
     images: {
       main: "/images/automate1.png",
-      secondary1: "/images/auto1.png",
+      secondary1: "/images/auto3.png",
       secondary2: "/images/auto2.png",
     },
   },
