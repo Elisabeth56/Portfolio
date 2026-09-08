@@ -7,6 +7,7 @@ import { navSections, site } from "@/content/site";
 import { projects } from "@/content/projects";
 import { cn, MODE_KEY, WORKSTATION_MIN_WIDTH } from "@/lib/utils";
 import { useEscape, useMediaQuery } from "@/lib/hooks";
+import { AppIcon } from "@/components/icons/AppIcons";
 
 export function TopBar() {
   const [open, setOpen] = useState(false);
@@ -17,9 +18,9 @@ export function TopBar() {
 
   useEscape(open, () => setOpen(false));
 
-  const enterWorkstation = () => {
+  const enterShell = () => {
     try {
-      window.localStorage.setItem(MODE_KEY, "workstation");
+      window.localStorage.setItem(MODE_KEY, "shell");
     } catch {
       /* private mode — the session still switches, it just will not persist */
     }
@@ -65,15 +66,17 @@ export function TopBar() {
           </Link>
 
           <div className="flex items-center gap-1 sm:gap-2">
-            {roomy && (
-              <button
-                type="button"
-                onClick={enterWorkstation}
-                className="t-label inline-flex items-center gap-2 rounded-full border border-line px-3.5 py-2 text-fg-muted transition-colors hover:border-accent hover:text-accent"
-              >
-                <span aria-hidden>⌘</span> Workstation
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={enterShell}
+              className="t-label inline-flex items-center gap-2 rounded-full border border-line px-3 py-2 text-fg-muted transition-colors hover:border-accent hover:text-accent"
+            >
+              <AppIcon
+                id={roomy ? "systems" : "about"}
+                className="size-3.5 rounded-[4px]"
+              />
+              {roomy ? "Workstation" : "Home"}
+            </button>
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}

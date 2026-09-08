@@ -2,16 +2,19 @@
 
 import { useCallback, useEffect, useSyncExternalStore } from "react";
 import { Workstation } from "@/components/workstation/Workstation";
+import { Phone } from "@/components/phone/Phone";
 import { MODE_KEY, WORKSTATION_MIN_WIDTH, type Mode } from "@/lib/utils";
 
 /**
- * The server always renders the document. On a roomy viewport this upgrades to
- * the workstation, unless the visitor has said they prefer the document.
+ * The server always renders the document. On the client this upgrades to a
+ * shell — the workstation on a roomy viewport, the phone home screen on a
+ * small one — unless the visitor has said they prefer the document, which is
+ * always one tap away from either.
  *
- * A blocking script decides before first paint and cloaks the page with a style
- * tag, so the document never flashes behind the workstation on the way in. It
- * signals through a window global rather than a DOM attribute, because anything
- * written onto <html> or <body> would be a hydration mismatch.
+ * A blocking script decides before first paint and cloaks the page with a
+ * style tag, so the document never flashes behind the shell on the way in. It
+ * signals through a window global rather than a DOM attribute, because
+ * anything written onto <html> or <body> would be a hydration mismatch.
  *
  * The mode lives in a tiny external store read through useSyncExternalStore:
  * that is the supported way to render browser-only state without mismatching
@@ -21,11 +24,13 @@ import { MODE_KEY, WORKSTATION_MIN_WIDTH, type Mode } from "@/lib/utils";
 let current: Mode | null = null;
 const listeners = new Set<() => void>();
 
+function shellForWidth(): Mode {
+  return window.innerWidth >= WORKSTATION_MIN_WIDTH ? "workstation" : "phone";
+}
+
 function compute(): Mode {
-  const w = window as unknown as { __elisynthWorkstation?: boolean };
-  return w.__elisynthWorkstation && window.innerWidth >= WORKSTATION_MIN_WIDTH
-    ? "workstation"
-    : "document";
+  const w = window as unknown as { __elisynthShell?: boolean };
+  return w.__elisynthShell ? shellForWidth() : "document";
 }
 
 function getSnapshot(): Mode {
@@ -47,13 +52,13 @@ function setMode(next: Mode) {
 function subscribe(onChange: () => void) {
   listeners.add(onChange);
 
-  // A window narrower than the workstation needs falls back rather than breaks.
+  // Crossing the width threshold swaps one shell for the other, but never
+  // pulls someone out of the document they chose.
   const mql = window.matchMedia(`(min-width: ${WORKSTATION_MIN_WIDTH}px)`);
   const onResize = () => {
-    if (!mql.matches) setMode("document");
+    if (current !== "document") setMode(shellForWidth());
   };
-  // The document's menu bar asks for the workstation through this event.
-  const onRequest = () => setMode("workstation");
+  const onRequest = () => setMode(shellForWidth());
 
   mql.addEventListener("change", onResize);
   window.addEventListener("elisynth:mode", onRequest);
@@ -84,14 +89,14 @@ export function AdaptiveShell({ children }: { children: React.ReactNode }) {
   }, []);
 
   if (mode === "workstation") return <Workstation onDocument={toDocument} />;
+  if (mode === "phone") return <Phone onDocument={toDocument} />;
   return <>{children}</>;
 }
 
 /** Runs before hydration so the correct surface is the first thing painted. */
 export const WS_BOOTSTRAP = `(function(){try{
-var m=localStorage.getItem(${JSON.stringify(MODE_KEY)});
-if(m!=="document"&&window.innerWidth>=${WORKSTATION_MIN_WIDTH}){
-window.__elisynthWorkstation=true;
+if(localStorage.getItem(${JSON.stringify(MODE_KEY)})!=="document"){
+window.__elisynthShell=true;
 var s=document.createElement("style");
 s.id="ws-cloak";s.textContent="body{visibility:hidden}";
 document.head.appendChild(s);}

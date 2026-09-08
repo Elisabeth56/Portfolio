@@ -28,10 +28,10 @@
   --color-bone-300: #ddd8cc;
   --color-bone-400: #c7c1b1;
 
-  --color-sienna-300: #ec9068;
-  --color-sienna-400: #dd6c3c;
-  --color-sienna-500: #c25528;
-  --color-sienna-600: #9e4320;
+  --color-rose-300: #f4a3ba;
+  --color-rose-400: #e97a9b;
+  --color-rose-500: #c4527a;
+  --color-rose-600: #b23a5f;
 
   --color-signal-run: #3f9e82;
   --color-signal-run-bright: #52bd9d;
@@ -52,7 +52,7 @@
   --color-fg: #14141a;
   --color-fg-muted: #5d5a52;
   --color-fg-faint: #6f6a5f;
-  --color-accent: #b34c22;
+  --color-accent: #b23a5f;
   --color-run: #2c7660;
   --color-flag: #ad3a31;
 
@@ -75,7 +75,7 @@
   --color-fg: #14141a;
   --color-fg-muted: #5d5a52;
   --color-fg-faint: #6f6a5f;
-  --color-accent: #b34c22;
+  --color-accent: #b23a5f;
   --color-run: #2c7660;
   --color-flag: #ad3a31;
   color-scheme: light;
@@ -90,8 +90,8 @@
   --color-line-soft: #202027;
   --color-fg: #e8e6e1;
   --color-fg-muted: #96938c;
-  --color-fg-faint: #847f76;
-  --color-accent: #e07b4f;
+  --color-fg-faint: #8c877e;
+  --color-accent: #e97a9b;
   --color-run: #52bd9d;
   --color-flag: #e06b5d;
   color-scheme: dark;
@@ -300,5 +300,15 @@ button,
 @media print {
   .no-print {
     display: none !important;
+  }
+}
+
+/* Phone app sheet rising from the bottom */
+@keyframes sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
   }
 }

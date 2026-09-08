@@ -45,7 +45,7 @@ const instrument = localFont({
 });
 
 const description =
-  "Elisabeth Nnamani builds multi-agent orchestration, grounded retrieval and offline-capable inference. Computer science student and AI software engineer, working from Nigeria.";
+  "Elisabeth Nnamani builds multi-agent orchestration, grounded retrieval and offline-capable inference. AI software engineer, working from Nigeria.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.domain),

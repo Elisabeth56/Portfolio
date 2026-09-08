@@ -41,7 +41,7 @@ export function ProjectWindow({ project }: { project: Project }) {
       <div
         role="tablist"
         aria-label={`${project.name} sections`}
-        className="sticky top-0 z-10 flex gap-1 border-b border-line-soft bg-surface/95 px-3 py-2 backdrop-blur"
+        className="sticky top-0 z-10 flex flex-wrap items-center gap-1 border-b border-line-soft bg-surface/95 px-3 py-2 backdrop-blur"
       >
         {TABS.map((t) => (
           <button
@@ -59,7 +59,7 @@ export function ProjectWindow({ project }: { project: Project }) {
             {t}
           </button>
         ))}
-        <div className="ml-auto flex items-center gap-3 pr-1">
+        <div className="ml-auto flex shrink-0 items-center gap-3 pr-1">
           {project.links.live && (
             <a
               href={project.links.live}
@@ -237,17 +237,17 @@ export function AboutWindow() {
     <Pad className="space-y-6">
       <div className="flex gap-5">
         <Image
-          src="/img/portrait-duo.webp"
+          src="/img/portrait.webp"
           alt="Elisabeth Nnamani"
-          width={360}
-          height={450}
+          width={1000}
+          height={1250}
           sizes="140px"
           className="h-auto w-[7.5rem] shrink-0 rounded"
         />
         <div className="min-w-0">
           <h2 className="t-display text-2xl uppercase">Elisabeth Nnamani</h2>
           <p className="t-mono mt-1.5 text-xs text-fg-faint">
-            AI Software Engineer · Computer Science student
+            AI Software Engineer
           </p>
           <p className="t-mono mt-1 text-xs text-fg-faint">
             {site.location} · WAT (UTC+1)

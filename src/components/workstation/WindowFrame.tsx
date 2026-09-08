@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { AppIcon, type AppId } from "@/components/icons/AppIcons";
 
 export type WindowSpec = {
   id: string;
@@ -10,6 +11,9 @@ export type WindowSpec = {
   subtitle?: string;
   /** Permanent URL for this content, if it has one. */
   href?: string;
+  /** The app's own colour, used to tint the title bar. */
+  accent?: string;
+  icon?: AppId;
   width: number;
   height: number;
 };
@@ -114,7 +118,7 @@ export function WindowFrame({
         zIndex: 30 + index,
       }}
       className={cn(
-        "absolute flex flex-col overflow-hidden rounded-xl border bg-surface shadow-2xl shadow-black/50 transition-[border-color,opacity] duration-200",
+        "absolute flex flex-col overflow-hidden rounded-[20px] border bg-surface shadow-2xl shadow-black/50 transition-[border-color,opacity] duration-200",
         focused ? "border-line opacity-100" : "border-line-soft opacity-90",
       )}
     >
@@ -124,6 +128,13 @@ export function WindowFrame({
         onPointerMove={onPointerMove}
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
+        style={
+          spec.accent
+            ? {
+                backgroundImage: `linear-gradient(to bottom, ${spec.accent}1f, transparent)`,
+              }
+            : undefined
+        }
         className="flex shrink-0 cursor-grab touch-none items-center gap-3 border-b border-line-soft bg-raised px-3 py-2.5 active:cursor-grabbing"
       >
         <div className="flex items-center gap-2" data-no-drag>
@@ -153,10 +164,15 @@ export function WindowFrame({
           )}
         </div>
 
-        <div className="min-w-0 flex-1 truncate text-center">
-          <span className="t-mono text-[0.75rem] text-fg">{spec.title}</span>
+        <div className="flex min-w-0 flex-1 items-center justify-center gap-2 truncate">
+          {spec.icon && (
+            <AppIcon id={spec.icon} className="size-4 shrink-0 rounded-[5px]" />
+          )}
+          <span className="truncate text-[0.8125rem] font-medium text-fg">
+            {spec.title}
+          </span>
           {spec.subtitle && (
-            <span className="t-mono ml-2 text-[0.6875rem] text-fg-faint">
+            <span className="t-mono hidden truncate text-[0.6875rem] text-fg-faint sm:inline">
               {spec.subtitle}
             </span>
           )}

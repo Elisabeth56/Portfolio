@@ -7,8 +7,8 @@ Live at [elisabethnnamani.dev](https://elisabethnnamani.dev).
 
 The site has two surfaces rendering the same content.
 
-**Workstation** (`/`, desktop only) — an operating-system shell where each
-project is a *running process* rather than a card. Open one and you get a
+**Workstation** (`/`, ≥1024px) — a desktop shell where each project is a
+*running process* rather than a card. Open one and you get a
 tabbed window: brief, an interactive architecture trace, the decisions behind
 it, and the stack. The traces are not decoration:
 
@@ -20,10 +20,17 @@ it, and the stack. The traces are not decoration:
 | FarmTwin | A network switch — cut it and everything keeps running                        |
 | FlowMind | Capture flowing into a typed relational schema                                |
 
-**Document** (`/read`, and `/` below 1024px) — the same material as a linear
-editorial page. This is what mobile gets, what crawlers and screen readers get,
-and what someone in a hurry gets. It is the baseline the server always renders;
-the workstation is a progressive upgrade on top of it.
+**Phone** (`/` below 1024px) — an iOS-style home screen. Identity and thesis
+widgets, an app grid of the five systems plus the panels, and a dock. Tapping
+an app raises a full-screen sheet carrying exactly the same content the
+workstation shows in a window. The traces become vertical stepped lists, gates
+and all.
+
+**Document** (`/read`, and one tap from either shell) — the same material as a
+linear editorial page. This is what crawlers and screen readers get, what
+someone in a hurry gets, and the version to send to somebody. It is the
+baseline the server always renders; both shells are a progressive upgrade on
+top of it, and the choice persists in `localStorage`.
 
 Every project also has a permanent, deep-linkable page at `/work/<slug>`, so
 the OS is never a black hole for search or for sharing.
@@ -89,6 +96,11 @@ descendant override.
 
 Type: Archivo (display) · Inter (body) · IBM Plex Mono (system chrome) ·
 Instrument Serif (the Method section only, so it reads in a different voice).
+
+App icons live in `src/components/icons/AppIcons.tsx` — squircle tiles with
+their own colour, the way a real app icon works rather than a theme-dependent
+glyph. `appColor` is the single source for each system's colour, and it also
+tints that system's desk tile, window title bar and trace glyph.
 
 ## Accessibility and performance notes
 

@@ -6,8 +6,9 @@ import { projects, getProject } from "@/content/projects";
 import { site } from "@/content/site";
 import { cn } from "@/lib/utils";
 import { useZonedClock } from "@/lib/hooks";
+import { AppIcon, appColor, type AppId } from "@/components/icons/AppIcons";
 import { Boot } from "./Boot";
-import { MiniTrace } from "./MiniTrace";
+import { ProjectWidget } from "./ProjectWidget";
 import { Terminal } from "./Terminal";
 import { WindowFrame, type WindowSpec } from "./WindowFrame";
 import {
@@ -23,12 +24,12 @@ import {
 /* ------------------------------------------------------------------ */
 
 const PANELS: Record<string, Omit<WindowSpec, "id">> = {
-  about: { title: "about", subtitle: "identity", width: 700, height: 620 },
-  systems: { title: "systems", subtitle: "index", width: 560, height: 480 },
-  trajectory: { title: "trajectory", subtitle: "experience", width: 760, height: 640 },
-  capabilities: { title: "capabilities", subtitle: "stack", width: 760, height: 620 },
-  method: { title: "method.md", subtitle: "how I think", width: 800, height: 680 },
-  contact: { title: "contact", width: 620, height: 520 },
+  about: { title: "About", subtitle: "identity", width: 700, height: 620 },
+  systems: { title: "Systems", subtitle: "index", width: 560, height: 480 },
+  trajectory: { title: "Trajectory", subtitle: "experience", width: 760, height: 640 },
+  capabilities: { title: "Capabilities", subtitle: "stack", width: 760, height: 620 },
+  method: { title: "Method", subtitle: "how I think", width: 800, height: 680 },
+  contact: { title: "Contact", width: 620, height: 520 },
 };
 
 /** Desk composition — deliberately uneven, placed rather than flowed. */
@@ -40,6 +41,15 @@ const PLACEMENT: Record<string, string> = {
   flowmind: "col-start-5 col-end-7 row-start-3 row-end-4",
 };
 
+const DOCK: Array<{ id: AppId; label: string }> = [
+  { id: "about", label: "About" },
+  { id: "systems", label: "Systems" },
+  { id: "trajectory", label: "Trajectory" },
+  { id: "capabilities", label: "Capabilities" },
+  { id: "method", label: "Method" },
+  { id: "contact", label: "Contact" },
+];
+
 /* ------------------------------------------------------------------ */
 
 export function Workstation({ onDocument }: { onDocument: () => void }) {
@@ -48,11 +58,7 @@ export function Workstation({ onDocument }: { onDocument: () => void }) {
   const clock = useZonedClock(site.timezone, !booting);
 
   const openWindow = useCallback((id: string) => {
-    setOpen((prev) => {
-      const without = prev.filter((w) => w !== id);
-      // Three at a time. Beyond that it stops being usable.
-      return [...without, id].slice(-3);
-    });
+    setOpen((prev) => [...prev.filter((w) => w !== id), id].slice(-3));
   }, []);
 
   const closeWindow = useCallback((id: string) => {
@@ -84,15 +90,23 @@ export function Workstation({ onDocument }: { onDocument: () => void }) {
       const p = getProject(id.slice(8));
       return {
         id,
-        title: p?.name.toLowerCase() ?? "system",
+        title: p?.name ?? "System",
         subtitle: p?.kind.toLowerCase(),
         href: p ? `/work/${p.slug}` : undefined,
+        accent: p ? appColor[p.slug as AppId] : undefined,
+        icon: p ? (p.slug as AppId) : undefined,
         width: 1040,
         height: 720,
       };
     }
     const panel = PANELS[id] ?? PANELS.about;
-    return { id, ...panel, href: id === "method" ? "/read#method" : undefined };
+    return {
+      id,
+      ...panel,
+      icon: id as AppId,
+      accent: appColor[id as AppId],
+      href: id === "method" ? "/read#method" : undefined,
+    };
   };
 
   const renderWindow = (id: string) => {
@@ -105,9 +119,7 @@ export function Workstation({ onDocument }: { onDocument: () => void }) {
         return <AboutWindow />;
       case "systems":
         return (
-          <SystemsIndexWindow
-            onOpen={(slug) => openWindow(`project:${slug}`)}
-          />
+          <SystemsIndexWindow onOpen={(slug) => openWindow(`project:${slug}`)} />
         );
       case "trajectory":
         return <TrajectoryWindow />;
@@ -122,17 +134,7 @@ export function Workstation({ onDocument }: { onDocument: () => void }) {
     }
   };
 
-  const dockItems = useMemo(
-    () => [
-      { id: "about", label: "About", glyph: "◉" },
-      { id: "systems", label: "Systems", glyph: "▤" },
-      { id: "trajectory", label: "Trajectory", glyph: "◇" },
-      { id: "capabilities", label: "Capabilities", glyph: "▣" },
-      { id: "method", label: "Method", glyph: "◆" },
-      { id: "contact", label: "Contact", glyph: "▢" },
-    ],
-    [],
-  );
+  const menuItems = useMemo(() => DOCK, []);
 
   return (
     <div
@@ -141,37 +143,47 @@ export function Workstation({ onDocument }: { onDocument: () => void }) {
     >
       {booting && <Boot onDone={() => setBooting(false)} />}
 
-      <div aria-hidden className="tx-grid absolute inset-0 opacity-[0.07]" />
+      <div aria-hidden className="tx-grid absolute inset-0 opacity-[0.06]" />
+      {/* one soft warm bloom so the desk is not a flat black field */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-40 -top-40 size-[720px] rounded-full opacity-[0.10] blur-3xl"
+        style={{ background: "#ec7fa0" }}
+      />
 
       {/* ---------------- menu bar ---------------- */}
-      <header className="absolute inset-x-0 top-0 z-40 flex h-9 items-center gap-4 border-b border-line-soft bg-bg/80 px-4 backdrop-blur">
-        <span className="t-mono text-[0.75rem] font-medium">
+      <header className="absolute inset-x-0 top-0 z-40 flex h-10 items-center gap-3 border-b border-line-soft bg-bg/70 px-3 backdrop-blur-xl">
+        <span className="t-mono rounded-full bg-raised px-2.5 py-1 text-[0.75rem] font-medium">
           elisynth<span className="text-fg-faint">/os</span>
         </span>
 
-        <nav aria-label="Panels" className="hidden items-center gap-1 xl:flex">
-          {dockItems.map((d) => (
+        <nav aria-label="Panels" className="hidden items-center gap-0.5 xl:flex">
+          {menuItems.map((d) => (
             <button
               key={d.id}
               type="button"
               onClick={() => openWindow(d.id)}
-              className="t-label rounded px-2 py-1 text-fg-muted transition-colors hover:bg-raised hover:text-fg"
+              className="t-label rounded-full px-2.5 py-1.5 text-fg-muted transition-colors hover:bg-raised hover:text-fg"
             >
               {d.label}
             </button>
           ))}
         </nav>
 
-        <div className="ml-auto flex items-center gap-4">
+        <div className="ml-auto flex items-center gap-3">
           <button
             type="button"
             onClick={onDocument}
-            className="t-label rounded border border-line px-2.5 py-1 text-fg-muted transition-colors hover:border-accent hover:text-accent"
+            className="t-label inline-flex items-center gap-1.5 rounded-full border border-line bg-raised px-2.5 py-1.5 text-fg-muted transition-colors hover:border-accent hover:text-accent"
           >
-            Document ↗
+            <AppIcon id="document" className="size-3.5 rounded-[4px]" />
+            Document
           </button>
           <span className="t-label inline-flex items-center gap-1.5 text-fg-faint">
-            <span aria-hidden className="inline-block size-1.5 rounded-full bg-run" />
+            <span
+              aria-hidden
+              className="inline-block size-1.5 rounded-full bg-run"
+            />
             {site.location}
           </span>
           <span className="t-mono t-nums text-[0.75rem] text-fg-muted">
@@ -181,21 +193,21 @@ export function Workstation({ onDocument }: { onDocument: () => void }) {
       </header>
 
       {/* ---------------- desk ---------------- */}
-      <div className="absolute inset-0 top-9 bottom-[4.5rem] flex overflow-hidden">
+      <div className="absolute inset-x-0 bottom-[5.25rem] top-10 flex overflow-hidden">
         {/* rail */}
-        <aside className="hidden w-64 shrink-0 flex-col gap-3 border-r border-line-soft p-3 lg:flex">
+        <aside className="hidden w-64 shrink-0 flex-col gap-3 p-3 lg:flex">
           <button
             type="button"
             onClick={() => openWindow("about")}
-            className="group flex gap-3 rounded-lg border border-line-soft bg-surface p-3 text-left transition-colors hover:border-line"
+            className="group flex gap-3 rounded-[18px] border border-line-soft bg-surface p-3 text-left transition-all hover:border-line hover:bg-raised"
           >
             <Image
-              src="/img/portrait-duo.webp"
+              src="/img/portrait.webp"
               alt=""
-              width={360}
-              height={450}
-              sizes="64px"
-              className="h-auto w-16 shrink-0 rounded"
+              width={1000}
+              height={1250}
+              sizes="72px"
+              className="h-auto w-16 shrink-0 rounded-[12px] bg-raised"
             />
             <span className="min-w-0">
               <span className="block truncate text-[0.8125rem] font-medium">
@@ -210,7 +222,7 @@ export function Workstation({ onDocument }: { onDocument: () => void }) {
             </span>
           </button>
 
-          <div className="rounded-lg border border-line-soft bg-surface p-3">
+          <div className="rounded-[18px] border border-line-soft bg-surface p-3">
             <p className="t-label text-fg-faint">Now</p>
             <p className="mt-2 text-[0.8125rem] leading-snug">
               {site.now.building}
@@ -220,8 +232,9 @@ export function Workstation({ onDocument }: { onDocument: () => void }) {
             </p>
           </div>
 
-          <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg border border-line-soft bg-surface">
-            <p className="t-label shrink-0 border-b border-line-soft px-3 py-2 text-fg-faint">
+          <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-[18px] border border-line-soft bg-surface">
+            <p className="t-label flex shrink-0 items-center gap-2 border-b border-line-soft px-3 py-2 text-fg-faint">
+              <AppIcon id="shell" className="size-3.5 rounded-[4px]" />
               shell
             </p>
             <Terminal onOpen={openWindow} onDocument={onDocument} />
@@ -231,68 +244,103 @@ export function Workstation({ onDocument }: { onDocument: () => void }) {
         {/* surface */}
         <main className="thin-scrollbar min-w-0 flex-1 overflow-y-auto px-5 py-5 lg:px-8 lg:py-7">
           <div className="mx-auto max-w-[1180px]">
-            {/* identity, set straight onto the desk */}
-            <div className="max-w-3xl">
-              <p className="t-label text-fg-faint">
-                {site.role} · Computer Science student · {site.location}
-              </p>
-              <h1 className="t-display mt-3 text-[clamp(1.75rem,3.6vw,3.15rem)] uppercase">
-                Systems that survive{" "}
-                <span className="text-accent">contact with reality</span>
-              </h1>
-              <p className="t-prose mt-4 text-[0.9375rem] text-fg-muted">
-                {site.intro}
-              </p>
+            <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_15rem] lg:gap-8">
+              <div className="max-w-3xl">
+                <h1 className="t-display text-[clamp(1.625rem,3.1vw,2.75rem)] uppercase">
+                  Systems that survive{" "}
+                  <span className="text-accent">contact with reality</span>
+                </h1>
+                <p className="t-prose mt-3 text-[0.875rem] text-fg-muted">
+                  {site.intro}
+                </p>
+              </div>
+
+              {/* a few true numbers, so the top of the desk is not empty */}
+              <dl className="hidden self-end rounded-[18px] border border-line-soft bg-surface/60 p-3.5 lg:block">
+                {[
+                  ["5", "systems shipped"],
+                  ["4", "live right now"],
+                  ["7", "agents in the largest"],
+                  ["2014", "oldest laptop one runs on"],
+                ].map(([n, label]) => (
+                  <div
+                    key={label}
+                    className="flex items-baseline gap-2.5 border-t border-line-soft py-1.5 first:border-t-0 first:pt-0 last:pb-0"
+                  >
+                    <dt className="t-mono t-nums w-9 shrink-0 text-right text-[0.8125rem] font-medium text-accent">
+                      {n}
+                    </dt>
+                    <dd className="text-[0.75rem] leading-tight text-fg-muted">
+                      {label}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
             </div>
 
-            {/* processes */}
-            <div className="mt-7 flex items-baseline justify-between gap-4 border-t border-line-soft pt-3">
+            <div className="mt-5 flex items-baseline justify-between gap-4 border-t border-line-soft pt-3">
               <p className="t-label text-fg-faint">Running systems</p>
               <p className="t-label text-fg-faint">
                 Select one to open its trace
               </p>
             </div>
 
-            <div className="mt-3 grid auto-rows-[minmax(8rem,auto)] grid-cols-2 gap-2.5 md:grid-cols-6">
-              {projects.map((p) => (
-                <button
-                  key={p.slug}
-                  type="button"
-                  onClick={() => openWindow(`project:${p.slug}`)}
-                  className={cn(
-                    "group relative flex flex-col overflow-hidden rounded-lg border border-line-soft bg-surface p-3.5 text-left transition-all duration-300 hover:border-accent/60 hover:bg-raised",
-                    "col-span-2",
-                    PLACEMENT[p.slug],
-                  )}
-                >
-                  <span className="flex items-baseline gap-2">
-                    <span className="t-label text-fg-faint transition-colors group-hover:text-accent">
-                      {p.index}
-                    </span>
-                    <span className="t-display text-lg uppercase leading-none">
-                      {p.name}
-                    </span>
+            <div className="mt-3 grid auto-rows-[minmax(8.5rem,auto)] grid-cols-2 gap-3 md:grid-cols-6">
+              {projects.map((p) => {
+                const c = appColor[p.slug as AppId];
+                const big = p.slug === "prismos";
+                return (
+                  <button
+                    key={p.slug}
+                    type="button"
+                    onClick={() => openWindow(`project:${p.slug}`)}
+                    style={{ ["--tile" as string]: c }}
+                    className={cn(
+                      "group relative flex flex-col overflow-hidden rounded-[20px] border border-line-soft bg-surface p-3.5 text-left transition-all duration-300",
+                      "hover:-translate-y-0.5 hover:border-[color:var(--tile)] hover:shadow-lg hover:shadow-black/40",
+                      "col-span-2",
+                      PLACEMENT[p.slug],
+                    )}
+                  >
+                    {/* the app's own colour, washed across the card */}
                     <span
                       aria-hidden
-                      className="ml-auto inline-block size-1.5 shrink-0 rounded-full bg-run/70"
+                      className="pointer-events-none absolute inset-0 opacity-[0.055] transition-opacity duration-300 group-hover:opacity-[0.11]"
+                      style={{ background: c }}
                     />
-                  </span>
 
-                  <span className="t-mono mt-1.5 block text-[0.625rem] text-fg-faint">
-                    {p.kind.toLowerCase()}
-                  </span>
+                    <span className="relative flex items-start gap-2.5">
+                      <AppIcon
+                        id={p.slug as AppId}
+                        className="size-9 shrink-0 rounded-[10px] shadow-sm shadow-black/40 transition-transform duration-300 group-hover:scale-105"
+                      />
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[0.9375rem] font-semibold leading-tight">
+                          {p.name}
+                        </span>
+                        <span className="t-mono mt-1 block truncate text-[0.625rem] text-fg-faint">
+                          {p.kind.toLowerCase()}
+                        </span>
+                      </span>
+                      <span
+                        aria-hidden
+                        className="mt-1 inline-block size-1.5 shrink-0 rounded-full bg-run/70"
+                      />
+                    </span>
 
-                  {/* the flagship gets a bigger diagram, because it fills a taller tile */}
-                  <MiniTrace
-                    trace={p.trace}
-                    className="pointer-events-none mt-3 min-h-12 w-full flex-1 opacity-70 transition-opacity duration-300 group-hover:opacity-100"
-                  />
+                    {/* a specimen of the product, not an abstract graph */}
+                    <span className="relative mt-3 flex min-h-0 flex-1 flex-col">
+                      <ProjectWidget slug={p.slug} size={big ? "lg" : "sm"} />
+                    </span>
 
-                  <span className="line-clamp-3 pt-3 text-[0.8125rem] leading-snug text-fg-muted">
-                    {p.tagline}
-                  </span>
-                </button>
-              ))}
+                    {big && (
+                      <span className="relative mt-3 border-t border-line-soft pt-3 text-[0.8125rem] leading-snug text-fg-muted">
+                        {p.tagline}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
             </div>
 
             <p className="t-label mt-6 text-fg-faint">
@@ -321,43 +369,62 @@ export function Workstation({ onDocument }: { onDocument: () => void }) {
       {/* ---------------- dock ---------------- */}
       <nav
         aria-label="Open a panel"
-        className="absolute inset-x-0 bottom-0 z-40 flex h-[4.5rem] items-center justify-center"
+        className="absolute inset-x-0 bottom-0 z-40 flex h-[5.25rem] items-center justify-center"
       >
-        <ul className="flex items-center gap-1 rounded-2xl border border-line-soft bg-surface/90 px-2 py-2 backdrop-blur">
-          {dockItems.map((d) => {
+        <ul className="flex items-end gap-1.5 rounded-[26px] border border-line-soft bg-surface/80 px-2.5 py-2.5 shadow-2xl shadow-black/40 backdrop-blur-xl">
+          {DOCK.map((d) => {
             const active = open.includes(d.id);
             return (
-              <li key={d.id}>
+              <li key={d.id} className="relative">
                 <button
                   type="button"
                   onClick={() => openWindow(d.id)}
-                  className={cn(
-                    "group relative flex size-11 flex-col items-center justify-center rounded-xl border transition-all duration-200",
-                    active
-                      ? "border-accent/50 bg-raised text-accent"
-                      : "border-transparent text-fg-muted hover:border-line-soft hover:bg-raised hover:text-fg",
-                  )}
+                  className="group relative block rounded-[14px] transition-transform duration-200 hover:-translate-y-1.5"
                 >
-                  <span aria-hidden className="text-sm leading-none">
-                    {d.glyph}
-                  </span>
+                  <AppIcon
+                    id={d.id}
+                    className="size-[46px] rounded-[13px] shadow-md shadow-black/30"
+                  />
                   <span className="sr-only">{d.label}</span>
                   <span
                     aria-hidden
-                    className="t-label pointer-events-none absolute -top-8 whitespace-nowrap rounded border border-line-soft bg-surface px-2 py-1 opacity-0 transition-opacity group-hover:opacity-100"
+                    className="t-label pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-line-soft bg-raised px-2.5 py-1 opacity-0 transition-opacity group-hover:opacity-100"
                   >
                     {d.label}
                   </span>
-                  {active && (
-                    <span
-                      aria-hidden
-                      className="absolute -bottom-1 size-1 rounded-full bg-accent"
-                    />
-                  )}
                 </button>
+                <span
+                  aria-hidden
+                  className={cn(
+                    "absolute -bottom-1 left-1/2 size-1 -translate-x-1/2 rounded-full transition-opacity",
+                    active ? "bg-fg opacity-70" : "opacity-0",
+                  )}
+                />
               </li>
             );
           })}
+
+          <li aria-hidden className="mx-1 h-11 w-px self-center bg-line-soft" />
+
+          <li>
+            <button
+              type="button"
+              onClick={onDocument}
+              className="group relative block rounded-[14px] transition-transform duration-200 hover:-translate-y-1.5"
+            >
+              <AppIcon
+                id="document"
+                className="size-[46px] rounded-[13px] shadow-md shadow-black/30"
+              />
+              <span className="sr-only">Read as a document</span>
+              <span
+                aria-hidden
+                className="t-label pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-line-soft bg-raised px-2.5 py-1 opacity-0 transition-opacity group-hover:opacity-100"
+              >
+                Document
+              </span>
+            </button>
+          </li>
         </ul>
       </nav>
     </div>

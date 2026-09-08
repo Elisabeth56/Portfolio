@@ -46,7 +46,7 @@ export function Hero() {
                   AI Software Engineer
                   <br />
                   <span className="text-fg-muted">
-                    Computer Science student
+                    Systems &amp; LLM engineering
                   </span>
                 </p>
               </div>
