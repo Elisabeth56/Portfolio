@@ -214,7 +214,7 @@ export function Workstation({ onDocument }: { onDocument: () => void }) {
                 Elisabeth Nnamani
               </span>
               <span className="t-mono mt-0.5 block text-[0.625rem] leading-tight text-fg-faint">
-                AI Software Engineer
+                AI Engineer
               </span>
               <span className="t-label mt-2 block text-accent opacity-0 transition-opacity group-hover:opacity-100">
                 open →

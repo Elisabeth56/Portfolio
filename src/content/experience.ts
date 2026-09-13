@@ -46,7 +46,7 @@ export const roles: Role[] = [
   },
   {
     index: "03",
-    title: "Freelance AI Software Engineer",
+    title: "Freelance AI Engineer",
     org: "Independent",
     period: "2025 — Present",
     current: true,

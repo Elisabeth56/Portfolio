@@ -4,7 +4,7 @@ import { join } from "node:path";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Elisabeth Nnamani — AI Software Engineer";
+export const alt = "Elisabeth Nnamani — AI Engineer";
 
 export default async function OpengraphImage() {
   const portrait = await readFile(
@@ -68,7 +68,7 @@ export default async function OpengraphImage() {
               Elisabeth Nnamani
             </span>
             <span style={{ marginTop: 10, fontSize: 24, color: "#96938c" }}>
-              AI Software Engineer · Nigeria
+              AI Engineer · Nigeria
             </span>
           </div>
         </div>

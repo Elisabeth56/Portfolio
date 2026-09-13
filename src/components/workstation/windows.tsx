@@ -247,7 +247,7 @@ export function AboutWindow() {
         <div className="min-w-0">
           <h2 className="t-display text-2xl uppercase">Elisabeth Nnamani</h2>
           <p className="t-mono mt-1.5 text-xs text-fg-faint">
-            AI Software Engineer
+            AI Engineer
           </p>
           <p className="t-mono mt-1 text-xs text-fg-faint">
             {site.location} · WAT (UTC+1)

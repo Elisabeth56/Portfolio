@@ -43,7 +43,7 @@ export function Hero() {
               <div>
                 <Label>Role</Label>
                 <p className="mt-1.5 text-[0.9375rem]">
-                  AI Software Engineer
+                  AI Engineer
                   <br />
                   <span className="text-fg-muted">
                     Systems &amp; LLM engineering

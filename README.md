@@ -1,6 +1,6 @@
 # elisynth
 
-Personal portfolio for **Elisabeth Nnamani** — AI Software Engineer.
+Personal portfolio for **Elisabeth Nnamani** — AI Engineer.
 Live at [elisabethnnamani.dev](https://elisabethnnamani.dev).
 
 ## The idea

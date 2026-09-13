@@ -161,7 +161,7 @@ export function Phone({ onDocument }: { onDocument: () => void }) {
               Elisabeth Nnamani
             </span>
             <span className="t-mono mt-1 block text-[0.6875rem] text-fg-faint">
-              AI Software Engineer · {site.location}
+              AI Engineer · {site.location}
             </span>
             <span className="mt-2 flex items-center gap-1.5 text-[0.75rem] text-run">
               <span
