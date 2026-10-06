@@ -189,6 +189,71 @@ html[data-theme="dark"] [data-ui="desk"] {
   outline-offset: 2px;
 }
 
+/* The theme toggle shows the current theme: sun in light, moon in dark. */
+.theme-moon,
+html[data-theme="dark"] .theme-sun {
+  display: none;
+}
+html[data-theme="dark"] .theme-moon {
+  display: inline;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .theme-sun {
+    display: none;
+  }
+  html:not([data-theme="light"]) .theme-moon {
+    display: inline;
+  }
+}
+
+/* Startup — plays once per session while <html data-startup> is set (see
+   lib/theme.ts). Her name on paper, then each [data-settle] piece rises in,
+   --i sets the order. Removing the attribute ends it at the final state. */
+.startup-mark {
+  display: none;
+}
+html[data-startup] .startup-mark {
+  display: grid;
+  animation: startup-mark 1000ms var(--ease-reveal) both;
+  pointer-events: none;
+}
+html[data-startup] .startup-stroke {
+  stroke-dasharray: 1;
+  animation: startup-stroke 500ms var(--ease-reveal) 100ms both;
+}
+html[data-startup] [data-settle] {
+  animation: startup-settle 700ms var(--ease-reveal) both;
+  animation-delay: calc(700ms + var(--i, 0) * 60ms);
+}
+
+@keyframes startup-mark {
+  0%,
+  65% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes startup-stroke {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes startup-settle {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* ==========================================================================
    Base
    ========================================================================== */

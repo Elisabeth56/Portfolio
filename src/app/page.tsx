@@ -1,5 +1,6 @@
-import { AdaptiveShell, WS_BOOTSTRAP } from "@/components/AdaptiveShell";
-import { DocumentView } from "@/components/document/DocumentView";
+import { Desk } from "@/components/desk/desk";
+import { Dock } from "@/components/desk/dock";
+import { Startup } from "@/components/desk/startup";
 import { site } from "@/content/site";
 
 const personSchema = {
@@ -23,10 +24,11 @@ const personSchema = {
 export default function Home() {
   return (
     <>
-      <script dangerouslySetInnerHTML={{ __html: WS_BOOTSTRAP }} />
-      <AdaptiveShell>
-        <DocumentView />
-      </AdaptiveShell>
+      <main data-ui="desk" className="min-h-dvh">
+        <Startup />
+        <Desk />
+        <Dock />
+      </main>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}

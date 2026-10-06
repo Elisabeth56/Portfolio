@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { site } from "@/content/site";
+import { BEFORE_PAINT } from "@/lib/theme";
 import "./globals.css";
 
 /**
@@ -108,8 +109,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f2efe9" },
-    { media: "(prefers-color-scheme: dark)", color: "#0e0e10" },
+    { media: "(prefers-color-scheme: light)", color: "#f0eeeb" },
+    { media: "(prefers-color-scheme: dark)", color: "#1b1a19" },
   ],
   colorScheme: "light dark",
 };
@@ -118,10 +119,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       data-scroll-behavior="smooth"
       className={`${archivo.variable} ${inter.variable} ${plexMono.variable} ${instrument.variable} ${geist.variable} ${caveat.variable} h-full`}
     >
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-full">
+        <script dangerouslySetInnerHTML={{ __html: BEFORE_PAINT }} />
+        {children}
+      </body>
     </html>
   );
 }
