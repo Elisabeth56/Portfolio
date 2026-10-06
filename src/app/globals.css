@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Room to pin a project panel and walk its trace: wide and tall enough. */
+@custom-variant pin (@media (min-width: 80rem) and (min-height: 52rem));
+
 /* ==========================================================================
    ELISYNTH — design tokens
    Two surfaces: `dark` (workstation) and `light` (document).

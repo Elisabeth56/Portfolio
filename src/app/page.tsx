@@ -1,6 +1,8 @@
 import { Desk } from "@/components/desk/desk";
 import { Dock } from "@/components/desk/dock";
 import { Startup } from "@/components/desk/startup";
+import { ProjectChapter } from "@/components/trace/project-chapter";
+import { projects } from "@/content/projects";
 import { site } from "@/content/site";
 
 const personSchema = {
@@ -27,6 +29,7 @@ export default function Home() {
       <main data-ui="desk" className="min-h-dvh">
         <Startup />
         <Desk />
+        <ProjectChapter project={projects[0]} aside="they have to disagree" />
         <Dock />
       </main>
       <script
