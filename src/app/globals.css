@@ -60,6 +60,24 @@
   --text-label--line-height: 1.2;
   --text-label--letter-spacing: 0.16em;
 
+  /* Paper desk (redesign). Colour values live in the [data-ui="desk"] block. */
+  --font-desk: var(--font-geist), "Helvetica Neue", Helvetica, sans-serif;
+  --font-hand: var(--font-caveat), "Bradley Hand", cursive;
+  --color-paper: #f0eeeb;
+  --color-well: #e9e6e1;
+  --color-ink: #292826;
+  --color-ink-2: #54524f;
+  --color-ink-3: #6a6763;
+  --color-ink-4: #a9a8a7;
+  --color-on-accent: #f8f3f1;
+  --color-accent-tint: #f3d6e0;
+  --color-accent-ink: #5e1f38;
+  --radius-icon: 22px;
+  --shadow-lift: 0 1px 2px rgb(41 40 38 / 0.04), 0 8px 24px rgb(41 40 38 / 0.06);
+  --shadow-dock: 0 1px 2px rgb(41 40 38 / 0.04), 0 12px 32px rgb(41 40 38 / 0.1);
+  --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-ui: cubic-bezier(0.4, 0, 0.2, 1);
+
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
 }
@@ -98,11 +116,88 @@
 }
 
 /* ==========================================================================
+   Paper desk — the redesign's tokens
+   Scoped to data-ui="desk" while the old shells still exist, because both
+   systems use --color-surface and --color-accent. Moves to :root when the old
+   surfaces are removed. Theme follows the system unless <html data-theme> says
+   otherwise.
+   ========================================================================== */
+
+[data-ui="desk"] {
+  --color-paper: #f0eeeb;
+  --color-surface: #f8f7f4;
+  --color-well: #e9e6e1;
+  --color-ink: #292826;
+  --color-ink-2: #54524f;
+  --color-ink-3: #6a6763;
+  --color-ink-4: #a9a8a7;
+  --color-accent: #7a2e4b;
+  --color-on-accent: #f8f3f1;
+  --color-accent-tint: #f3d6e0;
+  --color-accent-ink: #5e1f38;
+  --desk-dots: rgb(41 40 38 / 0.09);
+  --shadow-lift: 0 1px 2px rgb(41 40 38 / 0.04), 0 8px 24px rgb(41 40 38 / 0.06);
+  --shadow-dock: 0 1px 2px rgb(41 40 38 / 0.04), 0 12px 32px rgb(41 40 38 / 0.1);
+
+  background-color: var(--color-paper);
+  background-image: radial-gradient(var(--desk-dots) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--color-ink);
+  font-family: var(--font-desk);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) [data-ui="desk"] {
+    --color-paper: #1b1a19;
+    --color-surface: #252422;
+    --color-well: #2f2d2b;
+    --color-ink: #edeae5;
+    --color-ink-2: #bdb9b3;
+    --color-ink-3: #9a968f;
+    --color-ink-4: #5c5955;
+    --color-accent: #e39ab5;
+    --color-on-accent: #2a0f1b;
+    --color-accent-tint: #4a2233;
+    --color-accent-ink: #f3d6e0;
+    --desk-dots: transparent;
+    --shadow-lift: 0 8px 24px rgb(0 0 0 / 0.3);
+    --shadow-dock: 0 12px 32px rgb(0 0 0 / 0.4);
+    color-scheme: dark;
+  }
+}
+
+html[data-theme="dark"] [data-ui="desk"] {
+  --color-paper: #1b1a19;
+  --color-surface: #252422;
+  --color-well: #2f2d2b;
+  --color-ink: #edeae5;
+  --color-ink-2: #bdb9b3;
+  --color-ink-3: #9a968f;
+  --color-ink-4: #5c5955;
+  --color-accent: #e39ab5;
+  --color-on-accent: #2a0f1b;
+  --color-accent-tint: #4a2233;
+  --color-accent-ink: #f3d6e0;
+  --desk-dots: transparent;
+  --shadow-lift: 0 8px 24px rgb(0 0 0 / 0.3);
+  --shadow-dock: 0 12px 32px rgb(0 0 0 / 0.4);
+  color-scheme: dark;
+}
+
+[data-ui="desk"] :focus-visible {
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
    Base
    ========================================================================== */
 
-* {
-  border-color: var(--color-line-soft);
+/* In the base layer so border colour utilities can override it. */
+@layer base {
+  * {
+    border-color: var(--color-line-soft);
+  }
 }
 
 html {
@@ -128,7 +223,6 @@ body {
 :focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 3px;
-  border-radius: 2px;
 }
 
 /* Only the mouse loses the ring; keyboard keeps it. */

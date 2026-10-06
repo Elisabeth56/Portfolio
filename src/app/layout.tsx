@@ -44,6 +44,23 @@ const instrument = localFont({
   fallback: ["Georgia", "Times New Roman", "serif"],
 });
 
+/* The redesign's faces. The four above go once the old shells are replaced. */
+const geist = localFont({
+  src: "../fonts/geist-latin-wght-normal.woff2",
+  variable: "--font-geist",
+  weight: "100 900",
+  display: "swap",
+  fallback: ["Helvetica Neue", "Helvetica", "sans-serif"],
+});
+
+const caveat = localFont({
+  src: "../fonts/caveat-latin-500-normal.woff2",
+  variable: "--font-caveat",
+  weight: "500",
+  display: "swap",
+  fallback: ["Bradley Hand", "cursive"],
+});
+
 const description =
   "Elisabeth Nnamani builds multi-agent orchestration, grounded retrieval and offline-capable inference. AI software engineer, working from Nigeria.";
 
@@ -102,7 +119,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${archivo.variable} ${inter.variable} ${plexMono.variable} ${instrument.variable} h-full`}
+      className={`${archivo.variable} ${inter.variable} ${plexMono.variable} ${instrument.variable} ${geist.variable} ${caveat.variable} h-full`}
     >
       <body className="min-h-full">{children}</body>
     </html>
