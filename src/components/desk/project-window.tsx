@@ -80,7 +80,7 @@ export function ProjectWindowProvider({ children }: { children: ReactNode }) {
           // A click on the scrim, outside the window, closes it.
           if (event.target === event.currentTarget) close();
         }}
-        className="project-window m-auto h-[min(43.75rem,calc(100dvh-8rem))] w-[min(67.5rem,calc(100vw-4rem))] max-w-none overflow-hidden rounded-[32px] bg-surface p-0 text-ink shadow-dock"
+        className="project-window bottom-[calc(var(--spacing-dock-inset)+var(--spacing-dock))] m-auto h-[min(43.75rem,calc(100dvh-var(--spacing-dock-inset)*3-var(--spacing-dock)))] w-[min(67.5rem,calc(100vw-4rem))] max-w-none overflow-hidden rounded-[32px] bg-surface p-0 text-ink shadow-dock"
       >
         {project && <WindowBody key={project.slug} project={project} onClose={close} />}
       </dialog>
@@ -250,14 +250,17 @@ function Architecture({ project }: { project: Project }) {
         event.preventDefault();
       }}
     >
-      <div className="flex w-80 shrink-0 flex-col gap-4">
-        <Meta project={project} />
-        <p className="text-[1.75rem] leading-[1.18] font-medium tracking-[-0.025em] text-pretty">
-          {project.tagline}
-        </p>
+      <div className="flex min-h-0 w-80 shrink-0 flex-col gap-4">
+        {/* In a short window the tagline scrolls, so the step card and its button stay in view. */}
+        <div className="thin-scrollbar flex min-h-0 flex-col gap-4 overflow-y-auto">
+          <Meta project={project} />
+          <p className="text-[1.75rem] leading-[1.18] font-medium tracking-[-0.025em] text-pretty">
+            {project.tagline}
+          </p>
+        </div>
 
         {gate ? (
-          <div className="mt-auto flex flex-col gap-3 rounded-[20px] bg-accent-tint p-5 text-accent-ink">
+          <div className="mt-auto flex shrink-0 flex-col gap-3 rounded-[20px] bg-accent-tint p-5 text-accent-ink">
             <span className="text-[0.8125rem]">Waiting for you</span>
             <p aria-live="polite" className="text-[1.0625rem] leading-[1.35] font-medium">
               {gate.note}
@@ -271,7 +274,7 @@ function Architecture({ project }: { project: Project }) {
             </button>
           </div>
         ) : (
-          <div className="mt-auto flex flex-col gap-3 rounded-[20px] bg-paper p-5">
+          <div className="mt-auto flex shrink-0 flex-col gap-3 rounded-[20px] bg-paper p-5">
             <span className="text-[1.0625rem] font-medium tracking-[-0.01em]">{step.label}</span>
             <p aria-live="polite" className="text-[0.9375rem] leading-normal text-pretty text-ink-2">
               {step.note ?? step.nodes.map((node) => node.sub).join(" · ")}

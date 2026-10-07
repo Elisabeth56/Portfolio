@@ -50,7 +50,7 @@ export function Dock() {
       aria-label="Sections"
       data-settle
       style={{ "--i": 8 } as React.CSSProperties}
-      className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 z-40 flex h-[76px] -translate-x-1/2 items-center gap-3 rounded-[28px] bg-surface px-3 shadow-dock lg:bottom-9"
+      className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 z-40 flex h-dock -translate-x-1/2 items-center gap-3 rounded-[28px] bg-surface px-3 shadow-dock lg:bottom-dock-inset"
     >
       {items.map((item) => (
         <a

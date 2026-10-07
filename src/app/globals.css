@@ -79,6 +79,10 @@
   --color-caution: #80541a;
   --color-negative: #96392f;
   --radius-icon: 22px;
+  /* The dock's height and its inset from the bottom of a large screen. The
+     project window sits above it with the inset as the gap on both sides. */
+  --spacing-dock: 4.75rem;
+  --spacing-dock-inset: 2.25rem;
   --shadow-lift: 0 1px 2px rgb(41 40 38 / 0.04), 0 8px 24px rgb(41 40 38 / 0.06);
   --shadow-dock: 0 1px 2px rgb(41 40 38 / 0.04), 0 12px 32px rgb(41 40 38 / 0.1);
   --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
