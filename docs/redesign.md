@@ -18,8 +18,8 @@ Each PR targets `main` and goes live as it lands. Merges are done by fast-forwar
 | 1 | `feat/design-foundation` | Tokens, Geist and Caveat, `ButtonLink`, new 404 | Live 7 Oct |
 | 2 | `feat/home-desk` | Home desk, dock, theme switch, startup | Live 7 Oct |
 | 3 | `feat/lead-trace` | PrismOS pinned trace chapter | Live 7 Oct |
-| 4 | `elisabeth/lucid-ramanujan-7kgup0` | Other four system cards, project window with Brief / Architecture / Decisions / Stack tabs, mobile gap fix | In review |
-| 5 | `feat/home-document` | Trajectory, capabilities, method, about, contact, footer | In review, stacked on PR 4 |
+| 4 | `elisabeth/lucid-ramanujan-7kgup0` | Other four system cards, project window with Brief / Architecture / Decisions / Stack tabs, mobile gap fix | Live 7 Oct |
+| 5 | `feat/home-document` | Trajectory, capabilities, method, about, contact, footer | In review |
 | 6 | `feat/case-page` | Case page `/work/<slug>` | Screenshots in, build not started |
 | 7 | | `/read` | |
 | 8 | | Remove old shells and fonts, move tokens to `:root` | |
