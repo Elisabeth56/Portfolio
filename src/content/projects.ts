@@ -745,8 +745,7 @@ export const projects: Project[] = [
     kind: "AI product · SaaS",
     period: "2025 — 2026",
     status: "Live",
-    tagline:
-      "Removing the triage tax that kills productivity systems, with the model as the mechanic rather than a chat box.",
+    tagline: "Removing the triage tax that kills productivity systems.",
     role: "Architect and product owner",
     roleNote:
       "Defined the product, chose the stack, and drove it through four phases — schema, AI orchestration, payments, deployment. The consequential calls were mine, including replacing Stripe with Paystack for the Nigerian market and catching the incomplete migration when stripe_customer_id was still sitting in the schema afterwards.",
