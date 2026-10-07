@@ -21,7 +21,7 @@ Each PR targets `main` and goes live as it lands. Merges are done by fast-forwar
 | 4 | `elisabeth/lucid-ramanujan-7kgup0` | Other four system cards, project window with Brief / Architecture / Decisions / Stack tabs, mobile gap fix | Live 7 Oct |
 | 5 | `feat/home-document` | Trajectory, capabilities, method, about, contact, footer | Live 7 Oct |
 | 6 | `feat/case-page` | Case page `/work/<slug>` | Live 7 Oct |
-| 7 | | `/read` | |
+| 7 | `feat/read` | `/read` | Live 7 Oct |
 | 8 | | Remove old shells and fonts, move tokens to `:root` | |
 
 The home page now has every section of the screens canvas, and every dock tile and "Read the method" lands on its section.
@@ -40,6 +40,10 @@ PR 6 notes:
 - "Back to the desk" returns to the PrismOS chapter from its page and to the cards from the others.
 - The project window clears the dock. `--spacing-dock` (the dock's height) and `--spacing-dock-inset` (its distance from the bottom on desktop) are spacing tokens; the window sits above the dock with the inset as the gap above and below it, at most 700px tall. In a short window the Architecture tagline scrolls so the step card stays in view, and fades at its cut edge until scrolled to the end; the other tabs already scroll.
 - The IT Intern role (Cool Group) is out of the content, so Freelance AI Engineer is the only current role. It rendered on the old pages and, in PR 5, in the home trajectory.
+
+PR 7 notes:
+
+- `/read` is one plain column on paper without the dots, no client code: intro with the portrait, about, the five systems (each links to its case page), trajectory, capabilities, every method principle written out, and contact. It prints cleanly; "Open the desk" hides in print.
 
 ## Design sources
 
