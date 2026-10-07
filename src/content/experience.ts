@@ -24,8 +24,8 @@ export const roles: Role[] = [
     period: "2023 — 2024",
     frame: "Learning to ship on someone else's terms.",
     body: [
-      "Client sites and front-end builds, sold and delivered directly. The code was the smaller half of the job.",
-      "The larger half was scoping against a fixed budget, shipping to a date I did not set, and handing over something the client could operate without me in the room. Constraints I have never since been able to unsee.",
+      "Websites and web apps for small businesses and early-stage founders: landing pages, booking and contact flows, dashboards and content-managed sites, built with React, Next.js and Tailwind CSS.",
+      "Most projects started as a loose brief with a fixed budget. I scoped them, agreed what was in and what was out, shipped to the client's date, and handed over something they could run without me, usually a CMS and a short written guide. That is where I learned the code is the smaller half of the job.",
     ],
     shift:
       "From building what I wanted to build to building what someone had agreed to pay for.",

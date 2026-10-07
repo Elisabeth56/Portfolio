@@ -56,7 +56,9 @@ PR 8 notes:
 
 Final touches (7 Oct):
 
-- The hero is centred on the screen and over the dock. From 1280px wide the icon column is as wide as the widget column (18rem), with the icons centred in it, and the headline scales with the room left (54px at 1280, 70px at 1440, 76px from about 1500). Below 1280 the icon column stays 6rem. Elisabeth chose this over mirroring the icons against the widgets, and over the first attempt (a 96px shift, which crowded the widgets).
+- The desk is symmetrical at every desktop width: the widget column and the icon column are both 15rem, with the icons in a two-column grid (FlowMind centred under both) mirroring the widgets 32px from either edge. The headline sits at the centre of the screen and over the dock, with the same gap on both sides, and scales with the room between the columns (44px at 1024, 62px at 1200, 76px from about 1340). It sits midway between the menu bar and the dock, so the dock never covers the buttons on a short window at 100% zoom. Earlier attempts (a 96px shift, then a wider icon column with a single row of icons) left the gaps either side unequal, which read as off-centre in Safari and Chrome.
+- The contact card's two columns sit side by side from 1280px; at 1024 they overflowed the page.
+- The Freelance Web Developer entry describes the kind of work in general terms (no client names or figures).
 - "Open PrismOS" and the PrismOS desk icon open PrismOS's window, like the other icons (the case page on smaller screens). They used to scroll to the chapter just below.
 - The startup is a boot screen: her name over a progress bar that fills quickly, pauses near the end and completes, then the screen lifts and the desk settles. Once per session, skippable with any key or tap, never under reduced motion. The hero underline draws after it lifts.
 - Each system card on the home page and the window's Brief tab show the product's screenshot.

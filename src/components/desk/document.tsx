@@ -145,8 +145,8 @@ const socials = [
 function Contact() {
   return (
     <section id="contact" aria-labelledby="contact-title" className="flex scroll-mt-6 flex-col gap-10 lg:gap-16">
-      <div className="flex flex-col gap-3 rounded-[28px] bg-surface px-5 py-7 lg:flex-row lg:gap-16 lg:rounded-[32px] lg:p-14">
-        <div className="flex flex-col gap-3 pb-2 lg:w-[32.5rem] lg:shrink-0 lg:gap-5 lg:pb-0">
+      <div className="flex flex-col gap-3 rounded-[28px] bg-surface px-5 py-7 lg:gap-10 lg:rounded-[32px] lg:p-14 xl:flex-row xl:gap-16">
+        <div className="flex flex-col gap-3 pb-2 lg:gap-5 lg:pb-0 xl:w-[32.5rem] xl:shrink-0">
           <h2
             id="contact-title"
             className="text-[2.5rem] leading-[1.02] font-medium tracking-[-0.035em] lg:text-[4rem] lg:leading-none"
