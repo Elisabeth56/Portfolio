@@ -24,8 +24,8 @@ export default function ReadPage() {
   return (
     <>
       <main
-        data-ui="desk"
-        className="min-h-dvh bg-none! px-5 pb-24 print:pb-0 lg:pb-36"
+       
+        className="min-h-dvh bg-paper px-5 pb-24 print:pb-0 lg:pb-36"
       >
         <div className="mx-auto max-w-[50rem]">
           <header className="flex h-16 items-center justify-between text-[0.9375rem] lg:h-[4.5rem]">

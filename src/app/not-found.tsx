@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: "Page not found" };
 export default function NotFound() {
   return (
     <main
-      data-ui="desk"
+     
       className="relative flex min-h-dvh flex-col overflow-hidden px-5 py-6 md:px-8 md:py-3.5"
     >
       <p className="text-sm font-semibold md:text-[0.9375rem]">

@@ -9,43 +9,6 @@ import "./globals.css";
  * build-time network dependency, no third-party request on page load, and the
  * subset is exactly what this site sets (latin only).
  */
-const archivo = localFont({
-  src: "../fonts/archivo-latin-wght-normal.woff2",
-  variable: "--font-archivo",
-  weight: "100 900",
-  display: "swap",
-  fallback: ["Helvetica Neue", "Arial", "sans-serif"],
-});
-
-const inter = localFont({
-  src: "../fonts/inter-latin-wght-normal.woff2",
-  variable: "--font-inter",
-  weight: "100 900",
-  display: "swap",
-  fallback: ["system-ui", "-apple-system", "sans-serif"],
-});
-
-const plexMono = localFont({
-  src: [
-    { path: "../fonts/ibm-plex-mono-latin-400-normal.woff2", weight: "400", style: "normal" },
-    { path: "../fonts/ibm-plex-mono-latin-500-normal.woff2", weight: "500", style: "normal" },
-  ],
-  variable: "--font-plex-mono",
-  display: "swap",
-  fallback: ["ui-monospace", "SF Mono", "Menlo", "monospace"],
-});
-
-const instrument = localFont({
-  src: [
-    { path: "../fonts/instrument-serif-latin-400-normal.woff2", weight: "400", style: "normal" },
-    { path: "../fonts/instrument-serif-latin-400-italic.woff2", weight: "400", style: "italic" },
-  ],
-  variable: "--font-instrument",
-  display: "swap",
-  fallback: ["Georgia", "Times New Roman", "serif"],
-});
-
-/* The redesign's faces. The four above go once the old shells are replaced. */
 const geist = localFont({
   src: "../fonts/geist-latin-wght-normal.woff2",
   variable: "--font-geist",
@@ -121,7 +84,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       suppressHydrationWarning
       data-scroll-behavior="smooth"
-      className={`${archivo.variable} ${inter.variable} ${plexMono.variable} ${instrument.variable} ${geist.variable} ${caveat.variable} h-full`}
+      className={`${geist.variable} ${caveat.variable} h-full`}
     >
       <body className="min-h-full">
         <script dangerouslySetInnerHTML={{ __html: BEFORE_PAINT }} />

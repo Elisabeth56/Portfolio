@@ -4,136 +4,16 @@
 @custom-variant pin (@media (min-width: 80rem) and (min-height: 52rem));
 
 /* ==========================================================================
-   ELISYNTH — design tokens
-   Two surfaces: `dark` (workstation) and `light` (document).
-   Surface is set with data-surface on any container, so a dark window can
-   live inside a light page and shared components adapt without prop drilling.
+   Paper desk — design tokens
+   These carry the light values so Tailwind emits the utilities. The dark
+   theme redeclares the same names below. The theme follows the system unless
+   <html data-theme> says otherwise (see lib/theme.ts).
    ========================================================================== */
 
 @theme {
-  --font-display: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
-  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
-  --font-serif: var(--font-instrument), Georgia, "Times New Roman", serif;
-
-  /* Raw palette ---------------------------------------------------------- */
-  --color-ink-900: #08080a;
-  --color-ink-850: #0e0e10;
-  --color-ink-800: #141418;
-  --color-ink-700: #1a1a1f;
-  --color-ink-600: #232329;
-  --color-ink-500: #2e2e36;
-  --color-ink-400: #3d3d47;
-
-  --color-bone-50: #faf9f6;
-  --color-bone-100: #f2efe9;
-  --color-bone-200: #e9e5dc;
-  --color-bone-300: #ddd8cc;
-  --color-bone-400: #c7c1b1;
-
-  --color-rose-300: #f4a3ba;
-  --color-rose-400: #e97a9b;
-  --color-rose-500: #c4527a;
-  --color-rose-600: #b23a5f;
-
-  --color-signal-run: #3f9e82;
-  --color-signal-run-bright: #52bd9d;
-  --color-signal-flag: #c2453b;
-  --color-signal-flag-bright: #e06b5d;
-
-  /* Semantic surface tokens.
-     These carry the LIGHT values here so Tailwind emits the utilities and
-     :root gets a sane default. Each surface block below redeclares the same
-     --color-* names directly: a custom property is substituted on the element
-     that declares it, so an indirection like `--color-bg: var(--color-bg)` would be
-     frozen at :root and never pick up a descendant override. */
-  --color-bg: #f2efe9;
-  --color-surface: #faf9f6;
-  --color-raised: #ffffff;
-  --color-line: #d0cabb;
-  --color-line-soft: #e0dace;
-  --color-fg: #14141a;
-  --color-fg-muted: #5d5a52;
-  --color-fg-faint: #6f6a5f;
-  --color-accent: #b23a5f;
-  --color-run: #2c7660;
-  --color-flag: #ad3a31;
-
-  --text-label: 0.6875rem;
-  --text-label--line-height: 1.2;
-  --text-label--letter-spacing: 0.16em;
-
-  /* Paper desk (redesign). Colour values live in the [data-ui="desk"] block. */
-  --font-desk: var(--font-geist), "Helvetica Neue", Helvetica, sans-serif;
+  --font-sans: var(--font-geist), "Helvetica Neue", Helvetica, sans-serif;
   --font-hand: var(--font-caveat), "Bradley Hand", cursive;
-  --color-paper: #f0eeeb;
-  --color-well: #e9e6e1;
-  --color-ink: #292826;
-  --color-ink-2: #54524f;
-  --color-ink-3: #6a6763;
-  --color-ink-4: #a9a8a7;
-  --color-on-accent: #f8f3f1;
-  --color-accent-tint: #f3d6e0;
-  --color-accent-ink: #5e1f38;
-  --color-positive: #2f5d46;
-  --color-caution: #80541a;
-  --color-negative: #96392f;
-  --radius-icon: 22px;
-  /* The dock's height and its inset from the bottom of a large screen. The
-     project window sits above it with the inset as the gap on both sides. */
-  --spacing-dock: 4.75rem;
-  --spacing-dock-inset: 2.25rem;
-  --shadow-lift: 0 1px 2px rgb(41 40 38 / 0.04), 0 8px 24px rgb(41 40 38 / 0.06);
-  --shadow-dock: 0 1px 2px rgb(41 40 38 / 0.04), 0 12px 32px rgb(41 40 38 / 0.1);
-  --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-ui: cubic-bezier(0.4, 0, 0.2, 1);
 
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
-}
-
-/* Light surface — the document */
-:root,
-[data-surface="light"] {
-  --color-bg: #f2efe9;
-  --color-surface: #faf9f6;
-  --color-raised: #ffffff;
-  --color-line: #d0cabb;
-  --color-line-soft: #e0dace;
-  --color-fg: #14141a;
-  --color-fg-muted: #5d5a52;
-  --color-fg-faint: #6f6a5f;
-  --color-accent: #b23a5f;
-  --color-run: #2c7660;
-  --color-flag: #ad3a31;
-  color-scheme: light;
-}
-
-/* Dark surface — the workstation */
-[data-surface="dark"] {
-  --color-bg: #0e0e10;
-  --color-surface: #141418;
-  --color-raised: #1a1a1f;
-  --color-line: #2e2e36;
-  --color-line-soft: #202027;
-  --color-fg: #e8e6e1;
-  --color-fg-muted: #96938c;
-  --color-fg-faint: #8c877e;
-  --color-accent: #e97a9b;
-  --color-run: #52bd9d;
-  --color-flag: #e06b5d;
-  color-scheme: dark;
-}
-
-/* ==========================================================================
-   Paper desk — the redesign's tokens
-   Scoped to data-ui="desk" while the old shells still exist, because both
-   systems use --color-surface and --color-accent. Moves to :root when the old
-   surfaces are removed. Theme follows the system unless <html data-theme> says
-   otherwise.
-   ========================================================================== */
-
-[data-ui="desk"] {
   --color-paper: #f0eeeb;
   --color-surface: #f8f7f4;
   --color-well: #e9e6e1;
@@ -148,21 +28,26 @@
   --color-positive: #2f5d46;
   --color-caution: #80541a;
   --color-negative: #96392f;
-  --desk-dots: rgb(41 40 38 / 0.09);
-  --desk-scrim: rgb(41 40 38 / 0.16);
+
+  --radius-icon: 22px;
+  /* The dock's height and its inset from the bottom of a large screen. The
+     project window sits above it with the inset as the gap on both sides. */
+  --spacing-dock: 4.75rem;
+  --spacing-dock-inset: 2.25rem;
   --shadow-lift: 0 1px 2px rgb(41 40 38 / 0.04), 0 8px 24px rgb(41 40 38 / 0.06);
   --shadow-dock: 0 1px 2px rgb(41 40 38 / 0.04), 0 12px 32px rgb(41 40 38 / 0.1);
+  --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-ui: cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-  background-color: var(--color-paper);
-  background-image: radial-gradient(var(--desk-dots) 1px, transparent 1px);
-  background-size: 24px 24px;
-  color: var(--color-ink);
-  font-family: var(--font-desk);
+:root {
+  --desk-dots: rgb(41 40 38 / 0.09);
+  --desk-scrim: rgb(41 40 38 / 0.16);
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
-  html:not([data-theme="light"]) [data-ui="desk"] {
+  :root:not([data-theme="light"]) {
     --color-paper: #1b1a19;
     --color-surface: #252422;
     --color-well: #2f2d2b;
@@ -185,7 +70,7 @@
   }
 }
 
-html[data-theme="dark"] [data-ui="desk"] {
+:root[data-theme="dark"] {
   --color-paper: #1b1a19;
   --color-surface: #252422;
   --color-well: #2f2d2b;
@@ -207,30 +92,70 @@ html[data-theme="dark"] [data-ui="desk"] {
   color-scheme: dark;
 }
 
-[data-ui="desk"] :focus-visible {
+/* ==========================================================================
+   Base: paper with a faint dotted grid (the dots drop out in dark)
+   ========================================================================== */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-paper);
+  background-image: radial-gradient(var(--desk-dots) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+/* A 2px accent ring with a 2px gap, for the keyboard only. */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+button,
+[role="button"] {
+  cursor: pointer;
 }
 
 /* The theme toggle shows the current theme: sun in light, moon in dark. */
 .theme-moon,
-html[data-theme="dark"] .theme-sun {
+:root[data-theme="dark"] .theme-sun {
   display: none;
 }
-html[data-theme="dark"] .theme-moon {
+:root[data-theme="dark"] .theme-moon {
   display: inline;
 }
 @media (prefers-color-scheme: dark) {
-  html:not([data-theme="light"]) .theme-sun {
+  :root:not([data-theme="light"]) .theme-sun {
     display: none;
   }
-  html:not([data-theme="light"]) .theme-moon {
+  :root:not([data-theme="light"]) .theme-moon {
     display: inline;
   }
 }
 
-/* The project window grows out of the card or icon that opened it (the
-   origin is set in project-window.tsx) over a soft scrim. The page behind
-   stays put while it is open. */
+/* ==========================================================================
+   Project window
+   It grows out of the card or icon that opened it (the origin is set in
+   project-window.tsx) over a soft scrim. The page behind stays put while it
+   is open.
+   ========================================================================== */
+
 .project-window[open] {
   transition:
     opacity 500ms var(--ease-reveal),
@@ -241,7 +166,7 @@ html[data-theme="dark"] .theme-moon {
   }
 }
 .project-window::backdrop {
-  background: var(--desk-scrim, rgb(41 40 38 / 0.16));
+  background: var(--desk-scrim);
 }
 .project-window[open]::backdrop {
   transition: opacity 500ms var(--ease-reveal);
@@ -253,9 +178,12 @@ html:has(.project-window[open]) {
   overflow: hidden;
 }
 
-/* Startup — plays once per session while <html data-startup> is set (see
+/* ==========================================================================
+   Startup — plays once per session while <html data-startup> is set (see
    lib/theme.ts). Her name on paper, then each [data-settle] piece rises in,
-   --i sets the order. Removing the attribute ends it at the final state. */
+   --i sets the order. Removing the attribute ends it at the final state.
+   ========================================================================== */
+
 .startup-mark {
   display: none;
 }
@@ -302,131 +230,11 @@ html[data-startup] [data-settle] {
 }
 
 /* ==========================================================================
-   Base
-   ========================================================================== */
-
-/* In the base layer so border colour utilities can override it. */
-@layer base {
-  * {
-    border-color: var(--color-line-soft);
-  }
-}
-
-html {
-  -webkit-text-size-adjust: 100%;
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: var(--color-bg);
-  color: var(--color-fg);
-  font-family: var(--font-sans);
-  font-synthesis-weight: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-::selection {
-  background-color: var(--color-accent);
-  color: var(--color-bg);
-}
-
-:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 3px;
-}
-
-/* Only the mouse loses the ring; keyboard keeps it. */
-:focus:not(:focus-visible) {
-  outline: none;
-}
-
-button,
-[role="button"] {
-  cursor: pointer;
-}
-
-/* ==========================================================================
-   Type primitives
-   ========================================================================== */
-
-.t-display {
-  font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 0.88;
-  text-wrap: balance;
-}
-
-.t-label {
-  font-family: var(--font-mono);
-  font-size: var(--text-label);
-  line-height: 1.2;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-.t-mono {
-  font-family: var(--font-mono);
-  font-variant-ligatures: none;
-  font-feature-settings: "zero" 1;
-}
-
-.t-serif {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  letter-spacing: -0.01em;
-}
-
-.t-prose {
-  max-width: 64ch;
-  line-height: 1.62;
-  text-wrap: pretty;
-}
-
-.t-prose p + p {
-  margin-top: 1.1em;
-}
-
-/* Tabular figures wherever numbers are compared */
-.t-nums {
-  font-variant-numeric: tabular-nums;
-}
-
-/* ==========================================================================
-   Surface textures — deliberately near-invisible, never a "gradient feature"
-   ========================================================================== */
-
-.tx-paper {
-  background-image: radial-gradient(
-    var(--color-line-soft) 0.5px,
-    transparent 0.5px
-  );
-  background-size: 22px 22px;
-  background-position: -11px -11px;
-  opacity: 0.5;
-}
-
-.tx-grid {
-  background-image:
-    linear-gradient(to right, var(--color-line-soft) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--color-line-soft) 1px, transparent 1px);
-  background-size: 64px 64px;
-}
-
-/* ==========================================================================
    Utilities
    ========================================================================== */
 
-.hairline {
-  border-top: 1px solid var(--color-line);
-}
-
 .no-scrollbar {
   scrollbar-width: none;
-  -ms-overflow-style: none;
 }
 .no-scrollbar::-webkit-scrollbar {
   display: none;
@@ -434,61 +242,21 @@ button,
 
 .thin-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-line) transparent;
+  scrollbar-color: var(--color-ink-4) transparent;
 }
 .thin-scrollbar::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 .thin-scrollbar::-webkit-scrollbar-thumb {
-  background-color: var(--color-line);
+  background-color: var(--color-ink-4);
   border-radius: 99px;
 }
 .thin-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
 
-/* Animated dash used by trace edges when a step is active */
-@keyframes trace-flow {
-  to {
-    stroke-dashoffset: -12;
-  }
-}
-
-@keyframes caret {
-  0%,
-  49% {
-    opacity: 1;
-  }
-  50%,
-  100% {
-    opacity: 0;
-  }
-}
-
-.caret::after {
-  content: "▊";
-  margin-left: 0.15em;
-  animation: caret 1.05s step-end infinite;
-  color: var(--color-accent);
-}
-
-@keyframes pulse-ring {
-  0% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-run) 45%, transparent);
-  }
-  70% {
-    box-shadow: 0 0 0 7px color-mix(in srgb, var(--color-run) 0%, transparent);
-  }
-  100% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-run) 0%, transparent);
-  }
-}
-
-/* ==========================================================================
-   Reduced motion — everything decorative stops, nothing becomes unusable
-   ========================================================================== */
-
+/* Reduced motion: no startup, no rises; state changes still happen. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -500,21 +268,5 @@ button,
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
-  }
-}
-
-@media print {
-  .no-print {
-    display: none !important;
-  }
-}
-
-/* Phone app sheet rising from the bottom */
-@keyframes sheet-up {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
   }
 }

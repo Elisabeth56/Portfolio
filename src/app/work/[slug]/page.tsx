@@ -46,7 +46,7 @@ export default async function WorkPage({ params }: PageProps<"/work/[slug]">) {
   const back = i === 0 ? `/#${p.slug}` : "/#systems";
 
   return (
-    <main data-ui="desk" className="min-h-dvh">
+    <main className="min-h-dvh">
       <nav
         aria-label="Case study"
         className="flex h-16 items-center justify-between px-5 text-sm lg:h-12 lg:px-8"

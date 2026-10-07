@@ -6,8 +6,8 @@ Frontend-only redesign of elisabethnnamani.dev. Content, routes and stack stay (
 
 - Audit, references, direction, design system and screens: approved.
 - Direction: "Paper desk" with a mulberry accent.
-- Build: in progress (see PRs below).
-- Polish pass (design critique, accessibility, Lighthouse 90+ on all four scores): not started.
+- Build: done (see PRs below).
+- Polish pass (design critique, accessibility, Lighthouse 90+ on all four scores): in progress.
 
 ## PRs
 
@@ -22,7 +22,7 @@ Each PR targets `main` and goes live as it lands. Merges are done by fast-forwar
 | 5 | `feat/home-document` | Trajectory, capabilities, method, about, contact, footer | Live 7 Oct |
 | 6 | `feat/case-page` | Case page `/work/<slug>` | Live 7 Oct |
 | 7 | `feat/read` | `/read` | Live 7 Oct |
-| 8 | | Remove old shells and fonts, move tokens to `:root` | |
+| 8 | `feat/cleanup` | Remove old shells and fonts, move tokens to `:root` | Live 7 Oct |
 
 The home page now has every section of the screens canvas, and every dock tile and "Read the method" lands on its section.
 
@@ -45,6 +45,13 @@ PR 7 notes:
 
 - `/read` is one plain column on paper without the dots, no client code: intro with the portrait, about, the five systems (each links to its case page), trajectory, capabilities, every method principle written out, and contact. It prints cleanly; "Open the desk" hides in print.
 
+PR 8 notes:
+
+- The workstation, phone and document shells, their trace canvas and icons, and Archivo, Inter, IBM Plex Mono and Instrument Serif are gone.
+- The tokens are on `:root` (light) with the dark theme under `prefers-color-scheme` and `html[data-theme="dark"]`; `data-ui="desk"` is no longer needed. `body` carries the paper, dots, ink and Geist, so every page starts on the desk. `/read` paints plain paper over the dots.
+- The OG card is redrawn in the paper-desk style: headline with the mulberry underline and the portrait.
+- The README describes the desk, the case pages and `/read`.
+
 ## Design sources
 
 - Screens canvas (every page, light and dark): https://claude.ai/artifact/PDNMZoSe4sFFZs2E9nq1dd
@@ -66,9 +73,9 @@ PR 7 notes:
 
 ## Implementation notes
 
-- New tokens are scoped to `data-ui="desk"` while the old shells exist, because both systems use `--color-surface` and `--color-accent`.
+- Tokens are on `:root` in `src/app/globals.css` (PR 8); `body` carries the paper and dots.
 - Theme: system by default, `<html data-theme>` when chosen, stored under `theme`. The startup flag is `<html data-startup>`. Both are set before paint by the inline script in `src/lib/theme.ts`.
-- New components live in `src/components/desk/`, `src/components/trace/` and `src/components/ui/`, in kebab-case files.
+- Components live in `src/components/desk/`, `src/components/trace/`, `src/components/case/` and `src/components/ui/`, in kebab-case files.
 - Trace: `buildSteps` turns `trace.sequence` into steps; a sequence id that is not a node becomes a group of the nodes the sequence never names. Without a group, a node the sequence leaves out (Atlas AI's two gates) becomes its own step after the node that leads into it, so Atlas has 8 steps. `TraceMap` draws any project's trace from content. The `pin:` Tailwind variant (1280px wide and 832px tall) switches between the pinned and list layouts.
 - System cards (`desk/system-cards.tsx`) show four steps of the trace around `trace.focus`, the node that carries the project's argument. A gate shows its `action` label in the tint.
 - Project window (`desk/project-window.tsx`): a native `<dialog>` opened by `WindowLink` (the cards and the desk icons) when the viewport is at least 1280 by 720. Smaller screens, and Cmd, Ctrl or Shift clicks, follow the link to `/work/<slug>`. It grows from the card or icon that opened it; Esc, the close button or a click on the scrim closes it, and focus returns to the opener. The last tab is remembered per project under `window:tab:<slug>`; the default is Architecture. It is sized from the dock tokens so it never covers the dock.
@@ -82,7 +89,7 @@ PR 7 notes:
 
 ## Open with Elisabeth
 
-- Copy flag from the audit: system-speak in the old chrome. It goes with the old shells in PR 8.
+- Nothing open. System-speak in the old chrome went with the old shells in PR 8.
 
 Decided on 7 Oct:
 

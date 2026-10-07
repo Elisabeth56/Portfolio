@@ -30,7 +30,7 @@ const personSchema = {
 export default function Home() {
   return (
     <>
-      <main data-ui="desk" className="min-h-dvh">
+      <main className="min-h-dvh">
         <ProjectWindowProvider>
           <Startup />
           <Desk />
