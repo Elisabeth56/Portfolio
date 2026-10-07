@@ -56,5 +56,7 @@ function fitNodes(trace: Trace, minNodePx: number) {
     }
   }
   const nodeWidth = Math.min(NODE_W, gap * 0.9);
-  return { nodeWidth, minWidth: Math.round((minNodePx / nodeWidth) * 100) };
+  // A packed trace scrolls anyway, so its nodes get room for their longest label.
+  const px = nodeWidth < NODE_W ? Math.max(minNodePx, 120) : minNodePx;
+  return { nodeWidth, minWidth: Math.round((px / nodeWidth) * 100) };
 }

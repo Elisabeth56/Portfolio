@@ -93,7 +93,7 @@ export function TraceMap({ trace, stepOf, active, aside, nodeWidth = NODE_W, bou
                 nodeState === "skipped" && "border-2 border-dashed border-ink-4 text-ink-3",
               )}
             >
-              <span className="leading-tight font-medium">{node.label}</span>
+              <span className="leading-tight font-medium hyphens-auto">{node.label}</span>
               {node.sub && (
                 <span
                   className={cn(

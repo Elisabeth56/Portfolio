@@ -103,10 +103,15 @@ export function ProjectChapter({ project, aside, variant = "lead" }: Props) {
           onKeyDown={onKeyDown}
           className={cn(
             "mx-auto flex w-full flex-col rounded-[28px] bg-surface px-5 pin:h-full pin:max-h-[52rem] pin:flex-row pin:gap-12 pin:rounded-[32px] pin:p-12",
-            isCase ? "gap-6 py-6 pin:max-w-[75rem]" : "max-w-xl gap-10 py-7 pin:max-w-[86rem]",
+            isCase ? "gap-6 py-6" : "max-w-xl gap-10 py-7 pin:max-w-[86rem]",
           )}
         >
-          <div className="flex min-h-0 flex-col gap-4 pin:w-[21rem] pin:shrink-0 pin:gap-5">
+          <div
+            className={cn(
+              "flex min-h-0 flex-col gap-4 pin:shrink-0 pin:gap-5",
+              isCase ? "pin:w-[18.75rem]" : "pin:w-[21rem]",
+            )}
+          >
             {isCase ? (
               <h2 className="text-[1.625rem] leading-[1.12] font-medium tracking-[-0.025em] pin:text-[2rem]">
                 How it holds together

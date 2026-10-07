@@ -75,7 +75,7 @@ export default async function WorkPage({ params }: PageProps<"/work/[slug]">) {
         </span>
       </nav>
 
-      <div className="mx-auto flex max-w-[75rem] flex-col gap-24 px-5 pt-6 pb-24 lg:gap-40 lg:px-8 lg:pt-[5.5rem] lg:pb-36">
+      <div className="mx-auto flex max-w-[79rem] flex-col gap-24 px-5 pt-6 pb-24 lg:gap-40 lg:px-8 lg:pt-[5.5rem] lg:pb-36">
         <Header project={p} />
 
         <div className="-mt-10 lg:-mt-16">
