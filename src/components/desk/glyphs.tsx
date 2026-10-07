@@ -11,7 +11,8 @@ export type GlyphId =
   | "trajectory"
   | "capabilities"
   | "method"
-  | "contact";
+  | "contact"
+  | "read";
 
 /* One idea per glyph, single stroke, no colour of its own. */
 const paths: Record<GlyphId, ReactNode> = {
@@ -67,6 +68,12 @@ const paths: Record<GlyphId, ReactNode> = {
     <>
       <rect x="3.5" y="6" width="17" height="12" rx="3.5" />
       <path d="M4.5 8l7.5 5 7.5-5" />
+    </>
+  ),
+  read: (
+    <>
+      <path d="M7 3.5h6.5l4.5 4.5v11a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 19V5a1.5 1.5 0 0 1 1-1.5Z" />
+      <path d="M13.5 3.5V8H18M9 12.5h6M9 16h4" />
     </>
   ),
 };
