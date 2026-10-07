@@ -2,29 +2,30 @@
 
 import { THEME_KEY } from "@/lib/theme";
 
+/** Flips the theme and remembers it. Shared by the toggle and the menu bar. */
+export function toggleTheme() {
+  const root = document.documentElement;
+  const isDark =
+    root.dataset.theme === "dark" ||
+    (!root.dataset.theme && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  const next = isDark ? "light" : "dark";
+  root.dataset.theme = next;
+  try {
+    localStorage.setItem(THEME_KEY, next);
+  } catch {
+    /* private mode: the choice just lasts for this visit */
+  }
+}
+
 /**
- * Flips the theme and remembers it. The icon is chosen in CSS from the
- * resolved theme, so this renders the same on the server and the client.
+ * The theme switch. The icon is chosen in CSS from the resolved theme, so this
+ * renders the same on the server and the client.
  */
 export function ThemeToggle() {
-  const toggle = () => {
-    const root = document.documentElement;
-    const isDark =
-      root.dataset.theme === "dark" ||
-      (!root.dataset.theme && window.matchMedia("(prefers-color-scheme: dark)").matches);
-    const next = isDark ? "light" : "dark";
-    root.dataset.theme = next;
-    try {
-      localStorage.setItem(THEME_KEY, next);
-    } catch {
-      /* private mode: the choice just lasts for this visit */
-    }
-  };
-
   return (
     <button
       type="button"
-      onClick={toggle}
+      onClick={toggleTheme}
       aria-label="Switch between light and dark"
       className="relative grid h-11 w-11 place-items-center text-ink"
     >
