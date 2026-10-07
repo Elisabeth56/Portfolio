@@ -56,7 +56,7 @@ PR 8 notes:
 
 Final touches (7 Oct):
 
-- The hero's headline block is centred on the screen. The desk's icon column is 12rem narrower than the widget column, so the middle column's centre sat 96px right of the screen's; the block now shifts back by as much as the room beside it allows (all of it from 1232px wide).
+- The hero is centred on the screen and over the dock. From 1280px wide the icon column is as wide as the widget column (18rem), with the icons centred in it, and the headline scales with the room left (54px at 1280, 70px at 1440, 76px from about 1500). Below 1280 the icon column stays 6rem. Elisabeth chose this over mirroring the icons against the widgets, and over the first attempt (a 96px shift, which crowded the widgets).
 - "Open PrismOS" and the PrismOS desk icon open PrismOS's window, like the other icons (the case page on smaller screens). They used to scroll to the chapter just below.
 - The startup is a boot screen: her name over a progress bar that fills quickly, pauses near the end and completes, then the screen lifts and the desk settles. Once per session, skippable with any key or tap, never under reduced motion. The hero underline draws after it lifts.
 - Each system card on the home page and the window's Brief tab show the product's screenshot.

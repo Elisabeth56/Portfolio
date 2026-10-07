@@ -31,20 +31,19 @@ export function Desk() {
     <section className="relative px-5 pt-5 pb-14 lg:pt-0 lg:min-h-[max(100dvh,52rem)] lg:px-8 lg:pb-0">
       <MenuBar />
 
-      <div className="mx-auto flex max-w-xl flex-col gap-5 pt-2 lg:max-w-none lg:grid lg:grid-cols-[18rem_minmax(0,1fr)_6rem] lg:items-start lg:gap-8 lg:pt-6">
+      <div className="mx-auto flex max-w-xl flex-col gap-5 pt-2 lg:max-w-none lg:grid lg:grid-cols-[18rem_minmax(0,1fr)_6rem] lg:items-start xl:grid-cols-[18rem_minmax(0,1fr)_18rem] lg:gap-8 lg:pt-6">
         <aside className="flex flex-col gap-4">
           <Identity />
           <NowWidget />
         </aside>
 
-        {/* The icon column is 12rem narrower than the widgets, so the middle
-            column's centre sits 6rem right of the screen's. Shift back by as
-            much of that as the room beside the headline allows. */}
-        <div className="flex flex-col gap-4 px-1 pt-5 lg:translate-x-[calc(-1*min(6rem,max(0px,(100vw-77rem)/2)))] lg:items-center lg:gap-7 lg:px-0 lg:pt-44 lg:text-center">
+        {/* From xl the icon column is as wide as the widgets, so the headline
+            sits at the centre of the screen and as far from either side. */}
+        <div className="flex flex-col gap-4 pt-5 lg:items-center lg:gap-7 lg:pt-44 lg:text-center">
           <span className="hidden -rotate-3 font-hand text-[1.625rem] text-accent lg:block">
             AI engineer
           </span>
-          <h1 className="text-[2.125rem] leading-[1.06] font-medium tracking-[-0.035em] lg:text-balance lg:max-w-[45rem] lg:text-[clamp(3.25rem,5.3vw,4.75rem)] lg:leading-[1.02]">
+          <h1 className="text-[2.125rem] leading-[1.06] font-medium tracking-[-0.035em] lg:text-balance lg:max-w-[45rem] lg:text-[clamp(3.25rem,5.3vw,4.75rem)] lg:leading-[1.02] xl:text-[clamp(3.25rem,calc((100vw-46rem)/10),4.75rem)]">
             Systems that survive <Underlined>contact with reality</Underlined>
           </h1>
           <p className="mt-2 text-base leading-normal text-pretty text-ink-2 lg:mt-2 lg:max-w-[35rem] lg:text-[1.1875rem]">
