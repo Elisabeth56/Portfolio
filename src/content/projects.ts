@@ -442,7 +442,7 @@ export const projects: Project[] = [
     period: "2025 — 2026",
     status: "Live",
     tagline:
-      "Turning a messy bank statement into clean rows, for a market bank-linking APIs do not serve.",
+      "Turning a messy bank statement into clean rows, for a market that bank-linking APIs do not serve.",
     role: "Sole engineer",
     roleNote:
       "Architecture, backend, AI pipeline, frontend integration, payments and deployment. The marketing site predated the build; everything from the API surface inward is mine.",

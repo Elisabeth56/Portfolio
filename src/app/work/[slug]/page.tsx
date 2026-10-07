@@ -154,7 +154,7 @@ function Header({ project: p }: { project: Project }) {
               rel="noreferrer"
               className="flex h-12 items-center justify-center rounded-full bg-accent-tint px-6 text-base font-medium text-accent-ink transition-[background-color,transform] duration-200 ease-ui hover:bg-[color-mix(in_srgb,var(--color-accent)_10%,var(--color-accent-tint))] active:scale-[0.98] lg:self-start"
             >
-              {p.links.live ? `Visit ${p.name}` : "Read the code"}
+              {p.links.live ? `Visit ${p.name}` : "View the code"}
             </a>
           )}
           <span className="hidden text-[0.9375rem] text-ink-2 lg:inline">{p.role}</span>

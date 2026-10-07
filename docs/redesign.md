@@ -38,7 +38,7 @@ PR 6 notes:
 - `/work/<slug>` follows the screens canvas: back link and "Systems · n of 5", header with the "On my role" card, the pinned trace, problem and build with the product screenshot, the architecture in words, decisions, stack and what it demonstrates, and the next system.
 - The pinned trace is `ProjectChapter` with `variant="case"`: it leads with "How it holds together", shows the active step's note under it in the rail, and carries each project's behaviour. Atlas AI halts at a gate however far the page has scrolled, and approving lets it catch up; on a phone the approve button sits in the waiting step. FinSight's "Statement type" picks CSV or PDF, and the branch not taken is dashed and takes no step. FarmTwin has a network switch and a dashed "On this laptop" line around the trace.
 - `trace/trace-well.tsx` (`TraceWell`) is the map in a well that scrolls sideways when nodes would get too narrow, following the active step. The window uses it at 132px per node, the chapters at 96px, so only Atlas scrolls on a case page and the home chapter's nodes no longer touch. A packed trace (Atlas) gets 120px nodes at least, so its longest label fits. The case page's trace is 1200px wide with a 300px rail, as on the canvas.
-- FarmTwin has no live link: its header offers "Read the code" and says why there is nothing to visit.
+- FarmTwin has no live link: its header offers "View the code" and says why there is nothing to visit.
 - "Back to the desk" returns to the PrismOS chapter from its page and to the cards from the others.
 - The project window clears the dock. `--spacing-dock` (the dock's height) and `--spacing-dock-inset` (its distance from the bottom on desktop) are spacing tokens; the window sits above the dock with the inset as the gap above and below it, at most 700px tall. In a short window the Architecture tagline scrolls so the step card stays in view, and fades at its cut edge until scrolled to the end; the other tabs already scroll.
 - The IT Intern role (Cool Group) is out of the content, so Freelance AI Engineer is the only current role. It rendered on the old pages and, in PR 5, in the home trajectory.
@@ -53,6 +53,15 @@ PR 8 notes:
 - The tokens are on `:root` (light) with the dark theme under `prefers-color-scheme` and `html[data-theme="dark"]`; `data-ui="desk"` is no longer needed. `body` carries the paper, dots, ink and Geist, so every page starts on the desk. `/read` paints plain paper over the dots.
 - The OG card is redrawn in the paper-desk style: headline with the mulberry underline and the portrait.
 - The README describes the desk, the case pages and `/read`.
+
+Final touches (7 Oct):
+
+- The hero's headline block is centred on the screen. The desk's icon column is 12rem narrower than the widget column, so the middle column's centre sat 96px right of the screen's; the block now shifts back by as much as the room beside it allows (all of it from 1232px wide).
+- "Open PrismOS" and the PrismOS desk icon open PrismOS's window, like the other icons (the case page on smaller screens). They used to scroll to the chapter just below.
+- The startup is a boot screen: her name over a progress bar that fills quickly, pauses near the end and completes, then the screen lifts and the desk settles. Once per session, skippable with any key or tap, never under reduced motion. The hero underline draws after it lifts.
+- Each system card on the home page and the window's Brief tab show the product's screenshot.
+- Copy: "Building PrismOS" in the Now widget; the trajectory lede drops "Read upward"; "organized"; "a market that bank-linking APIs do not serve"; "View the code" for a project with no live link, in the window and on the case page.
+- The README no longer carries questions for Elisabeth; they go to her directly.
 
 ## Design sources
 
@@ -83,7 +92,7 @@ PR 8 notes:
 - Project window (`desk/project-window.tsx`): a native `<dialog>` opened by `WindowLink` (the cards and the desk icons) when the viewport is at least 1280 by 720. Smaller screens, and Cmd, Ctrl or Shift clicks, follow the link to `/work/<slug>`. It grows from the card or icon that opened it; Esc, the close button or a click on the scrim closes it, and focus returns to the opener. The last tab is remembered per project under `window:tab:<slug>`; the default is Architecture. It is sized from the dock tokens so it never covers the dock.
 - Window Architecture tab: Next step and Back buttons, or the arrow keys, walk the trace. The trace scrolls sideways inside its well and follows the active step; `TraceMap` takes a `nodeWidth` so tightly spaced rows (Atlas) do not overlap. On a gated trace a gate step replaces Next with its approval button.
 - `desk/document.tsx` (`DeskDocument`) holds everything after the lead chapter: systems, trajectory, capabilities, method, about, contact and the footer, 160px apart on desktop and 96px on a phone. `ui/section-head.tsx` is the shared title-and-lede heading.
-- Trajectory lists the newest role first, so "Read upward" reads oldest to newest. Method is an accordion with the first principle open; each principle ends with "Learned on <project>", which opens that project's window. Contact's Copy button reads "Copied" for two seconds.
+- Trajectory lists the newest role first. Method is an accordion with the first principle open; each principle ends with "Learned on <project>", which opens that project's window. Contact's Copy button reads "Copied" for two seconds.
 - `ui/segmented.tsx` is the Brief / Architecture / Decisions / Stack control: a `tablist` with a sliding thumb, arrow keys, Home and End.
 - Semantic colours `positive`, `caution` and `negative` are now tokens (light and dark), scoped like the rest.
 - The Vercel project is `elisynths`. Previews are behind Vercel login.

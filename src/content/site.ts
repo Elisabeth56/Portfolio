@@ -28,7 +28,7 @@ export const site = {
 
   /** The desk's Now widget, and the line under contact. */
   now: {
-    building: "PrismOS — agent-society tooling",
+    building: "Building PrismOS",
     open: "Open to AI engineering roles and selected contract work",
   },
 } as const;

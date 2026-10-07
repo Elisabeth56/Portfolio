@@ -1,11 +1,12 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
-import { ButtonLink } from "@/components/ui/button-link";
+import { ButtonLink, buttonClass } from "@/components/ui/button-link";
 import { projects } from "@/content/projects";
 import { site } from "@/content/site";
 import { AppIcon } from "./app-icon";
 import type { GlyphId } from "./glyphs";
 import { MenuBar } from "./menu-bar";
+import { WindowLink } from "./project-window";
 import { ThemeToggle } from "./theme-toggle";
 
 /** Order in which pieces settle during startup; read by the CSS as --i. */
@@ -36,7 +37,10 @@ export function Desk() {
           <NowWidget />
         </aside>
 
-        <div className="flex flex-col gap-4 px-1 pt-5 lg:items-center lg:gap-7 lg:px-0 lg:pt-44 lg:text-center">
+        {/* The icon column is 12rem narrower than the widgets, so the middle
+            column's centre sits 6rem right of the screen's. Shift back by as
+            much of that as the room beside the headline allows. */}
+        <div className="flex flex-col gap-4 px-1 pt-5 lg:translate-x-[calc(-1*min(6rem,max(0px,(100vw-77rem)/2)))] lg:items-center lg:gap-7 lg:px-0 lg:pt-44 lg:text-center">
           <span className="hidden -rotate-3 font-hand text-[1.625rem] text-accent lg:block">
             AI engineer
           </span>
@@ -47,7 +51,9 @@ export function Desk() {
             {site.intro}
           </p>
           <div className="hidden items-center gap-6 lg:flex">
-            <ButtonLink href={`#${lead.slug}`}>Open {lead.name}</ButtonLink>
+            <WindowLink slug={lead.slug} className={buttonClass()}>
+              Open {lead.name}
+            </WindowLink>
             <ButtonLink href="#method" variant="text">
               Read the method
             </ButtonLink>
@@ -59,7 +65,8 @@ export function Desk() {
           className="grid grid-cols-4 gap-x-2 gap-y-[1.125rem] pt-1 lg:flex lg:flex-col lg:items-center lg:gap-[1.375rem] lg:pt-3"
         >
           <AppIcon
-            href={`#${lead.slug}`}
+            href={`/work/${lead.slug}`}
+            opens={lead.slug}
             label={lead.name}
             glyph={lead.slug as GlyphId}
             tone="lead"

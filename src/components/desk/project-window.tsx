@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import {
   type ComponentProps,
@@ -358,6 +359,16 @@ function Brief({ project }: { project: Project }) {
             {paragraph}
           </p>
         ))}
+        <div className="mt-2 overflow-hidden rounded-[20px] bg-well">
+          <Image
+            src={`/img/work/${project.slug}.webp`}
+            alt={project.shot.alt}
+            width={project.shot.width}
+            height={project.shot.height}
+            sizes="480px"
+            className="h-auto w-full"
+          />
+        </div>
       </div>
       <div className="flex flex-col gap-4">
         <h3 className="text-[1.75rem] leading-[1.15] font-medium tracking-[-0.025em] lg:mt-9">
@@ -380,7 +391,7 @@ function Brief({ project }: { project: Project }) {
           ) : (
             project.links.repo && (
               <ButtonLink href={project.links.repo} target="_blank" rel="noreferrer">
-                View the repository
+                View the code
               </ButtonLink>
             )
           )}

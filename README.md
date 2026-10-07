@@ -103,15 +103,3 @@ handwritten asides per page.
   card that opened it. Tabs move with the arrow keys, Home and End.
 - Every page is static. No external requests at runtime: fonts are
   self-hosted, no analytics, no CDN.
-
-## Still to do
-
-One thing needs Elisabeth's own detail rather than mine:
-
-1. **Freelance Web Developer (2023–2024)** in `src/content/experience.ts` —
-   currently describes the shape of the role. Replace with real clients,
-   what was delivered, and anything measurable.
-
-Also: the FlowMind landing page still shows placeholder stats (50K+ users,
-2M+ tasks, 98% time saved). Nothing on this site repeats them, but they are
-live on flowmind-sage.vercel.app and worth removing.

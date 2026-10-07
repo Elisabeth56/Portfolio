@@ -25,14 +25,14 @@ export function DeskDocument({ systems }: { systems: Project[] }) {
   );
 }
 
-/* Newest first; the lede asks the reader to read upward, oldest to newest. */
+/* Newest first. */
 function Trajectory() {
   return (
     <section id="trajectory" aria-labelledby="trajectory-title" className="flex scroll-mt-6 flex-col gap-5 lg:gap-10">
       <SectionHead
         id="trajectory-title"
         title="How the work changed"
-        lede="Read upward. Each stage moved the boundary of what I was accountable for."
+        lede="Each stage moved the line on what I was accountable for."
       />
       <ol className="flex flex-col gap-3">
         {[...roles].reverse().map((role) => (
@@ -83,7 +83,7 @@ function Capabilities() {
       <SectionHead
         id="capabilities-title"
         title="Grouped by what I do with them"
-        lede="A list of logos tells you what someone has installed. This is organised by the job each layer is doing."
+        lede="A list of logos tells you what someone has installed. This is organized by the job each layer is doing."
       />
       <dl className="flex flex-col rounded-3xl bg-surface px-5 py-2 lg:rounded-[28px] lg:px-8 lg:py-3">
         {capabilities.map((group) => (

@@ -16,6 +16,9 @@ const variants = {
   text: "text-ink hover:text-accent",
 };
 
+/** The button look, for links that cannot be a `ButtonLink` (a `WindowLink`). */
+export const buttonClass = (variant: Props["variant"] = "primary") => cn(base, variants[variant]);
+
 export function ButtonLink({ variant = "primary", className, ...props }: Props) {
   return <Link className={cn(base, variants[variant], className)} {...props} />;
 }

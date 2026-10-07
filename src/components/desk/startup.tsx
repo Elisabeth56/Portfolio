@@ -4,10 +4,11 @@ import { useEffect } from "react";
 import { site } from "@/content/site";
 import { STARTUP_KEY } from "@/lib/theme";
 
-const DURATION_MS = 1700;
+const DURATION_MS = 2800;
 
 /**
- * The Mac moment: her name on plain paper, then the desk settles in. The
+ * The Mac moment: her name over a filling progress bar, then the screen lifts
+ * and the desk settles in. The
  * animation is CSS keyed on <html data-startup>, set before paint, so this
  * component only has to end it: on a timer, or at once on any key or tap.
  */
@@ -37,18 +38,13 @@ export function Startup() {
 
   return (
     <div aria-hidden className="startup-mark fixed inset-0 z-50 place-items-center bg-paper">
-      <div className="flex flex-col items-center gap-1.5">
-        <span className="text-[1.375rem] font-medium tracking-[-0.02em]">{site.name}</span>
-        <svg viewBox="0 0 150 10" fill="none" className="h-2.5 w-[150px] text-accent">
-          <path
-            className="startup-stroke"
-            pathLength={1}
-            d="M3 6C40 2 80 8 147 4"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-          />
-        </svg>
+      <div className="flex flex-col items-center gap-9 pb-[6vh]">
+        <span className="text-[2rem] font-semibold tracking-[-0.03em] lg:text-[2.5rem]">
+          {site.name}
+        </span>
+        <span className="h-[5px] w-44 overflow-hidden rounded-full bg-well lg:w-52">
+          <span className="startup-bar block size-full origin-left rounded-full bg-ink" />
+        </span>
       </div>
     </div>
   );

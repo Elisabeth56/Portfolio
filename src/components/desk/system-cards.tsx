@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Project } from "@/content/projects";
 import { buildSteps } from "@/components/trace/steps";
 import { cn } from "@/lib/utils";
@@ -62,6 +63,16 @@ function SystemCard({ project }: { project: Project }) {
       <p className="text-base leading-[1.45] text-pretty text-ink-2 lg:text-lg lg:leading-[1.4]">
         {project.tagline}
       </p>
+      <div className="aspect-[2/1] overflow-hidden rounded-2xl bg-well">
+        <Image
+          src={`/img/work/${project.slug}.webp`}
+          alt={project.shot.alt}
+          width={project.shot.width}
+          height={project.shot.height}
+          sizes="(min-width: 1024px) 560px, calc(100vw - 80px)"
+          className="size-full object-cover object-top"
+        />
+      </div>
       <Glimpse project={project} />
     </WindowLink>
   );
