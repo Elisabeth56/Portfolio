@@ -114,13 +114,11 @@ tints that system's desk tile, window title bar and trace glyph.
 
 ## Still to do
 
-Two things need Elisabeth's own detail rather than mine:
+One thing needs Elisabeth's own detail rather than mine:
 
 1. **Freelance Web Developer (2023–2024)** in `src/content/experience.ts` —
    currently describes the shape of the role. Replace with real clients,
    what was delivered, and anything measurable.
-2. **IT Intern, Cool Group (Jun–Dec 2026)** — same. It is rendered as
-   in-progress.
 
 Also: the FlowMind landing page still shows placeholder stats (50K+ users,
 2M+ tasks, 98% time saved). Nothing on this site repeats them, but they are

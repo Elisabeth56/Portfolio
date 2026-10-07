@@ -32,20 +32,6 @@ export const roles: Role[] = [
   },
   {
     index: "02",
-    title: "IT Intern",
-    org: "Cool Group",
-    period: "June 2026 — December 2026",
-    current: true,
-    frame: "Working inside an organization's operational context.",
-    body: [
-      "Six months inside a functioning IT organization, where systems have owners, history, and consequences that outlast the person who touched them last.",
-      "The difference from independent work is not technical difficulty. It is that nothing exists in isolation — every change lands in an environment somebody else depends on.",
-    ],
-    shift:
-      "From owning a repo end to end to operating inside something larger than the thing I built.",
-  },
-  {
-    index: "03",
     title: "Freelance AI Engineer",
     org: "Independent",
     period: "2025 — Present",
