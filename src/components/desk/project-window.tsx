@@ -5,6 +5,7 @@ import {
   type ComponentProps,
   type MouseEvent,
   type ReactNode,
+  type RefObject,
   createContext,
   useCallback,
   useContext,
@@ -208,6 +209,8 @@ function Architecture({ project }: { project: Project }) {
   const [active, setActive] = useState(0);
   const [approved, setApproved] = useState<Set<string>>(() => new Set());
   const scroller = useRef<HTMLDivElement>(null);
+  const intro = useRef<HTMLDivElement>(null);
+  const introCut = useMoreBelow(intro);
   const layout = useMemo(() => fitNodes(project), [project]);
 
   const step = steps[active];
@@ -252,7 +255,13 @@ function Architecture({ project }: { project: Project }) {
     >
       <div className="flex min-h-0 w-80 shrink-0 flex-col gap-4">
         {/* In a short window the tagline scrolls, so the step card and its button stay in view. */}
-        <div className="thin-scrollbar flex min-h-0 flex-col gap-4 overflow-y-auto">
+        <div
+          ref={intro}
+          className={cn(
+            "thin-scrollbar flex min-h-0 flex-col gap-4 overflow-y-auto",
+            introCut && "[mask-image:linear-gradient(to_bottom,#000_calc(100%-3rem),transparent)]",
+          )}
+        >
           <Meta project={project} />
           <p className="text-[1.75rem] leading-[1.18] font-medium tracking-[-0.025em] text-pretty">
             {project.tagline}
@@ -338,6 +347,27 @@ function fitNodes(project: Project) {
   }
   const nodeWidth = Math.min(NODE_W, gap * 0.9);
   return { nodeWidth, minWidth: Math.round((NODE_MIN_PX / nodeWidth) * 100) };
+}
+
+/** Whether a scrolling element has more content below what it shows, so its edge can fade. */
+function useMoreBelow(ref: RefObject<HTMLElement | null>) {
+  const [more, setMore] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const update = () => setMore(el.scrollHeight - el.scrollTop - el.clientHeight > 1);
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    return () => {
+      el.removeEventListener("scroll", update);
+      observer.disconnect();
+    };
+  }, [ref]);
+
+  return more;
 }
 
 /* ---------- Brief, Decisions, Stack: the case in short ---------- */
