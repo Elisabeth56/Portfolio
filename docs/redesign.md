@@ -19,19 +19,19 @@ Each PR targets `main` and goes live as it lands. Merges are done by fast-forwar
 | 2 | `feat/home-desk` | Home desk, dock, theme switch, startup | Live 7 Oct |
 | 3 | `feat/lead-trace` | PrismOS pinned trace chapter | Live 7 Oct |
 | 4 | `elisabeth/lucid-ramanujan-7kgup0` | Other four system cards, project window with Brief / Architecture / Decisions / Stack tabs, mobile gap fix | Live 7 Oct |
-| 5 | `feat/home-document` | Trajectory, capabilities, method, about, contact, footer | In review |
+| 5 | `feat/home-document` | Trajectory, capabilities, method, about, contact, footer | Live 7 Oct |
 | 6 | `feat/case-page` | Case page `/work/<slug>` | Screenshots in, build not started |
 | 7 | | `/read` | |
 | 8 | | Remove old shells and fonts, move tokens to `:root` | |
 
-With PR 5 the home page has every section of the screens canvas, and every dock tile and "Read the method" lands on its section. Until it lands, those sections only exist at `/read`.
+The home page now has every section of the screens canvas, and every dock tile and "Read the method" lands on its section.
 
 PR 4 notes:
 
 - Mobile gap fixed: the desk's bottom padding went from 128px to 56px, matching the board. In PR 5 the room the fixed dock needs sits at the bottom of `DeskDocument`, under the footer.
 - Until PR 6, "Open full page" in the window and every card on a phone or tablet go to the old `/work/<slug>` page.
 - Atlas AI's gates now pause the window's trace until approved. FarmTwin's network switch and FinSight's file-type branch (Trace component notes) are not built yet; they belong with the case page in PR 6.
-- The project window clears the dock. `--spacing-dock` (the dock's height) and `--spacing-dock-inset` (its distance from the bottom on desktop) are spacing tokens; the window sits above the dock with the inset as the gap above and below it, at most 700px tall. In a short window the Architecture tagline scrolls so the step card stays in view; the other tabs already scroll.
+- The project window clears the dock. `--spacing-dock` (the dock's height) and `--spacing-dock-inset` (its distance from the bottom on desktop) are spacing tokens; the window sits above the dock with the inset as the gap above and below it, at most 700px tall. In a short window the Architecture tagline scrolls so the step card stays in view, and fades at its cut edge until scrolled to the end; the other tabs already scroll.
 - The IT Intern role (Cool Group) is out of the content, so Freelance AI Engineer is the only current role. It rendered on the old pages and, in PR 5, in the home trajectory.
 
 ## Design sources
@@ -71,7 +71,7 @@ PR 4 notes:
 
 ## Open with Elisabeth
 
-- Copy flags from the audit: FlowMind's headline length, system-speak in the old chrome.
+- Copy flag from the audit: system-speak in the old chrome. It goes with the old shells in PR 8.
 
 Decided on 7 Oct:
 
@@ -81,6 +81,8 @@ Decided on 7 Oct:
 - New interface copy approved: 404 text, empty and error states, "Back to the desk", "Open the desk".
 - "Learned on FinSight" stays plain text, keeping the two-aside rule.
 - Capabilities: "Serving it" lists Next.js where the content had NestJS.
+- FlowMind's tagline is shortened to "Removing the triage tax that kills productivity systems."
+- The window's tagline fades where a short window cuts it off.
 - Product screenshots received. They are cropped to each product's own interface (no gradient backdrop, no browser chrome, per the design rules) and saved as `public/img/work/<slug>.webp`, 1600px wide, on the PR 6 branch `feat/case-page`.
 
 ## Build rules
