@@ -40,6 +40,8 @@ export type Trace = {
   caption: string;
   /** The node that carries the project's argument; its system card leads with it. */
   focus?: string;
+  /** A fork the visitor chooses: each option keeps one node and skips the others. */
+  branch?: { label: string; options: { node: string; label: string }[] };
 };
 
 export type Decision = {
@@ -60,6 +62,8 @@ export type Project = {
   role: string;
   roleNote?: string;
   links: { live?: string; repo?: string };
+  /** A screenshot of the product at `/img/work/<slug>.webp`. */
+  shot: { width: number; height: number; alt: string };
   problem: string[];
   stakes: string;
   built: string[];
@@ -85,6 +89,7 @@ export const projects: Project[] = [
     roleNote:
       "I defined the agent-society model, owned the blueprint through three versions, and made the architectural and scope calls. Implementation was directed rather than hand-typed — I reviewed output and gave corrective feedback. The scope enforcement was the part that mattered: every capability added after v1.0 went in as a patch against working architecture, never a rebuild.",
     links: { live: "https://prism-os-jade.vercel.app/" },
+    shot: { width: 1600, height: 1000, alt: "The PrismOS landing page, headed “Ship features with a full AI team.”" },
     problem: [
       "AI coding assistants are single-voiced. One model takes a feature request and decides everything itself — scope, architecture, implementation, testing — and it never disagrees with itself. The output compiles and demos well, and it quietly skips every tradeoff a real team would argue about.",
       "The second failure is context. Most agent tools generate in a vacuum. They do not know what the codebase already looks like, what stack it runs on, or what was decided three features ago. The result is technically valid and architecturally foreign.",
@@ -268,6 +273,7 @@ export const projects: Project[] = [
       "Natural language to production dbt models, grounded in the catalog your organization already has.",
     role: "Sole architect and engineer",
     links: { live: "https://atlas-ai-taupe.vercel.app/" },
+    shot: { width: 1600, height: 1002, alt: "The Atlas AI landing page, headed “Your data platform, operated by agents that never sleep.”" },
     problem: [
       "A business question — daily revenue by customer segment for the last ninety days — becomes a ticket, which sits in a queue, which becomes a data engineer hunting for the right tables, checking which columns are trustworthy, writing SQL and a dbt model, adding tests, writing docs and updating the catalog. Hours to days per request, and almost none of it creative.",
       "Point a language model at it and you hit a specific wall: it hallucinates schemas. It invents column names that sound plausible and joins on keys that do not exist. Ungrounded generation is worse than useless, because the output looks correct.",
@@ -441,6 +447,7 @@ export const projects: Project[] = [
     roleNote:
       "Architecture, backend, AI pipeline, frontend integration, payments and deployment. The marketing site predated the build; everything from the API surface inward is mine.",
     links: { live: "https://finsight-red-two.vercel.app/" },
+    shot: { width: 1600, height: 891, alt: "FinSight’s upload screen, where a CSV or PDF bank statement is dropped in." },
     problem: [
       "Bank statements are one of the richest personal datasets most people own and one of the least usable. They arrive as CSVs with inconsistent column names, or as PDFs where the transaction table is a visual artifact rather than structured data. Getting anything out of them means manual tagging in a spreadsheet, which almost nobody sustains past the first month.",
       "For Nigerian users the existing tools are worse than tedious. Western personal-finance apps depend on bank-linking APIs with poor or no coverage for Nigerian banks, price in USD only, and categorize against merchant vocabularies that do not recognize local transaction descriptors.",
@@ -501,6 +508,13 @@ export const projects: Project[] = [
     trace: {
       mode: "flow",
       focus: "markdown",
+      branch: {
+        label: "Statement type",
+        options: [
+          { node: "csv", label: "CSV" },
+          { node: "pdf", label: "PDF" },
+        ],
+      },
       caption:
         "The ingestion path. The markdown re-serialization step is the one that decides whether the model can reason about the table at all.",
       sequence: [
@@ -614,6 +628,7 @@ export const projects: Project[] = [
     roleNote:
       "Model selection and benchmarking, knowledge base curation and chunking, retrieval pipeline, backend, frontend and design system, the speech-to-text evaluation, and the full submission artifacts including ADRs.",
     links: { repo: "https://github.com/Elisabeth56/FarmTwin" },
+    shot: { width: 1600, height: 900, alt: "FarmTwin’s start screen, noting that it runs entirely on the laptop with no internet." },
     problem: [
       "Smallholder maize farmers in Nigeria make high-stakes agronomic decisions — planting dates, fertilizer timing and rates, pest response — largely without extension services. Where digital advisory tools exist they assume reliable connectivity, a modern smartphone and a cloud backend. That assumption fails in exactly the places the advice is most needed.",
       "There is also a trust problem specific to AI advisory in agriculture. A chatbot answering how much urea to apply at six weeks with a plausible but ungrounded number is worse than no tool at all, because a wrong dose costs a season.",
@@ -750,6 +765,7 @@ export const projects: Project[] = [
     roleNote:
       "Defined the product, chose the stack, and drove it through four phases — schema, AI orchestration, payments, deployment. The consequential calls were mine, including replacing Stripe with Paystack for the Nigerian market and catching the incomplete migration when stripe_customer_id was still sitting in the schema afterwards.",
     links: { live: "https://flowmind-sage.vercel.app/" },
+    shot: { width: 1600, height: 893, alt: "FlowMind’s landing page, with the assistant laying out a plan for the day." },
     problem: [
       "Knowledge workers capture information faster than they can organize it. Notes land in one app, tasks in another, half-formed ideas in a file nobody reopens. The bottleneck is the triage afterwards — deciding what belongs to which project, what actually matters today, and whether last week's intentions matched last week's reality.",
       "Notion, Todoist and Apple Notes are storage layers. They require the user to do the sorting.",

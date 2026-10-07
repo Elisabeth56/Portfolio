@@ -1,17 +1,12 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getProject, projects } from "@/content/projects";
+import { Decisions } from "@/components/case/decisions";
+import { Glyph, type GlyphId } from "@/components/desk/glyphs";
+import { ProjectChapter } from "@/components/trace/project-chapter";
+import { getProject, type Project, projects } from "@/content/projects";
 import { site } from "@/content/site";
-import { TraceCanvas } from "@/components/traces/TraceCanvas";
-import { TopBar } from "@/components/document/TopBar";
-import {
-  Label,
-  MetaRow,
-  Shell,
-  StatusPill,
-  TextLink,
-} from "@/components/document/primitives";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -37,6 +32,9 @@ export async function generateMetadata({
   };
 }
 
+/* The lead project's aside, the only handwritten line on its case page. */
+const asides: Partial<Record<string, string>> = { prismos: "they have to disagree" };
+
 export default async function WorkPage({ params }: PageProps<"/work/[slug]">) {
   const { slug } = await params;
   const p = getProject(slug);
@@ -44,237 +42,222 @@ export default async function WorkPage({ params }: PageProps<"/work/[slug]">) {
 
   const i = projects.findIndex((x) => x.slug === p.slug);
   const next = projects[(i + 1) % projects.length];
+  // Back to where the visitor most likely came from: the lead chapter or the cards.
+  const back = i === 0 ? `/#${p.slug}` : "/#systems";
 
   return (
-    <div data-surface="light" className="relative min-h-screen bg-bg text-fg">
-      <div aria-hidden className="tx-paper pointer-events-none fixed inset-0 z-0" />
-      <div className="relative z-10">
-        <TopBar />
+    <main data-ui="desk" className="min-h-dvh">
+      <nav
+        aria-label="Case study"
+        className="flex h-16 items-center justify-between px-5 text-sm lg:h-12 lg:px-8"
+      >
+        <Link
+          href={back}
+          className="-ml-1 flex h-11 items-center gap-2 px-1 text-[0.9375rem] text-ink-2 transition-colors duration-200 ease-ui hover:text-accent lg:gap-3 lg:text-sm"
+        >
+          <svg
+            aria-hidden
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="size-[18px] lg:hidden"
+          >
+            <path d="M15 5l-7 7 7 7" />
+          </svg>
+          <span className="hidden font-semibold text-ink lg:inline">{site.name}</span>
+          Back to the desk
+        </Link>
+        <span className="hidden text-ink-2 lg:inline">
+          Systems · {i + 1} of {projects.length}
+        </span>
+      </nav>
 
-        <main>
-          <Shell>
-            {/* masthead */}
-            <header className="pt-28 sm:pt-32 lg:pt-36">
-              <div className="flex flex-wrap items-baseline justify-between gap-4 border-t border-line pt-4">
-                <div className="flex items-baseline gap-5">
-                  <span className="t-label text-accent">{p.index}/</span>
-                  <Label>{p.kind}</Label>
-                </div>
-                <StatusPill status={p.status} />
-              </div>
+      <div className="mx-auto flex max-w-[75rem] flex-col gap-24 px-5 pt-6 pb-24 lg:gap-40 lg:px-8 lg:pt-[5.5rem] lg:pb-36">
+        <Header project={p} />
 
-              <h1 className="t-display mt-10 text-[clamp(3rem,11vw,9rem)] uppercase">
-                {p.name}
-              </h1>
+        <div className="-mt-10 lg:-mt-16">
+          <ProjectChapter project={p} variant="case" aside={asides[p.slug]} />
+        </div>
 
-              <p className="t-display mt-8 max-w-4xl text-[clamp(1.25rem,3vw,2.25rem)] tracking-[-0.02em]">
-                {p.tagline}
-              </p>
-            </header>
+        <ProblemAndBuild project={p} />
 
-            {/* meta + links */}
-            <div className="mt-14 grid gap-8 border-t border-line pt-6 lg:grid-cols-12 lg:gap-10">
-              <div className="lg:col-span-5">
-                <dl>
-                  <MetaRow k="Period">{p.period}</MetaRow>
-                  <MetaRow k="Role">{p.role}</MetaRow>
-                  <MetaRow k="Status">{p.status}</MetaRow>
-                </dl>
-                <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
-                  {p.links.live && (
-                    <TextLink href={p.links.live} external className="text-[0.9375rem]">
-                      Visit {p.name}
-                    </TextLink>
-                  )}
-                  {p.links.repo && (
-                    <TextLink href={p.links.repo} external className="text-[0.9375rem]">
-                      Repository
-                    </TextLink>
-                  )}
-                </div>
-              </div>
-              {p.roleNote && (
-                <div className="lg:col-span-7">
-                  <Label className="mb-3 block">On my role</Label>
-                  <p className="t-prose text-[1.0625rem] text-fg-muted">
-                    {p.roleNote}
-                  </p>
-                </div>
-              )}
-            </div>
+        <section aria-labelledby="architecture-title" className="flex flex-col gap-4 lg:gap-5">
+          <h2
+            id="architecture-title"
+            className="text-[1.75rem] leading-[1.12] font-medium tracking-[-0.025em] lg:text-[2rem]"
+          >
+            The architecture
+          </h2>
+          {p.architecture.map((paragraph) => (
+            <p
+              key={paragraph}
+              className="max-w-[65ch] text-base leading-[1.55] text-ink-2 lg:text-[1.0625rem]"
+            >
+              {paragraph}
+            </p>
+          ))}
+        </section>
 
-            {/* problem */}
-            <Section index="01" title="The problem">
-              <div className="t-prose space-y-4 text-[1.0625rem] text-fg-muted">
-                {p.problem.map((x, n) => (
-                  <p key={n}>{x}</p>
-                ))}
-              </div>
-              <p className="t-prose mt-8 border-l-2 border-accent/50 pl-5 text-[1.0625rem] text-fg">
-                <span className="t-label mb-2 block text-accent">
-                  Why it matters
-                </span>
-                {p.stakes}
-              </p>
-            </Section>
+        <Decisions decisions={p.decisions} />
 
-            {/* what I built */}
-            <Section index="02" title="What I built">
-              <div className="t-prose space-y-4 text-[1.0625rem] text-fg-muted">
-                {p.built.map((x, n) => (
-                  <p key={n}>{x}</p>
-                ))}
-              </div>
-            </Section>
-          </Shell>
+        <StackAndProof project={p} />
 
-          {/* architecture — full measure */}
-          <Shell>
-            <section className="mt-24 border-t border-line pt-6 sm:mt-32">
-              <div className="flex items-baseline gap-5">
-                <span className="t-label text-accent">03/</span>
-                <Label>Architecture</Label>
-              </div>
-              <h2 className="t-display mt-6 text-[clamp(1.75rem,4.4vw,3.25rem)] uppercase">
-                How it holds together
-              </h2>
-              <div className="mt-9">
-                <TraceCanvas trace={p.trace} />
-              </div>
-              <div className="t-prose mt-10 space-y-4 text-[1.0625rem] text-fg-muted">
-                {p.architecture.map((x, n) => (
-                  <p key={n}>{x}</p>
-                ))}
-              </div>
-            </section>
-          </Shell>
-
-          <Shell>
-            {/* decisions */}
-            <Section index="04" title="Decisions">
-              <ol className="space-y-12">
-                {p.decisions.map((d, n) => (
-                  <li key={n} className="grid gap-4 lg:grid-cols-12 lg:gap-10">
-                    <div className="lg:col-span-4">
-                      <span className="t-label text-fg-faint">
-                        {String(n + 1).padStart(2, "0")}
-                      </span>
-                      <h3 className="t-serif mt-3 text-[clamp(1.375rem,2.6vw,1.875rem)] leading-tight">
-                        {d.title}
-                      </h3>
-                    </div>
-                    <div className="lg:col-span-8">
-                      <p className="t-prose text-[1.0625rem] text-fg-muted">
-                        {d.body}
-                      </p>
-                      {d.cost && (
-                        <p className="t-prose mt-4 border-l-2 border-accent/50 pl-5 text-[1.0625rem] text-fg-muted">
-                          <span className="t-label mr-2 text-accent">Cost</span>
-                          {d.cost}
-                        </p>
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </Section>
-
-            {/* stack + demonstrates */}
-            <Section index="05" title="Stack">
-              <div className="grid gap-10 lg:grid-cols-12">
-                <div className="lg:col-span-7">
-                  <div className="divide-y divide-line-soft border-y border-line-soft">
-                    {p.stack.map((g) => (
-                      <div
-                        key={g.group}
-                        className="grid grid-cols-[7.5rem_1fr] gap-4 py-4 sm:grid-cols-[9rem_1fr]"
-                      >
-                        <Label>{g.group}</Label>
-                        <ul className="flex flex-wrap gap-x-3 gap-y-2">
-                          {g.items.map((it) => (
-                            <li
-                              key={it}
-                              className="t-mono text-[0.8125rem] after:ml-3 after:text-fg-faint after:content-['·'] last:after:content-none"
-                            >
-                              {it}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="lg:col-span-5">
-                  <Label className="mb-4 block">What it demonstrates</Label>
-                  <ul className="space-y-3">
-                    {p.demonstrates.map((d) => (
-                      <li
-                        key={d}
-                        className="flex gap-3 text-[0.9375rem] text-fg-muted"
-                      >
-                        <span
-                          aria-hidden
-                          className="mt-[0.5em] text-[0.4rem] text-accent"
-                        >
-                          ●
-                        </span>
-                        {d}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </Section>
-
-            {/* next */}
-            <nav className="mt-28 border-t border-line pt-6 sm:mt-36">
-              <div className="flex flex-wrap items-end justify-between gap-6">
-                <Link
-                  href="/read#systems"
-                  className="t-label inline-block py-1.5 text-fg-muted transition-colors hover:text-accent"
-                >
-                  ← All systems
-                </Link>
-                <Link href={`/work/${next.slug}`} className="group text-right">
-                  <span className="t-label block text-fg-faint">Next</span>
-                  <span className="t-display mt-2 block text-[clamp(1.75rem,5vw,3.5rem)] uppercase transition-colors group-hover:text-accent">
-                    {next.name}
-                  </span>
-                </Link>
-              </div>
-              <p className="t-label py-14 text-fg-faint">
-                © {new Date().getFullYear()} Elisabeth Nnamani
-              </p>
-            </nav>
-          </Shell>
-        </main>
+        <Link
+          href={`/work/${next.slug}`}
+          className="group -mt-8 flex h-[8.25rem] items-center justify-between rounded-[28px] bg-surface px-6 text-ink transition-[background-color,transform] duration-200 ease-ui hover:bg-[color-mix(in_srgb,var(--color-ink)_3%,var(--color-surface))] active:scale-[0.99] lg:h-[12.5rem] lg:rounded-[32px] lg:px-14"
+        >
+          <span className="flex flex-col gap-1.5 lg:gap-2">
+            <span className="text-sm text-ink-2 lg:text-[0.9375rem]">Next system</span>
+            <span className="text-[2.25rem] leading-none font-medium tracking-[-0.035em] transition-colors duration-200 ease-ui group-hover:text-accent lg:text-[4rem]">
+              {next.name}
+            </span>
+          </span>
+          <span className="grid size-16 place-items-center rounded-[20px] bg-well text-accent lg:size-24 lg:rounded-[30px]">
+            <Glyph id={next.slug as GlyphId} className="size-7 lg:size-[42px]" />
+          </span>
+        </Link>
       </div>
+    </main>
+  );
+}
+
+function Header({ project: p }: { project: Project }) {
+  const link = p.links.live ?? p.links.repo;
+  return (
+    <header className="flex flex-col gap-[18px] lg:flex-row lg:items-end lg:gap-20">
+      <div className="flex flex-col gap-[18px] lg:w-[40rem] lg:shrink-0 lg:gap-6">
+        <div className="mt-3 flex items-center gap-3 lg:mt-0 lg:gap-3.5">
+          <span className="grid size-12 shrink-0 place-items-center rounded-[15px] bg-accent text-on-accent lg:size-[52px] lg:rounded-[17px]">
+            <Glyph id={p.slug as GlyphId} className="size-6 lg:size-[26px]" />
+          </span>
+          <span className="text-sm text-ink-2 lg:text-[0.9375rem]">
+            {p.kind} · {p.period} ·{" "}
+            <span className={p.status === "Submitted" ? undefined : "text-positive"}>
+              {p.status}
+            </span>
+          </span>
+        </div>
+        <h1 className="text-[4rem] leading-[0.95] font-medium tracking-[-0.045em] lg:text-[7rem]">
+          {p.name}
+        </h1>
+        <p className="text-2xl leading-[1.2] tracking-[-0.02em] text-pretty lg:text-[2rem] lg:leading-[1.18] lg:tracking-[-0.025em]">
+          {p.tagline}
+        </p>
+        <div className="mt-2 flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-6">
+          {link && (
+            <a
+              href={link}
+              target="_blank"
+              rel="noreferrer"
+              className="flex h-12 items-center justify-center rounded-full bg-accent-tint px-6 text-base font-medium text-accent-ink transition-[background-color,transform] duration-200 ease-ui hover:bg-[color-mix(in_srgb,var(--color-accent)_10%,var(--color-accent-tint))] active:scale-[0.98] lg:self-start"
+            >
+              {p.links.live ? `Visit ${p.name}` : "Read the code"}
+            </a>
+          )}
+          <span className="hidden text-[0.9375rem] text-ink-2 lg:inline">{p.role}</span>
+        </div>
+        {!p.links.live && p.trace.mode === "offline" && (
+          <p className="text-[0.9375rem] leading-normal text-ink-2">
+            It runs offline on a laptop, so there is nothing to visit.
+          </p>
+        )}
+      </div>
+      {p.roleNote && (
+        <div className="flex flex-col gap-1.5 rounded-[20px] bg-surface p-[18px] lg:grow lg:gap-2.5 lg:rounded-3xl lg:p-7">
+          <span className="text-[0.8125rem] text-ink-2 lg:text-sm">
+            <span className="lg:hidden">{p.role}</span>
+            <span className="hidden lg:inline">On my role</span>
+          </span>
+          <p className="text-[0.9375rem] leading-normal lg:text-base lg:leading-[1.55]">
+            {p.roleNote}
+          </p>
+        </div>
+      )}
+    </header>
+  );
+}
+
+function ProblemAndBuild({ project: p }: { project: Project }) {
+  const heading =
+    "text-[1.75rem] leading-[1.12] font-medium tracking-[-0.025em] lg:text-[2rem]";
+  const body = "max-w-[65ch] text-base leading-[1.55] text-ink-2 lg:text-[1.0625rem]";
+  return (
+    <div className="flex flex-col gap-10 lg:grid lg:grid-cols-2 lg:gap-20">
+      <section aria-labelledby="problem-title" className="flex flex-col gap-4 lg:gap-5">
+        <h2 id="problem-title" className={heading}>
+          The problem
+        </h2>
+        {p.problem.map((paragraph) => (
+          <p key={paragraph} className={body}>
+            {paragraph}
+          </p>
+        ))}
+        <p className="max-w-[65ch] text-base leading-[1.55] lg:text-[1.0625rem]">{p.stakes}</p>
+      </section>
+      <section aria-labelledby="built-title" className="flex flex-col gap-4 lg:gap-5">
+        <h2 id="built-title" className={heading}>
+          What I built
+        </h2>
+        {p.built.map((paragraph) => (
+          <p key={paragraph} className={body}>
+            {paragraph}
+          </p>
+        ))}
+        <figure className="mt-2 overflow-hidden rounded-[20px] bg-well lg:rounded-3xl">
+          <Image
+            src={`/img/work/${p.slug}.webp`}
+            alt={p.shot.alt}
+            width={p.shot.width}
+            height={p.shot.height}
+            sizes="(min-width: 1024px) 560px, calc(100vw - 40px)"
+            className="h-auto w-full"
+          />
+        </figure>
+      </section>
     </div>
   );
 }
 
-function Section({
-  index,
-  title,
-  children,
-}: {
-  index: string;
-  title: string;
-  children: React.ReactNode;
-}) {
+function StackAndProof({ project: p }: { project: Project }) {
   return (
-    <section className="mt-24 border-t border-line pt-6 sm:mt-32">
-      <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
-        <div className="lg:col-span-3">
-          <div className="flex items-baseline gap-4 lg:sticky lg:top-24 lg:block">
-            <span className="t-label text-accent">{index}/</span>
-            <h2 className="t-display mt-0 text-[clamp(1.25rem,2.4vw,1.75rem)] uppercase lg:mt-3">
-              {title}
-            </h2>
-          </div>
-        </div>
-        <div className="lg:col-span-9">{children}</div>
-      </div>
-    </section>
+    <div className="flex flex-col gap-16 lg:flex-row lg:gap-20">
+      <section aria-labelledby="stack-title" className="flex flex-col gap-4 lg:w-[38.75rem] lg:shrink-0 lg:gap-6">
+        <h2
+          id="stack-title"
+          className="text-[1.75rem] leading-[1.12] font-medium tracking-[-0.025em] lg:text-[2rem]"
+        >
+          Stack
+        </h2>
+        <dl className="flex flex-col rounded-3xl bg-surface px-5 py-2 text-[0.9375rem] lg:px-7">
+          {p.stack.map((group) => (
+            <div
+              key={group.group}
+              className="flex flex-col gap-0.5 py-3 lg:min-h-14 lg:flex-row lg:items-center lg:gap-6"
+            >
+              <dt className="text-[0.8125rem] text-ink-2 lg:w-[8.125rem] lg:shrink-0 lg:text-[0.9375rem]">
+                {group.group}
+              </dt>
+              <dd>{group.items.join(" · ")}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+      <section aria-labelledby="proof-title" className="flex flex-col gap-4 lg:grow lg:gap-6">
+        <h2
+          id="proof-title"
+          className="text-[1.75rem] leading-[1.12] font-medium tracking-[-0.025em] lg:text-[2rem]"
+        >
+          What it demonstrates
+        </h2>
+        <ul className="flex flex-col gap-3.5 text-base leading-[1.4] lg:pt-3 lg:text-[1.0625rem]">
+          {p.demonstrates.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </section>
+    </div>
   );
 }

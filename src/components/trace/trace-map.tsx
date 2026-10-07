@@ -10,6 +10,8 @@ type Props = {
   aside?: string;
   /** Node width as a share of the map; edges start and end at its sides. */
   nodeWidth?: number;
+  /** FarmTwin: a dashed line around everything that runs on the device. */
+  boundary?: string;
 };
 
 export const NODE_W = 13.5;
@@ -18,16 +20,28 @@ export const NODE_W = 13.5;
  * The architecture as a map: nodes at the positions the content gives them,
  * joined by curved lines. A node is done, active or still ahead.
  */
-export function TraceMap({ trace, stepOf, active, aside, nodeWidth = NODE_W }: Props) {
+export function TraceMap({ trace, stepOf, active, aside, nodeWidth = NODE_W, boundary }: Props) {
   const byId = new Map(trace.nodes.map((node) => [node.id, node]));
+  // A node with no step is on the branch the visitor did not choose.
   const state = (id: string) => {
-    const index = stepOf.get(id) ?? 0;
+    const index = stepOf.get(id);
+    if (index === undefined) return "skipped";
     return index < active ? "done" : index === active ? "active" : "ahead";
   };
   const anchor = trace.nodes.find((node) => state(node.id) === "active");
 
   return (
-    <div className="h-full min-h-[26rem] rounded-3xl bg-paper px-5 py-4 text-sm">
+    <div className="relative h-full min-h-[26rem] rounded-3xl bg-paper px-5 py-4 text-sm">
+      {boundary && (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-3 rounded-[18px] border-2 border-dashed border-ink-4"
+        >
+          <span className="absolute -top-2.5 left-5 bg-paper px-2 text-[0.8125rem] leading-none text-ink-2">
+            {boundary}
+          </span>
+        </div>
+      )}
       {/* Inset so the outermost nodes clear the rounded corners. */}
       <div className="relative size-full">
         <svg
@@ -41,7 +55,8 @@ export function TraceMap({ trace, stepOf, active, aside, nodeWidth = NODE_W }: P
             const from = byId.get(edge.from);
             const to = byId.get(edge.to);
             if (!from || !to) return null;
-            const reached = (stepOf.get(edge.to) ?? 0) <= active;
+            const skipped = !stepOf.has(edge.from) || !stepOf.has(edge.to);
+            const reached = !skipped && (stepOf.get(edge.to) ?? 0) <= active;
             const isLoop = edge.kind === "loop";
             return (
               <path
@@ -49,7 +64,7 @@ export function TraceMap({ trace, stepOf, active, aside, nodeWidth = NODE_W }: P
                 d={isLoop ? loopPath(from, to) : flowPath(from, to, nodeWidth)}
                 vectorEffect="non-scaling-stroke"
                 strokeWidth={isLoop ? 1.5 : 2}
-                strokeDasharray={isLoop ? "4 5" : undefined}
+                strokeDasharray={isLoop || skipped ? "4 5" : undefined}
                 strokeLinecap="round"
                 className={cn(
                   "transition-[stroke] duration-500 ease-reveal",
@@ -75,6 +90,7 @@ export function TraceMap({ trace, stepOf, active, aside, nodeWidth = NODE_W }: P
                 nodeState === "active" && "bg-accent text-on-accent",
                 nodeState === "done" && "bg-surface text-ink",
                 nodeState === "ahead" && "bg-surface text-ink-3",
+                nodeState === "skipped" && "border-2 border-dashed border-ink-4 text-ink-3",
               )}
             >
               <span className="leading-tight font-medium">{node.label}</span>

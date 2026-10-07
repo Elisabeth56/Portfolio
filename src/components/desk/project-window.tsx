@@ -15,7 +15,7 @@ import {
   useState,
 } from "react";
 import { buildSteps, stepIndexByNode } from "@/components/trace/steps";
-import { NODE_W, TraceMap } from "@/components/trace/trace-map";
+import { TraceWell } from "@/components/trace/trace-well";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Segmented } from "@/components/ui/segmented";
 import { type Project, getProject } from "@/content/projects";
@@ -208,10 +208,8 @@ function Architecture({ project }: { project: Project }) {
   const stepOf = useMemo(() => stepIndexByNode(steps), [steps]);
   const [active, setActive] = useState(0);
   const [approved, setApproved] = useState<Set<string>>(() => new Set());
-  const scroller = useRef<HTMLDivElement>(null);
   const intro = useRef<HTMLDivElement>(null);
   const introCut = useMoreBelow(intro);
-  const layout = useMemo(() => fitNodes(project), [project]);
 
   const step = steps[active];
   const gate =
@@ -229,18 +227,6 @@ function Architecture({ project }: { project: Project }) {
     setApproved((done) => new Set(done).add(step.id));
     setActive(active + 1);
   };
-
-  // Keep the active step in view as the trace walks sideways.
-  useEffect(() => {
-    const el = scroller.current;
-    if (!el) return;
-    const x = step.nodes.reduce((sum, node) => sum + node.x, 0) / step.nodes.length;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    el.scrollTo({
-      left: (x / 100) * el.scrollWidth - el.clientWidth / 2,
-      behavior: reduce ? "auto" : "smooth",
-    });
-  }, [step]);
 
   return (
     <div
@@ -315,38 +301,16 @@ function Architecture({ project }: { project: Project }) {
           Step {active + 1} of {steps.length}
           {gate && " · paused"}
         </p>
-        <div
-          ref={scroller}
-          className="no-scrollbar h-full overflow-x-auto overflow-y-hidden rounded-3xl bg-paper"
-        >
-          <div style={{ minWidth: layout.minWidth }} className="h-full pt-10">
-            <TraceMap
-              trace={project.trace}
-              stepOf={stepOf}
-              active={active}
-              aside={gate ? asides[project.slug] : undefined}
-              nodeWidth={layout.nodeWidth}
-            />
-          </div>
-        </div>
+        <TraceWell
+          trace={project.trace}
+          stepOf={stepOf}
+          active={active}
+          aside={gate ? asides[project.slug] : undefined}
+          className="pt-10"
+        />
       </div>
     </div>
   );
-}
-
-/* Nodes on one row must not touch, and each needs about 132px to stay legible. */
-const NODE_MIN_PX = 132;
-
-function fitNodes(project: Project) {
-  const { nodes } = project.trace;
-  let gap = Infinity;
-  for (const a of nodes) {
-    for (const b of nodes) {
-      if (a !== b && Math.abs(a.y - b.y) < 12) gap = Math.min(gap, Math.abs(a.x - b.x));
-    }
-  }
-  const nodeWidth = Math.min(NODE_W, gap * 0.9);
-  return { nodeWidth, minWidth: Math.round((NODE_MIN_PX / nodeWidth) * 100) };
 }
 
 /** Whether a scrolling element has more content below what it shows, so its edge can fade. */

@@ -20,7 +20,7 @@ Each PR targets `main` and goes live as it lands. Merges are done by fast-forwar
 | 3 | `feat/lead-trace` | PrismOS pinned trace chapter | Live 7 Oct |
 | 4 | `elisabeth/lucid-ramanujan-7kgup0` | Other four system cards, project window with Brief / Architecture / Decisions / Stack tabs, mobile gap fix | Live 7 Oct |
 | 5 | `feat/home-document` | Trajectory, capabilities, method, about, contact, footer | Live 7 Oct |
-| 6 | `feat/case-page` | Case page `/work/<slug>` | Screenshots in, build not started |
+| 6 | `feat/case-page` | Case page `/work/<slug>` | Live 7 Oct |
 | 7 | | `/read` | |
 | 8 | | Remove old shells and fonts, move tokens to `:root` | |
 
@@ -29,8 +29,15 @@ The home page now has every section of the screens canvas, and every dock tile a
 PR 4 notes:
 
 - Mobile gap fixed: the desk's bottom padding went from 128px to 56px, matching the board. In PR 5 the room the fixed dock needs sits at the bottom of `DeskDocument`, under the footer.
-- Until PR 6, "Open full page" in the window and every card on a phone or tablet go to the old `/work/<slug>` page.
-- Atlas AI's gates now pause the window's trace until approved. FarmTwin's network switch and FinSight's file-type branch (Trace component notes) are not built yet; they belong with the case page in PR 6.
+- Atlas AI's gates now pause the window's trace until approved.
+
+PR 6 notes:
+
+- `/work/<slug>` follows the screens canvas: back link and "Systems · n of 5", header with the "On my role" card, the pinned trace, problem and build with the product screenshot, the architecture in words, decisions, stack and what it demonstrates, and the next system.
+- The pinned trace is `ProjectChapter` with `variant="case"`: it leads with "How it holds together", shows the active step's note under it in the rail, and carries each project's behaviour. Atlas AI halts at a gate however far the page has scrolled, and approving lets it catch up; on a phone the approve button sits in the waiting step. FinSight's "Statement type" picks CSV or PDF, and the branch not taken is dashed and takes no step. FarmTwin has a network switch and a dashed "On this laptop" line around the trace.
+- `trace/trace-well.tsx` (`TraceWell`) is the map in a well that scrolls sideways when nodes would get too narrow, following the active step. The window uses it at 132px per node, the chapters at 96px, so only Atlas scrolls on a case page and the home chapter's nodes no longer touch.
+- FarmTwin has no live link: its header offers "Read the code" and says why there is nothing to visit.
+- "Back to the desk" returns to the PrismOS chapter from its page and to the cards from the others.
 - The project window clears the dock. `--spacing-dock` (the dock's height) and `--spacing-dock-inset` (its distance from the bottom on desktop) are spacing tokens; the window sits above the dock with the inset as the gap above and below it, at most 700px tall. In a short window the Architecture tagline scrolls so the step card stays in view, and fades at its cut edge until scrolled to the end; the other tabs already scroll.
 - The IT Intern role (Cool Group) is out of the content, so Freelance AI Engineer is the only current role. It rendered on the old pages and, in PR 5, in the home trajectory.
 
@@ -83,7 +90,7 @@ Decided on 7 Oct:
 - Capabilities: "Serving it" lists Next.js where the content had NestJS.
 - FlowMind's tagline is shortened to "Removing the triage tax that kills productivity systems."
 - The window's tagline fades where a short window cuts it off.
-- Product screenshots received. They are cropped to each product's own interface (no gradient backdrop, no browser chrome, per the design rules) and saved as `public/img/work/<slug>.webp`, 1600px wide, on the PR 6 branch `feat/case-page`.
+- Product screenshots received. They are cropped to each product's own interface (no gradient backdrop, no browser chrome, per the design rules) and saved as `public/img/work/<slug>.webp`, 1600px wide. Each project's `shot` gives its size and alt text.
 
 ## Build rules
 
