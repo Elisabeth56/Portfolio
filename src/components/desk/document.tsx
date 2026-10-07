@@ -95,7 +95,7 @@ function Capabilities() {
               {group.verb}
             </dt>
             <dd className="text-sm leading-normal text-ink-2 lg:text-[0.9375rem]">
-              {group.items.join(" · ")}
+              {group.items.join("\u00a0· ")}
             </dd>
           </div>
         ))}
