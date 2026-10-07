@@ -13,7 +13,7 @@ export function SystemCards({ projects }: { projects: Project[] }) {
     <section
       id="systems"
       aria-labelledby="systems-title"
-      className="mx-auto flex max-w-xl scroll-mt-6 flex-col gap-5 px-5 pt-24 pb-32 lg:max-w-[79rem] lg:gap-10 lg:px-8 lg:pt-40 lg:pb-48"
+      className="flex scroll-mt-6 flex-col gap-5 lg:gap-10"
     >
       <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
         <h2

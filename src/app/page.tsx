@@ -1,8 +1,8 @@
 import { Desk } from "@/components/desk/desk";
+import { DeskDocument } from "@/components/desk/document";
 import { Dock } from "@/components/desk/dock";
 import { ProjectWindowProvider } from "@/components/desk/project-window";
 import { Startup } from "@/components/desk/startup";
-import { SystemCards } from "@/components/desk/system-cards";
 import { ProjectChapter } from "@/components/trace/project-chapter";
 import { projects } from "@/content/projects";
 import { site } from "@/content/site";
@@ -35,7 +35,7 @@ export default function Home() {
           <Startup />
           <Desk />
           <ProjectChapter project={lead} aside="they have to disagree" />
-          <SystemCards projects={others} />
+          <DeskDocument systems={others} />
           <Dock />
         </ProjectWindowProvider>
       </main>

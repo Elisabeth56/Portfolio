@@ -19,16 +19,16 @@ Each PR targets `main` and goes live as it lands. Merges are done by fast-forwar
 | 2 | `feat/home-desk` | Home desk, dock, theme switch, startup | Live 7 Oct |
 | 3 | `feat/lead-trace` | PrismOS pinned trace chapter | Live 7 Oct |
 | 4 | `elisabeth/lucid-ramanujan-7kgup0` | Other four system cards, project window with Brief / Architecture / Decisions / Stack tabs, mobile gap fix | In review |
-| 5 | next | Trajectory, capabilities, method, about, contact | Not started |
-| 6 | | Case page `/work/<slug>` | |
+| 5 | `feat/home-document` | Trajectory, capabilities, method, about, contact, footer | In review, stacked on PR 4 |
+| 6 | next | Case page `/work/<slug>` | Not started |
 | 7 | | `/read` | |
 | 8 | | Remove old shells and fonts, move tokens to `:root` | |
 
-Until PR 5 lands, the live home page has no trajectory, capabilities, method, about or contact sections; they remain at `/read`. The dock tiles and "Read the method" point at anchors that do not exist yet; the Systems tile now works.
+With PR 5 the home page has every section of the screens canvas, and every dock tile and "Read the method" lands on its section. Until it lands, those sections only exist at `/read`.
 
 PR 4 notes:
 
-- Mobile gap fixed: the desk's bottom padding went from 128px to 56px, matching the board. The space the fixed dock needs now sits at the bottom of the systems section, the page's last element. PR 5 moves it to whichever section ends the page.
+- Mobile gap fixed: the desk's bottom padding went from 128px to 56px, matching the board. In PR 5 the room the fixed dock needs sits at the bottom of `DeskDocument`, under the footer.
 - Until PR 6, "Open full page" in the window and every card on a phone or tablet go to the old `/work/<slug>` page.
 - Atlas AI's gates now pause the window's trace until approved. FarmTwin's network switch and FinSight's file-type branch (Trace component notes) are not built yet; they belong with the case page in PR 6.
 - The project window clears the dock. `--spacing-dock` (the dock's height) and `--spacing-dock-inset` (its distance from the bottom on desktop) are spacing tokens; the window sits above the dock with the inset as the gap above and below it, at most 700px tall. In a short window the Architecture tagline scrolls so the step card stays in view; the other tabs already scroll.
@@ -62,6 +62,8 @@ PR 4 notes:
 - System cards (`desk/system-cards.tsx`) show four steps of the trace around `trace.focus`, the node that carries the project's argument. A gate shows its `action` label in the tint.
 - Project window (`desk/project-window.tsx`): a native `<dialog>` opened by `WindowLink` (the cards and the desk icons) when the viewport is at least 1280 by 720. Smaller screens, and Cmd, Ctrl or Shift clicks, follow the link to `/work/<slug>`. It grows from the card or icon that opened it; Esc, the close button or a click on the scrim closes it, and focus returns to the opener. The last tab is remembered per project under `window:tab:<slug>`; the default is Architecture. It is sized from the dock tokens so it never covers the dock.
 - Window Architecture tab: Next step and Back buttons, or the arrow keys, walk the trace. The trace scrolls sideways inside its well and follows the active step; `TraceMap` takes a `nodeWidth` so tightly spaced rows (Atlas) do not overlap. On a gated trace a gate step replaces Next with its approval button.
+- `desk/document.tsx` (`DeskDocument`) holds everything after the lead chapter: systems, trajectory, capabilities, method, about, contact and the footer, 160px apart on desktop and 96px on a phone. `ui/section-head.tsx` is the shared title-and-lede heading.
+- Trajectory lists the newest role first, so "Read upward" reads oldest to newest. Method is an accordion with the first principle open; each principle ends with "Learned on <project>", which opens that project's window. Contact's Copy button reads "Copied" for two seconds.
 - `ui/segmented.tsx` is the Brief / Architecture / Decisions / Stack control: a `tablist` with a sliding thumb, arrow keys, Home and End.
 - Semantic colours `positive`, `caution` and `negative` are now tokens (light and dark), scoped like the rest.
 - The Vercel project is `elisynths`. Previews are behind Vercel login.
@@ -73,6 +75,8 @@ PR 4 notes:
 - One screenshot per product for case pages and icons.
 - Approval of new interface copy: 404 text, empty and error states, "Back to the desk", "Open the desk".
 - Copy flags from the audit: FlowMind's headline length, system-speak in the old chrome.
+- The home board shows "learned on FinSight" in Caveat, which would be a third handwritten aside on the page (the hero's "AI engineer" and PrismOS's "they have to disagree"). The build keeps to the two-aside rule and sets it as plain text. Say if the board should win.
+- The board's capabilities list names Next.js under "Serving it"; the content says NestJS, and the build follows the content.
 
 Decided on 7 Oct:
 
