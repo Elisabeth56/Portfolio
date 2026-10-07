@@ -75,6 +75,9 @@
   --color-on-accent: #f8f3f1;
   --color-accent-tint: #f3d6e0;
   --color-accent-ink: #5e1f38;
+  --color-positive: #2f5d46;
+  --color-caution: #80541a;
+  --color-negative: #96392f;
   --radius-icon: 22px;
   --shadow-lift: 0 1px 2px rgb(41 40 38 / 0.04), 0 8px 24px rgb(41 40 38 / 0.06);
   --shadow-dock: 0 1px 2px rgb(41 40 38 / 0.04), 0 12px 32px rgb(41 40 38 / 0.1);
@@ -138,7 +141,11 @@
   --color-on-accent: #f8f3f1;
   --color-accent-tint: #f3d6e0;
   --color-accent-ink: #5e1f38;
+  --color-positive: #2f5d46;
+  --color-caution: #80541a;
+  --color-negative: #96392f;
   --desk-dots: rgb(41 40 38 / 0.09);
+  --desk-scrim: rgb(41 40 38 / 0.16);
   --shadow-lift: 0 1px 2px rgb(41 40 38 / 0.04), 0 8px 24px rgb(41 40 38 / 0.06);
   --shadow-dock: 0 1px 2px rgb(41 40 38 / 0.04), 0 12px 32px rgb(41 40 38 / 0.1);
 
@@ -163,7 +170,11 @@
     --color-on-accent: #2a0f1b;
     --color-accent-tint: #4a2233;
     --color-accent-ink: #f3d6e0;
+    --color-positive: #8fc3a6;
+    --color-caution: #ddb57a;
+    --color-negative: #e59a8e;
     --desk-dots: transparent;
+    --desk-scrim: rgb(0 0 0 / 0.4);
     --shadow-lift: 0 8px 24px rgb(0 0 0 / 0.3);
     --shadow-dock: 0 12px 32px rgb(0 0 0 / 0.4);
     color-scheme: dark;
@@ -182,7 +193,11 @@ html[data-theme="dark"] [data-ui="desk"] {
   --color-on-accent: #2a0f1b;
   --color-accent-tint: #4a2233;
   --color-accent-ink: #f3d6e0;
+  --color-positive: #8fc3a6;
+  --color-caution: #ddb57a;
+  --color-negative: #e59a8e;
   --desk-dots: transparent;
+  --desk-scrim: rgb(0 0 0 / 0.4);
   --shadow-lift: 0 8px 24px rgb(0 0 0 / 0.3);
   --shadow-dock: 0 12px 32px rgb(0 0 0 / 0.4);
   color-scheme: dark;
@@ -207,6 +222,31 @@ html[data-theme="dark"] .theme-moon {
   html:not([data-theme="light"]) .theme-moon {
     display: inline;
   }
+}
+
+/* The project window grows out of the card or icon that opened it (the
+   origin is set in project-window.tsx) over a soft scrim. The page behind
+   stays put while it is open. */
+.project-window[open] {
+  transition:
+    opacity 500ms var(--ease-reveal),
+    scale 700ms var(--ease-reveal);
+  @starting-style {
+    opacity: 0;
+    scale: 0.94;
+  }
+}
+.project-window::backdrop {
+  background: var(--desk-scrim, rgb(41 40 38 / 0.16));
+}
+.project-window[open]::backdrop {
+  transition: opacity 500ms var(--ease-reveal);
+  @starting-style {
+    opacity: 0;
+  }
+}
+html:has(.project-window[open]) {
+  overflow: hidden;
 }
 
 /* Startup — plays once per session while <html data-startup> is set (see

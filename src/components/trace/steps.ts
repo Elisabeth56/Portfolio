@@ -9,24 +9,43 @@ export type Step = {
 };
 
 /**
- * Turns a trace into the steps a visitor moves through. A sequence id that is
- * not a node (PrismOS's "debate") is a group: it collects every node the
- * sequence never names, and they activate together.
+ * Turns a trace into the steps a visitor moves through.
+ *
+ * A sequence id that is not a node (PrismOS's "debate") is a group: it
+ * collects every node the sequence never names, and they activate together.
+ * Without a group, a node the sequence leaves out (Atlas AI's approval gates)
+ * becomes its own step, right after the node that leads into it.
  */
 export function buildSteps(trace: Trace): Step[] {
   const byId = new Map(trace.nodes.map((node) => [node.id, node]));
-  const grouped = trace.nodes.filter((node) => !trace.sequence.includes(node.id));
+  const unnamed = trace.nodes.filter((node) => !trace.sequence.includes(node.id));
+  const hasGroup = trace.sequence.some((id) => !byId.has(id));
 
-  return trace.sequence.map((id) => {
+  const single = (node: TraceNode): Step => ({
+    id: node.id,
+    label: node.label,
+    note: node.note,
+    nodes: [node],
+  });
+
+  const steps: Step[] = trace.sequence.map((id) => {
     const node = byId.get(id);
-    if (node) return { id, label: node.label, note: node.note, nodes: [node] };
+    if (node) return single(node);
     return {
       id,
-      label: grouped.map((member) => member.label).join(", "),
+      label: unnamed.map((member) => member.label).join(", "),
       note: trace.caption,
-      nodes: grouped,
+      nodes: unnamed,
     };
   });
+  if (hasGroup) return steps;
+
+  for (const node of unnamed) {
+    const from = trace.edges.find((edge) => edge.to === node.id)?.from;
+    const after = steps.findIndex((step) => step.id === from);
+    steps.splice(after === -1 ? steps.length : after + 1, 0, single(node));
+  }
+  return steps;
 }
 
 /** Which step each node belongs to, for colouring nodes and edges. */

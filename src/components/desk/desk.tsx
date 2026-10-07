@@ -27,7 +27,7 @@ const panels: { id: GlyphId; label: string }[] = [
  */
 export function Desk() {
   return (
-    <section className="relative px-5 pt-5 pb-32 lg:pt-0 lg:min-h-[max(100dvh,52rem)] lg:px-8 lg:pb-0">
+    <section className="relative px-5 pt-5 pb-14 lg:pt-0 lg:min-h-[max(100dvh,52rem)] lg:px-8 lg:pb-0">
       <MenuBar />
 
       <div className="mx-auto flex max-w-xl flex-col gap-5 pt-2 lg:max-w-none lg:grid lg:grid-cols-[18rem_minmax(0,1fr)_6rem] lg:items-start lg:gap-8 lg:pt-6">
@@ -69,6 +69,7 @@ export function Desk() {
             <AppIcon
               key={project.slug}
               href={`/work/${project.slug}`}
+              opens={project.slug}
               label={project.name}
               glyph={project.slug as GlyphId}
               style={settle(3 + i)}

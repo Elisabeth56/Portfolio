@@ -18,6 +18,8 @@ export type TraceNode = {
   y: number;
   /** Revealed when the node is selected. This is where the engineering lives. */
   note?: string;
+  /** On a `gated` trace, the button that lets the run past this gate. */
+  action?: string;
 };
 
 export type TraceEdge = {
@@ -36,6 +38,8 @@ export type Trace = {
   /** Bespoke interaction layer, handled per project. */
   mode: "flow" | "debate" | "gated" | "offline";
   caption: string;
+  /** The node that carries the project's argument; its system card leads with it. */
+  focus?: string;
 };
 
 export type Decision = {
@@ -324,6 +328,7 @@ export const projects: Project[] = [
     ],
     trace: {
       mode: "gated",
+      focus: "gate1",
       caption:
         "Two checkpoints are real. The pipeline will not generate SQL until the matched context is approved, and will not touch the catalog until writeback is approved. Approve them to continue.",
       sequence: [
@@ -360,6 +365,7 @@ export const projects: Project[] = [
           label: "Context review",
           sub: "human approval",
           kind: "gate",
+          action: "Approve context",
           x: 31.5,
           y: 50,
           note: "The run pauses here. The user sees exactly which datasets matched and how confident the match was, and either accepts the context or starts fresh — before a line of SQL exists.",
@@ -395,6 +401,7 @@ export const projects: Project[] = [
           label: "Writeback approval",
           sub: "human approval",
           kind: "gate",
+          action: "Approve writeback",
           x: 81.5,
           y: 50,
           note: "Nothing reaches the catalog without this. An agent that pushes lineage into production metadata unasked is a liability, not a feature.",
@@ -493,6 +500,7 @@ export const projects: Project[] = [
     ],
     trace: {
       mode: "flow",
+      focus: "markdown",
       caption:
         "The ingestion path. The markdown re-serialization step is the one that decides whether the model can reason about the table at all.",
       sequence: [
@@ -660,6 +668,7 @@ export const projects: Project[] = [
     ],
     trace: {
       mode: "offline",
+      focus: "qwen",
       caption:
         "Everything inside the boundary runs on the device. Cut the network and nothing changes — that is the entire thesis. Try the switch.",
       sequence: ["query", "embed", "vec", "assemble", "qwen", "stream"],
@@ -798,6 +807,7 @@ export const projects: Project[] = [
     ],
     trace: {
       mode: "flow",
+      focus: "organize",
       caption:
         "Capture is the user's only job. Everything right of the inbox is chained model work writing structured results back into a relational model the interface reads directly.",
       sequence: ["capture", "organize", "schema", "planner", "summary", "ui"],

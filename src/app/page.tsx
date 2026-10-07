@@ -1,9 +1,13 @@
 import { Desk } from "@/components/desk/desk";
 import { Dock } from "@/components/desk/dock";
+import { ProjectWindowProvider } from "@/components/desk/project-window";
 import { Startup } from "@/components/desk/startup";
+import { SystemCards } from "@/components/desk/system-cards";
 import { ProjectChapter } from "@/components/trace/project-chapter";
 import { projects } from "@/content/projects";
 import { site } from "@/content/site";
+
+const [lead, ...others] = projects;
 
 const personSchema = {
   "@context": "https://schema.org",
@@ -27,10 +31,13 @@ export default function Home() {
   return (
     <>
       <main data-ui="desk" className="min-h-dvh">
-        <Startup />
-        <Desk />
-        <ProjectChapter project={projects[0]} aside="they have to disagree" />
-        <Dock />
+        <ProjectWindowProvider>
+          <Startup />
+          <Desk />
+          <ProjectChapter project={lead} aside="they have to disagree" />
+          <SystemCards projects={others} />
+          <Dock />
+        </ProjectWindowProvider>
       </main>
       <script
         type="application/ld+json"
