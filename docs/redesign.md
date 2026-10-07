@@ -20,7 +20,7 @@ Each PR targets `main` and goes live as it lands. Merges are done by fast-forwar
 | 3 | `feat/lead-trace` | PrismOS pinned trace chapter | Live 7 Oct |
 | 4 | `elisabeth/lucid-ramanujan-7kgup0` | Other four system cards, project window with Brief / Architecture / Decisions / Stack tabs, mobile gap fix | In review |
 | 5 | `feat/home-document` | Trajectory, capabilities, method, about, contact, footer | In review, stacked on PR 4 |
-| 6 | next | Case page `/work/<slug>` | Not started |
+| 6 | `feat/case-page` | Case page `/work/<slug>` | Screenshots in, build not started |
 | 7 | | `/read` | |
 | 8 | | Remove old shells and fonts, move tokens to `:root` | |
 
@@ -71,17 +71,17 @@ PR 4 notes:
 
 ## Open with Elisabeth
 
-- Her taglines for the hero.
-- One screenshot per product for case pages and icons.
-- Approval of new interface copy: 404 text, empty and error states, "Back to the desk", "Open the desk".
 - Copy flags from the audit: FlowMind's headline length, system-speak in the old chrome.
-- The home board shows "learned on FinSight" in Caveat, which would be a third handwritten aside on the page (the hero's "AI engineer" and PrismOS's "they have to disagree"). The build keeps to the two-aside rule and sets it as plain text. Say if the board should win.
-- The board's capabilities list names Next.js under "Serving it"; the content says NestJS, and the build follows the content.
 
 Decided on 7 Oct:
 
 - Trajectory: leave the IT Intern role out.
 - Project window: clear the dock instead of overlapping it.
+- Hero: keep the current headline and lede; no new taglines.
+- New interface copy approved: 404 text, empty and error states, "Back to the desk", "Open the desk".
+- "Learned on FinSight" stays plain text, keeping the two-aside rule.
+- Capabilities: "Serving it" lists Next.js where the content had NestJS.
+- Product screenshots received. They are cropped to each product's own interface (no gradient backdrop, no browser chrome, per the design rules) and saved as `public/img/work/<slug>.webp`, 1600px wide, on the PR 6 branch `feat/case-page`.
 
 ## Build rules
 

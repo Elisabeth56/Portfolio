@@ -105,7 +105,7 @@ export const capabilities: CapabilityGroup[] = [
     verb: "Serving it",
     detail:
       "APIs that hold under streaming, long-running chains, and authorization that has to resolve before the first byte.",
-    items: ["FastAPI", "Python", "Node.js", "Express", "NestJS", "TypeScript"],
+    items: ["FastAPI", "Python", "Node.js", "Express", "Next.js", "TypeScript"],
   },
   {
     index: "05",
