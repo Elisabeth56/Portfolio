@@ -59,7 +59,7 @@ export function Segmented<T extends string>({
       role="tablist"
       aria-label={label}
       onKeyDown={onKeyDown}
-      className={cn("relative flex h-12 gap-0.5 rounded-full bg-well p-1", className)}
+      className={cn("relative flex h-[3.25rem] gap-0.5 rounded-full bg-well p-1 lg:h-12", className)}
     >
       {thumb && (
         <span

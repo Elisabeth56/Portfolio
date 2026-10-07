@@ -7,7 +7,9 @@ Frontend-only redesign of elisabethnnamani.dev. Content, routes and stack stay (
 - Audit, references, direction, design system and screens: approved.
 - Direction: "Paper desk" with a mulberry accent.
 - Build: done (see PRs below).
-- Polish pass (design critique, accessibility, Lighthouse 90+ on all four scores): in progress.
+- Polish pass (design critique, accessibility, Lighthouse 90+ on all four scores): done 7 Oct.
+  - Lighthouse on the production build, mobile / desktop. Home: performance 92 / 100, accessibility, best practices and SEO 100 / 100. `/work/atlas-ai`: 98 / 100, the rest 100. `/read`: 97 / 100, the rest 100. Home's mobile LCP is the hero lede rising in after the startup, which plays once per session.
+  - Every link and button on a phone is at least 44px (FinSight's CSV/PDF switch and `/read`'s contact links were raised to it). Focus is a 2px mulberry ring on every interactive element. Under reduced motion the startup never plays.
 
 ## PRs
 

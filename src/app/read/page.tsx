@@ -246,7 +246,7 @@ function Contact() {
             <dd>
               <a
                 href={row.href}
-                className="font-medium break-all transition-colors duration-200 ease-ui hover:text-accent"
+                className="inline-flex min-h-11 items-center font-medium break-all transition-colors duration-200 ease-ui hover:text-accent"
               >
                 {row.value}
               </a>
