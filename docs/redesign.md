@@ -31,6 +31,8 @@ PR 4 notes:
 - Mobile gap fixed: the desk's bottom padding went from 128px to 56px, matching the board. The space the fixed dock needs now sits at the bottom of the systems section, the page's last element. PR 5 moves it to whichever section ends the page.
 - Until PR 6, "Open full page" in the window and every card on a phone or tablet go to the old `/work/<slug>` page.
 - Atlas AI's gates now pause the window's trace until approved. FarmTwin's network switch and FinSight's file-type branch (Trace component notes) are not built yet; they belong with the case page in PR 6.
+- The project window clears the dock. `--spacing-dock` (the dock's height) and `--spacing-dock-inset` (its distance from the bottom on desktop) are spacing tokens; the window sits above the dock with the inset as the gap above and below it, at most 700px tall. In a short window the Architecture tagline scrolls so the step card stays in view; the other tabs already scroll.
+- The IT Intern role (Cool Group) is out of the content, so Freelance AI Engineer is the only current role. It rendered on the old pages and, in PR 5, in the home trajectory.
 
 ## Design sources
 
@@ -58,7 +60,7 @@ PR 4 notes:
 - New components live in `src/components/desk/`, `src/components/trace/` and `src/components/ui/`, in kebab-case files.
 - Trace: `buildSteps` turns `trace.sequence` into steps; a sequence id that is not a node becomes a group of the nodes the sequence never names. Without a group, a node the sequence leaves out (Atlas AI's two gates) becomes its own step after the node that leads into it, so Atlas has 8 steps. `TraceMap` draws any project's trace from content. The `pin:` Tailwind variant (1280px wide and 832px tall) switches between the pinned and list layouts.
 - System cards (`desk/system-cards.tsx`) show four steps of the trace around `trace.focus`, the node that carries the project's argument. A gate shows its `action` label in the tint.
-- Project window (`desk/project-window.tsx`): a native `<dialog>` opened by `WindowLink` (the cards and the desk icons) when the viewport is at least 1280 by 720. Smaller screens, and Cmd, Ctrl or Shift clicks, follow the link to `/work/<slug>`. It grows from the card or icon that opened it; Esc, the close button or a click on the scrim closes it, and focus returns to the opener. The last tab is remembered per project under `window:tab:<slug>`; the default is Architecture.
+- Project window (`desk/project-window.tsx`): a native `<dialog>` opened by `WindowLink` (the cards and the desk icons) when the viewport is at least 1280 by 720. Smaller screens, and Cmd, Ctrl or Shift clicks, follow the link to `/work/<slug>`. It grows from the card or icon that opened it; Esc, the close button or a click on the scrim closes it, and focus returns to the opener. The last tab is remembered per project under `window:tab:<slug>`; the default is Architecture. It is sized from the dock tokens so it never covers the dock.
 - Window Architecture tab: Next step and Back buttons, or the arrow keys, walk the trace. The trace scrolls sideways inside its well and follows the active step; `TraceMap` takes a `nodeWidth` so tightly spaced rows (Atlas) do not overlap. On a gated trace a gate step replaces Next with its approval button.
 - `ui/segmented.tsx` is the Brief / Architecture / Decisions / Stack control: a `tablist` with a sliding thumb, arrow keys, Home and End.
 - Semantic colours `positive`, `caution` and `negative` are now tokens (light and dark), scoped like the rest.
@@ -71,6 +73,11 @@ PR 4 notes:
 - One screenshot per product for case pages and icons.
 - Approval of new interface copy: 404 text, empty and error states, "Back to the desk", "Open the desk".
 - Copy flags from the audit: FlowMind's headline length, system-speak in the old chrome.
+
+Decided on 7 Oct:
+
+- Trajectory: leave the IT Intern role out.
+- Project window: clear the dock instead of overlapping it.
 
 ## Build rules
 
