@@ -443,7 +443,7 @@ function Stack({ project }: { project: Project }) {
         {project.stack.map((group) => (
           <div key={group.group} className="flex gap-6 py-4">
             <dt className="w-32 shrink-0 text-ink-2">{group.group}</dt>
-            <dd>{group.items.join(" · ")}</dd>
+            <dd>{group.items.join("\u00a0· ")}</dd>
           </div>
         ))}
       </dl>
