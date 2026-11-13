@@ -6,6 +6,7 @@ export type GlyphId =
   | "finsight"
   | "farmtwin"
   | "flowmind"
+  | "itoms"
   | "about"
   | "systems"
   | "trajectory"
@@ -38,6 +39,12 @@ const paths: Record<GlyphId, ReactNode> = {
       <circle cx="4.5" cy="12" r="1.8" />
       <circle cx="19.5" cy="12" r="1.8" />
       <path d="M12 6.3v3.2M12 14.5v3.2M6.3 12h3.2M14.5 12h3.2" />
+    </>
+  ),
+  itoms: (
+    <>
+      <path d="M3.5 11.6V5a1.5 1.5 0 0 1 1.5-1.5h6.6l9 9-8.1 8.1Z" />
+      <circle cx="8" cy="8" r="1.4" />
     </>
   ),
   about: (

@@ -3,11 +3,8 @@ import { DeskDocument } from "@/components/desk/document";
 import { Dock } from "@/components/desk/dock";
 import { ProjectWindowProvider } from "@/components/desk/project-window";
 import { Startup } from "@/components/desk/startup";
-import { ProjectChapter } from "@/components/trace/project-chapter";
 import { projects } from "@/content/projects";
 import { site } from "@/content/site";
-
-const [lead, ...others] = projects;
 
 const personSchema = {
   "@context": "https://schema.org",
@@ -34,8 +31,7 @@ export default function Home() {
         <ProjectWindowProvider>
           <Startup />
           <Desk />
-          <ProjectChapter project={lead} aside="they have to disagree" />
-          <DeskDocument systems={others} />
+          <DeskDocument systems={projects} />
           <Dock />
         </ProjectWindowProvider>
       </main>

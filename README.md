@@ -28,10 +28,9 @@ npm start
 ## The idea
 
 A paper desk. `/` opens like a Mac starting up: her name on paper, then the
-desk settles in, with the portrait and Now widgets, the five project icons,
-the headline and a dock. Scroll and the desk becomes a document: PrismOS as a
-pinned chapter whose architecture trace advances as you scroll, then the other
-four systems, trajectory, capabilities, method, about and contact.
+desk settles in, with the portrait and Now widgets, the six project icons,
+the headline and a dock. Scroll and the desk becomes a document: all six
+systems as cards, then trajectory, capabilities, method, about and contact.
 
 On a large screen a project card opens a window with Brief, Architecture,
 Decisions and Stack tabs. Everywhere else it goes to the case page,
@@ -45,6 +44,7 @@ trace keeps the project's own behaviour:
 | FinSight | Pick CSV or PDF and the ingestion path takes that branch            |
 | FarmTwin | A network switch: cut it and everything keeps answering             |
 | FlowMind | Capture flowing into a typed relational schema                      |
+| ITOMS    | Pick the quick fix's answer: safe steps, or a hand-over to IT      |
 
 `/read` is the whole portfolio as one plain column, for sending to someone and
 for printing.
@@ -69,7 +69,7 @@ All copy is typed data. No JSX changes needed to update the site.
 | File                       | What it holds                                          |
 | -------------------------- | ------------------------------------------------------ |
 | `src/content/site.ts`      | Name, thesis, about copy, links, "now"                  |
-| `src/content/projects.ts`  | The five systems, including each interactive trace      |
+| `src/content/projects.ts`  | The six systems, including each interactive trace       |
 | `src/content/experience.ts`| Roles and capability groups                             |
 | `src/content/method.ts`    | The seven principles and their evidence                 |
 

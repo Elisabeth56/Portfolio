@@ -20,7 +20,7 @@ export const site = {
   ],
 
   links: {
-    email: "nnamanielisabeth@gmail.com",
+    email: "hello@elisabethnnamani.dev",
     github: "https://github.com/Elisabeth56",
     linkedin: "https://www.linkedin.com/in/elisabethnnamani",
     x: "https://x.com/elisynthdev",

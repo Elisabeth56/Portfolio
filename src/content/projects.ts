@@ -89,7 +89,7 @@ export const projects: Project[] = [
     roleNote:
       "I defined the agent-society model, owned the blueprint through three versions, and made the architectural and scope calls. Implementation was directed rather than hand-typed — I reviewed output and gave corrective feedback. The scope enforcement was the part that mattered: every capability added after v1.0 went in as a patch against working architecture, never a rebuild.",
     links: { live: "https://prism-os-jade.vercel.app/" },
-    shot: { width: 1600, height: 1000, alt: "The PrismOS landing page, headed “Ship features with a full AI team.”" },
+    shot: { width: 2400, height: 1500, alt: "The PrismOS landing page, headed “One request in. One reviewed pull request out.”" },
     problem: [
       "AI coding assistants are single-voiced. One model takes a feature request and decides everything itself — scope, architecture, implementation, testing — and it never disagrees with itself. The output compiles and demos well, and it quietly skips every tradeoff a real team would argue about.",
       "The second failure is context. Most agent tools generate in a vacuum. They do not know what the codebase already looks like, what stack it runs on, or what was decided three features ago. The result is technically valid and architecturally foreign.",
@@ -273,7 +273,7 @@ export const projects: Project[] = [
       "Natural language to production dbt models, grounded in the catalog your organization already has.",
     role: "Sole architect and engineer",
     links: { live: "https://atlas-ai-taupe.vercel.app/" },
-    shot: { width: 1600, height: 1002, alt: "The Atlas AI landing page, headed “Your data platform, operated by agents that never sleep.”" },
+    shot: { width: 2400, height: 1500, alt: "The Atlas landing page, headed “Ask for a pipeline. Get dbt you can check.”" },
     problem: [
       "A business question — daily revenue by customer segment for the last ninety days — becomes a ticket, which sits in a queue, which becomes a data engineer hunting for the right tables, checking which columns are trustworthy, writing SQL and a dbt model, adding tests, writing docs and updating the catalog. Hours to days per request, and almost none of it creative.",
       "Point a language model at it and you hit a specific wall: it hallucinates schemas. It invents column names that sound plausible and joins on keys that do not exist. Ungrounded generation is worse than useless, because the output looks correct.",
@@ -447,7 +447,7 @@ export const projects: Project[] = [
     roleNote:
       "Architecture, backend, AI pipeline, frontend integration, payments and deployment. The marketing site predated the build; everything from the API surface inward is mine.",
     links: { live: "https://finsight-red-two.vercel.app/" },
-    shot: { width: 1600, height: 891, alt: "FinSight’s upload screen, where a CSV or PDF bank statement is dropped in." },
+    shot: { width: 2400, height: 1500, alt: "The FinSight landing page, headed “Your bank statement, read properly,” beside a sorted statement." },
     problem: [
       "Bank statements are one of the richest personal datasets most people own and one of the least usable. They arrive as CSVs with inconsistent column names, or as PDFs where the transaction table is a visual artifact rather than structured data. Getting anything out of them means manual tagging in a spreadsheet, which almost nobody sustains past the first month.",
       "For Nigerian users the existing tools are worse than tedious. Western personal-finance apps depend on bank-linking APIs with poor or no coverage for Nigerian banks, price in USD only, and categorize against merchant vocabularies that do not recognize local transaction descriptors.",
@@ -627,8 +627,8 @@ export const projects: Project[] = [
     role: "Sole developer",
     roleNote:
       "Model selection and benchmarking, knowledge base curation and chunking, retrieval pipeline, backend, frontend and design system, the speech-to-text evaluation, and the full submission artifacts including ADRs.",
-    links: { repo: "https://github.com/Elisabeth56/FarmTwin" },
-    shot: { width: 1600, height: 900, alt: "FarmTwin’s start screen, noting that it runs entirely on the laptop with no internet." },
+    links: { live: "https://farmtwin-beta.vercel.app", repo: "https://github.com/Elisabeth56/FarmTwin" },
+    shot: { width: 2400, height: 1767, alt: "The FarmTwin landing page, with a 3D model of a small farm above the headline “Your farm, on your laptop.”" },
     problem: [
       "Smallholder maize farmers in Nigeria make high-stakes agronomic decisions — planting dates, fertilizer timing and rates, pest response — largely without extension services. Where digital advisory tools exist they assume reliable connectivity, a modern smartphone and a cloud backend. That assumption fails in exactly the places the advice is most needed.",
       "There is also a trust problem specific to AI advisory in agriculture. A chatbot answering how much urea to apply at six weeks with a plausible but ungrounded number is worse than no tool at all, because a wrong dose costs a season.",
@@ -765,7 +765,7 @@ export const projects: Project[] = [
     roleNote:
       "Defined the product, chose the stack, and drove it through four phases — schema, AI orchestration, payments, deployment. The consequential calls were mine, including replacing Stripe with Paystack for the Nigerian market and catching the incomplete migration when stripe_customer_id was still sitting in the schema afterwards.",
     links: { live: "https://flowmind-sage.vercel.app/" },
-    shot: { width: 1600, height: 893, alt: "FlowMind’s landing page, with the assistant laying out a plan for the day." },
+    shot: { width: 2400, height: 1500, alt: "The FlowMind landing page, headed “Put it down. We’ll sort it.”" },
     problem: [
       "Knowledge workers capture information faster than they can organize it. Notes land in one app, tasks in another, half-formed ideas in a file nobody reopens. The bottleneck is the triage afterwards — deciding what belongs to which project, what actually matters today, and whether last week's intentions matched last week's reality.",
       "Notion, Todoist and Apple Notes are storage layers. They require the user to do the sorting.",
@@ -888,6 +888,161 @@ export const projects: Project[] = [
         { from: "schema", to: "summary", kind: "branch" },
         { from: "planner", to: "ui", kind: "branch" },
         { from: "summary", to: "ui", kind: "branch" },
+      ],
+    },
+  },
+  /* ====================================================================== */
+  {
+    slug: "itoms",
+    index: "06",
+    name: "ITOMS",
+    kind: "Internal tool · AI-assisted",
+    period: "2026",
+    status: "Live",
+    tagline:
+      "An IT desk for a small office: problems reported in under a minute, one queue sorted by due time, and a history for every device.",
+    role: "Sole developer",
+    roleNote:
+      "Designed it from an IT support internship, then built the schema, the Express API, the three role-based interfaces, the quick fix with its eval sets, the tests and CI, and the 13 decision records.",
+    links: { live: "https://itoms.vercel.app", repo: "https://github.com/Elisabeth56/ITOMS" },
+    shot: { width: 2400, height: 1500, alt: "The ITOMS landing page, headed “Every device, every fix, on record.”" },
+    problem: [
+      "During an IT support internship at a 50-person office in Lagos, requests arrived by walking over, a phone call or a WhatsApp message. Nothing recorded who asked, what was done or how long it took.",
+      "Nobody could say which laptop someone held or what a printer had cost in repairs, and the same jammed printer came back every few weeks. Many requests also had a safe first step, like restarting the printer or rejoining the Wi-Fi, that the person could have tried while they waited.",
+    ],
+    stakes:
+      "A small IT team loses its week to requests it cannot see or rank. The constraints were real: about 50 users, a few hundred tickets a year, free tiers only, and a build one person could finish and explain.",
+    built: [
+      "Employees report a problem in under a minute and follow it through four stages, confirming the fix themselves. Before filing they can ask for a quick fix: up to five safe steps, or a hand-over to IT.",
+      "IT staff work one queue sorted by due time, entirely from the keyboard. Every laptop and printer carries an asset tag, a holder and its own repair history. Admins manage people, devices and change requests.",
+    ],
+    architecture: [
+      "A Next.js web app calls an Express API that runs as one Vercel function. Supabase provides auth and Postgres, and a daily cron closes tickets nobody confirmed.",
+      "The rules that must never break live in the database: a partial unique index allows one holder per device and one pending change request, a check constraint refuses a resolved ticket without a resolution, and a trigger keeps the activity trail append-only. The API checks the same rules so it can return clear messages.",
+      "The quick fix is one prompt with a validated JSON answer, served by Groq with Gemini as the fallback. A filter strips forbidden steps the model still writes, and every suggestion is stored so IT sees what was tried.",
+    ],
+    decisions: [
+      {
+        title: "The database is the last line",
+        body: "Tickets, people and devices are joined on almost every screen and every change writes a history row, so I chose Postgres and pushed the invariants into constraints, indexes and triggers. Putting the one-holder rule in a unique index removed a whole class of race conditions and made the tests simpler.",
+      },
+      {
+        title: "Lock the row, or let the index refuse",
+        body: "When two IT staff act on the same ticket, the API locks the row with FOR UPDATE inside a transaction, so the second one sees the first one's change. A duplicate insert has no row to lock yet, so a second change request for the same laptop is stopped by the unique index instead.",
+      },
+      {
+        title: "Due times without a job queue",
+        body: "Each priority has a due time, from 4 hours for urgent to 72 for low. A trigger sets it when a ticket is filed or re-prioritised, and lateness is computed in each query. There is no scheduler to keep in sync, which matters on a free plan where cron runs once a day.",
+        cost: "Due times run on the wall clock, so a ticket filed on Friday evening is late by Monday morning.",
+      },
+      {
+        title: "Measured before trusted",
+        body: "I built a golden set of 32 cases and 15 unseen ones, and a GitHub workflow runs both on every prompt change and commits the results. The latest run made 31 of 32 and 14 of 15 correct hand-over decisions on Groq's free tier. I kept the single prompt over retrieval because tickets recorded no fix yet, so resolving a ticket now requires a resolution note to build that corpus.",
+      },
+      {
+        title: "I corrected my own decision record",
+        body: "One record said the daily cron kept the free database awake. During a rebuild I found the project paused, because the live API had never been given its database settings. I amended the record instead of deleting it.",
+      },
+    ],
+    stack: [
+      { group: "Web", items: ["Next.js 16", "React 19", "Tailwind 4"] },
+      { group: "API", items: ["Express 5", "TypeScript", "zod", "pg"] },
+      { group: "Data & auth", items: ["Supabase Postgres", "Supabase Auth", "triggers", "row locks"] },
+      { group: "AI", items: ["Groq", "Gemini fallback", "eval sets"] },
+      { group: "Quality", items: ["Vitest", "Supertest", "Playwright", "GitHub Actions"] },
+      { group: "Hosting", items: ["Vercel", "daily cron"] },
+    ],
+    demonstrates: [
+      "Invariants enforced in the database rather than trusted to application code",
+      "Concurrency handled with row locks and unique indexes, each where it fits",
+      "A small AI feature with a safety filter and an eval that runs on every change",
+      "Interfaces shaped for three roles, including a keyboard-first queue",
+      "A decision trail of 13 records, one of them corrected in public",
+    ],
+    trace: {
+      mode: "flow",
+      focus: "quickfix",
+      branch: {
+        label: "The quick fix decides",
+        options: [
+          { node: "steps", label: "Safe steps" },
+          { node: "handover", label: "Hand over" },
+        ],
+      },
+      caption:
+        "One request, from the person with the problem to the history of the device. The quick fix either gives safe steps or hands over to IT, and either way IT sees what was tried.",
+      sequence: ["report", "quickfix", "filter", "steps", "handover", "queue", "resolve"],
+      nodes: [
+        {
+          id: "report",
+          label: "Report",
+          sub: "under a minute",
+          kind: "io",
+          x: 7,
+          y: 50,
+          note: "An employee picks a category and describes the problem. The device they hold is already linked, so they never type an asset number.",
+        },
+        {
+          id: "quickfix",
+          label: "Quick fix",
+          sub: "Groq → Gemini",
+          kind: "model",
+          x: 24,
+          y: 50,
+          note: "One prompt with a validated JSON answer: up to five safe steps, or a hand-over for anything involving passwords, damage, security or several people. 31 of 32 golden cases and 14 of 15 unseen ones get the hand-over decision right.",
+        },
+        {
+          id: "filter",
+          label: "Safety filter",
+          sub: "zod · unsafe steps cut",
+          kind: "gate",
+          x: 41,
+          y: 50,
+          note: "The answer has to parse against a schema, then a filter removes forbidden steps the model still writes. Every suggestion is stored with the ticket.",
+        },
+        {
+          id: "steps",
+          label: "Try the steps",
+          sub: "employee",
+          kind: "ui",
+          x: 58,
+          y: 26,
+        },
+        {
+          id: "handover",
+          label: "Hand over",
+          sub: "straight to IT",
+          kind: "io",
+          x: 58,
+          y: 74,
+        },
+        {
+          id: "queue",
+          label: "IT queue",
+          sub: "sorted by due_at",
+          kind: "store",
+          x: 76,
+          y: 50,
+          note: "A trigger sets the due time from the priority, and lateness is computed in the query. IT staff move through it with J and K and act without the mouse.",
+        },
+        {
+          id: "resolve",
+          label: "Resolve",
+          sub: "row lock · history",
+          kind: "store",
+          x: 92,
+          y: 50,
+          note: "The update runs under a row lock and writes an append-only history row, so the device keeps its record and two staff never overwrite each other.",
+        },
+      ],
+      edges: [
+        { from: "report", to: "quickfix" },
+        { from: "quickfix", to: "filter" },
+        { from: "filter", to: "steps", kind: "branch" },
+        { from: "filter", to: "handover", kind: "branch" },
+        { from: "steps", to: "queue", kind: "branch" },
+        { from: "handover", to: "queue", kind: "branch" },
+        { from: "queue", to: "resolve" },
       ],
     },
   },

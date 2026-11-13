@@ -9,7 +9,7 @@ import { site } from "@/content/site";
 export const metadata: Metadata = {
   title: "Portfolio",
   description:
-    "The full portfolio as a single document: five AI systems, the decisions behind them, and the working method that produced them.",
+    "The full portfolio as a single document: six AI systems, the decisions behind them, and the working method that produced them.",
   alternates: { canonical: "/read" },
 };
 
@@ -120,7 +120,7 @@ function Systems() {
   return (
     <section aria-labelledby="systems-title" className={`${section} gap-2`}>
       <h2 id="systems-title" className={`${h2} mb-3 lg:mb-4`}>
-        Five systems, one argument
+        Six systems, one argument
       </h2>
       {projects.map((p) => (
         <Link

@@ -9,7 +9,7 @@ import { Method } from "./method";
 import { SystemCards } from "./system-cards";
 
 /**
- * Everything after the lead project: the desk scrolled into a document. One
+ * Everything after the first screen: the desk scrolled into a document. One
  * column of chapters, 160px apart on desktop and 96px on a phone.
  */
 export function DeskDocument({ systems }: { systems: Project[] }) {

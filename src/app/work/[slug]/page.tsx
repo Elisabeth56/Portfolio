@@ -32,7 +32,7 @@ export async function generateMetadata({
   };
 }
 
-/* The lead project's aside, the only handwritten line on its case page. */
+/* PrismOS's aside, the only handwritten line on its case page. */
 const asides: Partial<Record<string, string>> = { prismos: "they have to disagree" };
 
 export default async function WorkPage({ params }: PageProps<"/work/[slug]">) {
@@ -42,8 +42,7 @@ export default async function WorkPage({ params }: PageProps<"/work/[slug]">) {
 
   const i = projects.findIndex((x) => x.slug === p.slug);
   const next = projects[(i + 1) % projects.length];
-  // Back to where the visitor most likely came from: the lead chapter or the cards.
-  const back = i === 0 ? `/#${p.slug}` : "/#systems";
+  const back = "/#systems";
 
   return (
     <main className="min-h-dvh">

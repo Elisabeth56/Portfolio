@@ -1,18 +1,15 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
-import { ButtonLink, buttonClass } from "@/components/ui/button-link";
+import { ButtonLink } from "@/components/ui/button-link";
 import { projects } from "@/content/projects";
 import { site } from "@/content/site";
 import { AppIcon } from "./app-icon";
 import type { GlyphId } from "./glyphs";
 import { MenuBar } from "./menu-bar";
-import { WindowLink } from "./project-window";
 import { ThemeToggle } from "./theme-toggle";
 
 /** Order in which pieces settle during startup; read by the CSS as --i. */
 const settle = (i: number) => ({ "--i": i }) as CSSProperties;
-
-const [lead, ...others] = projects;
 
 /* On a phone these three sit in the grid; on desktop they live in the dock. */
 const panels: { id: GlyphId; label: string }[] = [
@@ -51,9 +48,7 @@ export function Desk() {
             {site.intro}
           </p>
           <div className="hidden items-center gap-6 lg:flex">
-            <WindowLink slug={lead.slug} className={buttonClass()}>
-              Open {lead.name}
-            </WindowLink>
+            <ButtonLink href="#systems">See the work</ButtonLink>
             <ButtonLink href="#method" variant="text">
               Read the method
             </ButtonLink>
@@ -62,24 +57,16 @@ export function Desk() {
 
         <nav
           aria-label="Systems"
-          className="grid grid-cols-4 gap-x-2 gap-y-[1.125rem] pt-1 lg:grid-cols-2 lg:gap-x-4 lg:gap-y-7 lg:pt-3 lg:[&>a:nth-of-type(5)]:col-span-2"
+          className="grid grid-cols-4 gap-x-2 gap-y-[1.125rem] pt-1 lg:grid-cols-2 lg:gap-x-4 lg:gap-y-7 lg:pt-3"
         >
-          <AppIcon
-            href={`/work/${lead.slug}`}
-            opens={lead.slug}
-            label={lead.name}
-            glyph={lead.slug as GlyphId}
-            tone="lead"
-            style={settle(2)}
-          />
-          {others.map((project, i) => (
+          {projects.map((project, i) => (
             <AppIcon
               key={project.slug}
               href={`/work/${project.slug}`}
               opens={project.slug}
               label={project.name}
               glyph={project.slug as GlyphId}
-              style={settle(3 + i)}
+              style={settle(2 + i)}
             />
           ))}
           {panels.map((panel, i) => (
@@ -89,7 +76,7 @@ export function Desk() {
                 label={panel.label}
                 glyph={panel.id}
                 tone="panel"
-                style={settle(7 + i)}
+                style={settle(8 + i)}
               />
             </span>
           ))}

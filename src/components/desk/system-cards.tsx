@@ -6,7 +6,7 @@ import { Glyph, type GlyphId } from "./glyphs";
 import { WindowLink } from "./project-window";
 
 /**
- * The four systems after the lead, as large cards. On a large screen a card
+ * Every system, as large cards. On a large screen a card
  * opens the project window; anywhere else it is a link to the case page.
  */
 export function SystemCards({ projects }: { projects: Project[] }) {
@@ -21,7 +21,7 @@ export function SystemCards({ projects }: { projects: Project[] }) {
           id="systems-title"
           className="text-[2.25rem] leading-[1.04] font-medium tracking-[-0.035em] lg:text-[3.5rem] lg:leading-[1.02]"
         >
-          Five systems, one argument
+          Six systems, one argument
         </h2>
         <p className="mb-1 text-base leading-normal text-pretty text-ink-2 lg:mb-0 lg:w-[28.75rem] lg:shrink-0">
           Each one is a different answer to the same question: what has to be true for a language
