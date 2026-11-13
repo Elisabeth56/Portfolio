@@ -1,7 +1,29 @@
 # elisynth
 
-Personal portfolio for **Elisabeth Nnamani** — AI Engineer.
-Live at [elisabethnnamani.dev](https://elisabethnnamani.dev).
+Hi, I'm Elisabeth Nnamani, an AI engineer based in Nigeria. Most of what I
+build sits in one place: the layer between a language model and a system that
+has to be correct. That means multi-agent orchestration, retrieval grounded in
+schemas that actually exist, and inference that keeps working with the network
+unplugged.
+
+This repo is my portfolio, live at
+[elisabethnnamani.dev](https://elisabethnnamani.dev). It opens like a Mac
+desktop, with my projects as apps on the desk, and scrolls into the story of
+each one told through its architecture. If you would rather read everything in
+one go, [`/read`](https://elisabethnnamani.dev/read) has it in a single column.
+
+## Running it
+
+```bash
+npm install
+npm run dev      # http://localhost:3000
+npm run build
+npm start
+```
+
+> Do not interrupt `next build`. A killed build leaves the Turbopack cache
+> referencing chunks it never wrote, and the next build inherits it. If you see
+> 500s on `/_next/static/chunks/*`, `rm -rf .next` and build again.
 
 ## The idea
 
@@ -31,19 +53,6 @@ for printing.
 
 Next.js 16 (App Router, Turbopack) · React 19 · TypeScript · Tailwind CSS v4
 (CSS-first `@theme`) · Motion · self-hosted fonts via `next/font/local`.
-
-## Running it
-
-```bash
-npm install
-npm run dev      # http://localhost:3000
-npm run build
-npm start
-```
-
-> Do not interrupt `next build`. A killed build leaves the Turbopack cache
-> referencing chunks it never wrote, and the next build inherits it. If you see
-> 500s on `/_next/static/chunks/*`, `rm -rf .next` and build again.
 
 ## Deploying
 
