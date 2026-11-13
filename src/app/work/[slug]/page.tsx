@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Decisions } from "@/components/case/decisions";
-import { Glyph, type GlyphId } from "@/components/desk/glyphs";
+import { AppTile, type GlyphId } from "@/components/desk/glyphs";
 import { ProjectChapter } from "@/components/trace/project-chapter";
 import { getProject, type Project, projects } from "@/content/projects";
 import { site } from "@/content/site";
@@ -114,9 +114,11 @@ export default async function WorkPage({ params }: PageProps<"/work/[slug]">) {
               {next.name}
             </span>
           </span>
-          <span className="grid size-16 place-items-center rounded-[20px] bg-well text-accent lg:size-24 lg:rounded-[30px]">
-            <Glyph id={next.slug as GlyphId} className="size-7 lg:size-[42px]" />
-          </span>
+          <AppTile
+            id={next.slug as GlyphId}
+            className="size-16 rounded-[18px] lg:size-24 lg:rounded-[26px]"
+            glyphClassName="size-7 lg:size-[42px]"
+          />
         </Link>
       </div>
     </main>
@@ -129,9 +131,11 @@ function Header({ project: p }: { project: Project }) {
     <header className="flex flex-col gap-[18px] lg:flex-row lg:items-end lg:gap-20">
       <div className="flex flex-col gap-[18px] lg:w-[40rem] lg:shrink-0 lg:gap-6">
         <div className="mt-3 flex items-center gap-3 lg:mt-0 lg:gap-3.5">
-          <span className="grid size-12 shrink-0 place-items-center rounded-[15px] bg-accent text-on-accent lg:size-[52px] lg:rounded-[17px]">
-            <Glyph id={p.slug as GlyphId} className="size-6 lg:size-[26px]" />
-          </span>
+          <AppTile
+            id={p.slug as GlyphId}
+            className="size-12 rounded-[14px] lg:size-[52px] lg:rounded-[15px]"
+            glyphClassName="size-6 lg:size-[26px]"
+          />
           <span className="text-sm text-ink-2 lg:text-[0.9375rem]">
             {p.kind} · {p.period} ·{" "}
             <span className={p.status === "Submitted" ? undefined : "text-positive"}>

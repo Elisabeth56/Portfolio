@@ -2,7 +2,7 @@ import Image from "next/image";
 import type { Project } from "@/content/projects";
 import { buildSteps } from "@/components/trace/steps";
 import { cn } from "@/lib/utils";
-import { Glyph, type GlyphId } from "./glyphs";
+import { AppTile, type GlyphId } from "./glyphs";
 import { WindowLink } from "./project-window";
 
 /**
@@ -47,9 +47,11 @@ function SystemCard({ project }: { project: Project }) {
       className="group flex h-full flex-col gap-3 rounded-3xl bg-surface p-5 text-ink transition-[background-color,transform] duration-200 ease-ui hover:bg-[color-mix(in_srgb,var(--color-ink)_3%,var(--color-surface))] active:scale-[0.99] lg:min-h-80 lg:gap-4 lg:rounded-[28px] lg:p-7"
     >
       <div className="flex items-center gap-3 lg:gap-3.5">
-        <span className="grid size-12 shrink-0 place-items-center rounded-[15px] bg-well text-accent lg:size-[52px] lg:rounded-2xl">
-          <Glyph id={project.slug as GlyphId} className="size-6" />
-        </span>
+        <AppTile
+          id={project.slug as GlyphId}
+          className="size-12 rounded-[14px] lg:size-[52px] lg:rounded-[15px]"
+          glyphClassName="size-6"
+        />
         <div className="flex flex-col gap-0.5">
           <span className="text-xl font-medium tracking-[-0.015em] transition-colors duration-200 ease-ui group-hover:text-accent lg:text-2xl lg:tracking-[-0.02em]">
             {project.name}

@@ -2,14 +2,17 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { projects } from "@/content/projects";
 import { cn } from "@/lib/utils";
-import { Glyph, type GlyphId } from "./glyphs";
+import { AppTile, type GlyphId } from "./glyphs";
+import { WindowLink } from "./project-window";
 
-type Item = { id: GlyphId; label: string; mobile?: boolean };
+type Item = { id: GlyphId; label: string; mobile?: boolean; desktop?: boolean };
 
+/* On a large screen the projects sit in the dock, so Systems is phone-only. */
 const items: Item[] = [
   { id: "about", label: "About" },
-  { id: "systems", label: "Systems", mobile: true },
+  { id: "systems", label: "Systems", mobile: true, desktop: false },
   { id: "trajectory", label: "Trajectory" },
   { id: "capabilities", label: "Capabilities" },
   { id: "method", label: "Method", mobile: true },
@@ -124,11 +127,25 @@ export function Dock() {
   return (
     <nav
       ref={ref}
-      aria-label="Sections"
+      aria-label="Dock"
       data-settle
       style={{ "--i": 8 } as React.CSSProperties}
-      className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 z-40 flex h-dock -translate-x-1/2 items-end gap-3 rounded-[28px] bg-[color-mix(in_srgb,var(--color-surface)_78%,transparent)] px-3 pb-3 shadow-dock ring-1 ring-[color-mix(in_srgb,var(--color-ink)_7%,transparent)] backdrop-blur-xl backdrop-saturate-150 lg:bottom-dock-inset"
+      className="glass fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 z-40 flex h-dock -translate-x-1/2 items-end gap-3 rounded-[28px] px-3 pb-3 lg:bottom-dock-inset"
     >
+      {projects.map((project) => (
+        <WindowLink
+          key={project.slug}
+          data-tile
+          slug={project.slug}
+          aria-label={project.name}
+          className={cn(tile, "hidden lg:grid")}
+        >
+          <TileFace id={project.slug as GlyphId} />
+          <Label>{project.name}</Label>
+        </WindowLink>
+      ))}
+      <Divider />
+
       {items.map((item) => (
         <a
           key={item.id}
@@ -139,25 +156,47 @@ export function Dock() {
           className={cn(
             tile,
             item.mobile ? "grid" : "hidden lg:grid",
-            active === item.id ? "bg-accent text-on-accent" : "bg-well text-ink hover:text-accent",
+            item.desktop === false && "lg:hidden",
           )}
         >
-          <Glyph id={item.id} className="size-[calc(24px*var(--s,1))] transition-[width,height] duration-150 ease-ui" />
+          <TileFace id={item.id} />
+          {active === item.id && (
+            <span aria-hidden className="absolute -bottom-[7px] left-1/2 size-1 -translate-x-1/2 rounded-full bg-ink" />
+          )}
           <Label>{item.label}</Label>
         </a>
       ))}
 
       {/* Like the line before the Dock's Downloads and Trash: the page as one document. */}
-      <span aria-hidden className="mb-2.5 hidden h-8 w-px self-end bg-[color-mix(in_srgb,var(--color-ink)_14%,transparent)] lg:block" />
+      <Divider />
       <Link
         data-tile
         href="/read"
         aria-label="Read as one document"
-        className={cn(tile, "hidden bg-well text-ink hover:text-accent lg:grid")}
+        className={cn(tile, "hidden lg:grid")}
       >
-        <Glyph id="read" className="size-[calc(24px*var(--s,1))] transition-[width,height] duration-150 ease-ui" />
+        <TileFace id="read" />
         <Label>Read as one document</Label>
       </Link>
     </nav>
+  );
+}
+
+function TileFace({ id }: { id: GlyphId }) {
+  return (
+    <AppTile
+      id={id}
+      className="size-full rounded-[inherit]"
+      glyphClassName="size-[calc(26px*var(--s,1))] transition-[width,height] duration-150 ease-ui"
+    />
+  );
+}
+
+function Divider() {
+  return (
+    <span
+      aria-hidden
+      className="mb-2.5 hidden h-8 w-px self-end bg-[color-mix(in_srgb,var(--color-ink)_14%,transparent)] lg:block"
+    />
   );
 }

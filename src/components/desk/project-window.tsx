@@ -21,7 +21,7 @@ import { ButtonLink } from "@/components/ui/button-link";
 import { Segmented } from "@/components/ui/segmented";
 import { type Project, getProject } from "@/content/projects";
 import { cn } from "@/lib/utils";
-import { Glyph, type GlyphId } from "./glyphs";
+import { AppTile, type GlyphId } from "./glyphs";
 
 /* The window needs the same room as the pinned trace; smaller screens get the case page. */
 const WINDOW_QUERY = "(min-width: 80rem) and (min-height: 45rem)";
@@ -136,9 +136,7 @@ function WindowBody({ project, onClose }: { project: Project; onClose: () => voi
     <div className="flex h-full flex-col gap-6 px-10 pt-5 pb-10">
       <header className="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
         <div className="flex items-center gap-3">
-          <span className="grid size-10 place-items-center rounded-[13px] bg-accent text-on-accent">
-            <Glyph id={project.slug as GlyphId} className="size-5" />
-          </span>
+          <AppTile id={project.slug as GlyphId} className="size-10 rounded-[12px]" glyphClassName="size-5" />
           <h2 className="text-[1.0625rem] font-medium">{project.name}</h2>
         </div>
         <Segmented

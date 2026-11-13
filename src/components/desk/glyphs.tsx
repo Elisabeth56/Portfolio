@@ -1,4 +1,5 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 export type GlyphId =
   | "prismos"
@@ -99,5 +100,41 @@ export function Glyph({ id, className }: { id: GlyphId; className?: string }) {
     >
       {paths[id]}
     </svg>
+  );
+}
+
+/* Each app's colour, like a macOS icon: projects take their product's colour. */
+const tints: Record<GlyphId, [from: string, to: string, ink?: string]> = {
+  prismos: ["#a34540", "#5e1f1c"],
+  "atlas-ai": ["#3a3a33", "#14140f", "#dde8a6"],
+  finsight: ["#3f8a63", "#1e5a3e"],
+  farmtwin: ["#9cc46b", "#4f8a33"],
+  flowmind: ["#4867a8", "#1e3466"],
+  itoms: ["#f3d37a", "#e0a93a", "#3a2a08"],
+  about: ["#f0b39a", "#d9725a"],
+  systems: ["#b24a6f", "#6e2441"],
+  trajectory: ["#f6c978", "#e58a3a"],
+  capabilities: ["#9aa9da", "#5868a8"],
+  method: ["#c9a27c", "#8c6240"],
+  contact: ["#7fc3f2", "#2f86d6"],
+  read: ["#ffffff", "#e9e4dd", "#7a2e4b"],
+};
+
+/** A glyph on its own coloured tile. Size and radius come from `className`. */
+export function AppTile({
+  id,
+  className,
+  glyphClassName,
+}: {
+  id: GlyphId;
+  className?: string;
+  glyphClassName?: string;
+}) {
+  const [from, to, ink = "#fff"] = tints[id];
+  const style = { "--tile-from": from, "--tile-to": to, color: ink } as CSSProperties;
+  return (
+    <span className={cn("app-tile grid shrink-0 place-items-center", className)} style={style}>
+      <Glyph id={id} className={glyphClassName} />
+    </span>
   );
 }

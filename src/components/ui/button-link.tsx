@@ -3,8 +3,8 @@ import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 
 type Props = ComponentProps<typeof Link> & {
-  /** `primary` is the tinted pill, one per view. `text` is the quiet second action. */
-  variant?: "primary" | "text";
+  /** `primary` is the tinted pill, one per view. `solid` is for glass, where a tint washes out. `text` is the quiet second action. */
+  variant?: "primary" | "solid" | "text";
 };
 
 const base =
@@ -13,6 +13,8 @@ const base =
 const variants = {
   primary:
     "rounded-full bg-accent-tint px-6 text-accent-ink hover:bg-[color-mix(in_srgb,var(--color-accent)_10%,var(--color-accent-tint))]",
+  solid:
+    "rounded-full bg-accent px-6 text-on-accent hover:bg-[color-mix(in_srgb,var(--color-ink)_12%,var(--color-accent))]",
   text: "text-ink hover:text-accent",
 };
 

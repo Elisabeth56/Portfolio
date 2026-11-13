@@ -27,10 +27,12 @@ npm start
 
 ## The idea
 
-A paper desk. `/` opens like a Mac starting up: her name on paper, then the
-desk settles in, with the portrait and Now widgets, the six project icons,
-the headline and a dock. Scroll and the desk becomes a document: all six
-systems as cards, then trajectory, capabilities, method, about and contact.
+A Mac desktop on paper. `/` opens like a Mac starting up: her name on paper,
+then the desktop settles in over a hills wallpaper, with the headline in a
+frosted window, a portrait and a contact widget either side, and a dock that
+holds the six projects as apps. Scroll and the desk becomes a document: all
+six systems as cards, then trajectory, capabilities, method, about and
+contact.
 
 On a large screen a project card opens a window with Brief, Architecture,
 Decisions and Stack tabs. Everywhere else it goes to the case page,
@@ -39,8 +41,8 @@ trace keeps the project's own behaviour:
 
 | Project  | The interaction                                                     |
 | -------- | ------------------------------------------------------------------- |
-| PrismOS  | Three agents take their positions together before a binding ruling  |
-| Atlas AI | The run **halts** at each human gate until the visitor approves     |
+| PrismOS  | Three critics review the spec together, and code decides the conflicts |
+| Atlas    | The run **halts** at each human gate until the visitor approves     |
 | FinSight | Pick CSV or PDF and the ingestion path takes that branch            |
 | FarmTwin | A network switch: cut it and everything keeps answering             |
 | FlowMind | Capture flowing into a typed relational schema                      |
