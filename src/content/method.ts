@@ -16,13 +16,13 @@ export const principles: Principle[] = [
     title: "The expensive failures return an answer",
     body: [
       "The bugs I remember all have the same shape. Nothing throws. Nothing logs. The system returns something plausible and you carry on.",
-      "Fixed-size chunking split a transaction table mid-row, so the model got an amount with no date attached and answered confidently. An environment variable set at runtime where Next.js needs it at build time made a frontend fall back silently to fixtures, and the application looked like it was working. A Tailwind v4 migration compiled cleanly and simply did not apply any styles.",
-      "So I have stopped treating a green run as evidence. The question is not whether it completed. It is whether I can name what it would look like if it were quietly wrong.",
+      "Groq retired both models FinSight used, and every request moved quietly to the fallback while the screen looked fine. Two FarmTwin passages had a stray colon in their frontmatter, and the parser skipped them without a word, so search just knew less. An environment variable set at runtime where Next.js needs it at build time made a frontend fall back to fixtures, and the app looked like it was working.",
+      "So I have stopped treating a green run as evidence. Before I trust a result, I try to name what it would look like if it were quietly wrong.",
     ],
     evidence: {
       project: "FinSight",
       slug: "finsight",
-      note: "Semantic chunking around section headers, row boundaries as hard splits",
+      note: "Provider changes now get an eval run with the fallback switched off",
     },
   },
   {
@@ -57,14 +57,14 @@ export const principles: Principle[] = [
     index: "04",
     title: "Name the cost of the call",
     body: [
-      "I categorize transactions with a model and no rule table. The honest description of that is a permanent per-upload token cost traded against zero rule maintenance.",
-      "I could describe it as the elegant choice and leave the sentence there. It would read better and mean less.",
+      "PrismOS runs three critics, a resolver and a verifier on every request. On my own eval, against a 14-file API, that pipeline passed the same checks as a single prompt and used about 3.5 times the tokens.",
+      "I could have called the critics what makes it reliable and left the sentence there. It would read better and mean less, so the README puts both numbers side by side.",
       "Every architectural decision I am confident about, I can state what it costs. The ones I cannot state a cost for are usually the ones I have not thought about hard enough.",
     ],
     evidence: {
-      project: "FinSight",
-      slug: "finsight",
-      note: "Model-only categorization, 40-transaction batching",
+      project: "PrismOS",
+      slug: "prismos",
+      note: "17 of 18 checks in both arms, 22,758 against 6,437 tokens per case",
     },
   },
   {
@@ -78,21 +78,21 @@ export const principles: Principle[] = [
     evidence: {
       project: "Atlas",
       slug: "atlas-ai",
-      note: "Three resumable phases rebuilt from agent_runs.output_json",
+      note: "Runs claimed with a 60-second lease, resumed from the last finished step",
     },
   },
   {
     index: "06",
-    title: "Patch what works",
+    title: "Decide where state lives first",
     body: [
-      "Across three versions of PrismOS, every capability added after v1.0 went in as an incremental patch against working architecture. Agent 0, the designer role, project memory, feature classification. Several proposed rebuilds were rejected.",
-      "Auth, rate limiting and webhooks were cut and written down as deferred, rather than half-built and left looking finished.",
-      "A rewrite is the most expensive way to avoid understanding the thing you already have.",
+      "The hackathon version of PrismOS had eight agents with job titles, and it demoed well. When I audited it afterwards, runs lived in memory, ownership was an anonymous ID in localStorage, the agents never read the user's code, and the prompts forced every agent to object.",
+      "For the rebuild I designed the tables and the failure modes before writing a prompt. Postgres became the queue, the log and the step cache, with exactly-once claims, heartbeats and a reaper, so a run survives a deploy, a refresh and a crashed worker.",
+      "Almost everything that was wrong came down to where state lived. The prompts were the easy part.",
     ],
     evidence: {
       project: "PrismOS",
       slug: "prismos",
-      note: "Versioned blueprint as single source of truth, v1.0 through v1.2",
+      note: "Rebuilt in four days on free tiers, with 145 API tests",
     },
   },
   {
