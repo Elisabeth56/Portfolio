@@ -591,7 +591,7 @@ export const projects: Project[] = [
     name: "FarmTwin",
     kind: "Offline-first local inference",
     period: "2026",
-    status: "Submitted",
+    status: "Live",
     tagline:
       "A desktop app that keeps a record of each farm, works out crop stage and risk, and answers from extension guides with a model that runs on the laptop, without internet.",
     role: "Sole developer",
