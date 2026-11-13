@@ -89,7 +89,7 @@ export const projects: Project[] = [
     roleNote:
       "I built the hackathon version, audited it, and rebuilt it as a product in four days on free tiers: the pipeline and its conflict rule, the Postgres queue, the GitHub App access model, the web app and its design system, and the eval.",
     links: { live: "https://prism-os-jade.vercel.app", repo: "https://github.com/Elisabeth56/PrismOS" },
-    shot: { width: 2400, height: 1500, alt: "The PrismOS landing page, headed “One request in. One reviewed pull request out.”" },
+    shot: { width: 2400, height: 1500, alt: "The PrismOS landing page, headed “One request in. One reviewed pull request out.”, with light through a prism reaching all three critics." },
     problem: [
       "Asking a model for a feature gets you code that skips the part a reviewer would catch: where the change belongs, how it can be abused, what the user sees when it fails.",
       "Running several agents usually does not help either, because each gives its own opinion on its own text and nobody resolves anything. And once the code is written, turning it into a pull request is still your job.",
