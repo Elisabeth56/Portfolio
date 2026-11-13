@@ -99,9 +99,9 @@ export const principles: Principle[] = [
     index: "07",
     title: "Build for the market you are actually in",
     body: [
-      "Stripe does not serve Nigerian payment rails, so FlowMind and FinSight run on Paystack, and the migration touched the schema, the status enum, webhook verification and the whole billing interface. It was not a client library swap.",
+      "Stripe does not serve Nigerian payment rails, so FlowMind and FinSight run on Paystack, and the migration touched the schema, the status enum, webhook verification and the whole billing interface, far more than the client library.",
       "FarmTwin runs with the network unplugged on a 2014 laptop because that is the hardware and the connectivity the farms actually have. FinSight parses statements because bank-linking APIs do not cover Nigerian banks at all.",
-      "None of this is a constraint I am working around. It is the specification.",
+      "I treat these conditions as the specification from the first day.",
     ],
     evidence: {
       project: "FlowMind",
