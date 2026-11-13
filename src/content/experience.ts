@@ -38,7 +38,7 @@ export const roles: Role[] = [
     current: true,
     frame: "Owning the system, not just the surface.",
     body: [
-      "Building LLM-backed products end to end, for clients and for myself: FinSight, FlowMind, PrismOS, Atlas AI, FarmTwin, ITOMS.",
+      "Building LLM-backed products end to end, for clients and for myself: FinSight, FlowMind, PrismOS, Atlas, FarmTwin, ITOMS.",
       "This is where the work moved past the interface. Orchestration and agent design, retrieval that has to stay grounded, tenant isolation enforced in the database, billing that survives a webhook, deployment across platforms that each break differently. Six products shipped, each one teaching a failure mode the last one did not have.",
     ],
     shift:

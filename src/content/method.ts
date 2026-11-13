@@ -76,7 +76,7 @@ export const principles: Principle[] = [
       "The pattern is the same each time: move the guarantee somewhere it cannot be skipped by someone who is in a hurry, including me.",
     ],
     evidence: {
-      project: "Atlas AI",
+      project: "Atlas",
       slug: "atlas-ai",
       note: "Three resumable phases rebuilt from agent_runs.output_json",
     },
